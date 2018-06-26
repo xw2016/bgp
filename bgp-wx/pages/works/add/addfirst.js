@@ -8,6 +8,7 @@ Page({
    */
   data: {
     work: {},
+    workId:null,
     planBeginDate: util.formatTime(new Date()),
     planEndDate: '',
     workTypeArray: [],
@@ -50,7 +51,7 @@ Page({
           return item.dictionaryValue;
         })
         
-        // workLevelArr.unshift('');
+        workLevelArr.unshift('请选择');
         that.setData({
           workLevelArr: workLevelArr
         })
@@ -77,8 +78,7 @@ Page({
           // var titleArr = workTypeList.map(item => {
           //   return item.title;
           // });
-          // titleArr.unshift('');
-          var titleArr = '';
+          let titleArr=['请选择'];
           that.setData({
             workTypeArray: [typeArr, titleArr],
             workTypeList,
@@ -262,36 +262,26 @@ Page({
     let url = '/work/add';
     let method = 'post';
     // let data = that.data;
-  debugger
     let data = {
       parentWorkName: '本任务',
       parentId: '0',
-      // workId:that.data.workId, //判断是否存在
+      workId:that.data.workId, //判断是否存在/
       workName: that.data.workName,
       description: that.data.description,
       createReason: that.data.createReson,
       planBeginDate: that.data.planBeginDate,
       planEndDate: that.data.planEndDate,
       // departments: that.data.departments,
-      level: that.data.workLevel,
+      level: that.data.workLevel == "请选择" ? "" : that.data.workLevel,
       typeId: that.data.workType.typeId,
       typeName: that.data.workType.title,
       pass: that.data.workType.unifyKpi == 'Y' ? 'Y' : 'N'
 
-      // responsible: '周智远',
-      // responsibleNum: '196764',
-      // responsibleList: '196764:周智远',
-
-      // reviewer: '张三',
-      // reviewerNum: '768672',
-      // creator: '张三',
-      // creatorNum: '768672'
     };
     util.onSubmitJson(url, data, method, function(res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-        // that.openSuccess();
         that.setData(res.data.data);
         callback(res.data.data)
       }
