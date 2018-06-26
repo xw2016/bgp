@@ -184,6 +184,7 @@ Page({
     })
   },
   checkResponsibleChange:function(e){//责任人选择
+  
     var checkboxItems = this.checkUserChange(e, this.data.responsibleList);
     this.setData({
       responsibleList: checkboxItems
@@ -191,10 +192,13 @@ Page({
     var checkUsers = this.getCheckedUser(checkboxItems);
     var checkUserNames ='';
     var checkUserArr = checkUsers.split(",");
-    checkUserArr.forEach(function(item){
+    if(checkUserArr!=''){
+      checkUserArr.forEach(function (item) {
         var name = item.split(":")[1];
-        checkUserNames=checkUserNames+","+name;
-    });
+        checkUserNames = checkUserNames + "," + name;
+      });
+    }
+
     if (checkUserNames != '' && checkUserNames.substr(0,1)==",") {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
     }
@@ -333,7 +337,7 @@ Page({
   formSubmit: function(e) {
     let that = this;
     let validate = this.validateForm();
-    debugger
+    
     if (!validate.checkForm(e)) {
       const error = validate.errorList[0];
       that.setData({
@@ -347,9 +351,6 @@ Page({
 
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
-    // let beginDate = that.data.beginDate;
-    // work.planBeginDate = work.planBeginDate.replace(/-/g, "/");
-    // work.planEndDate = work.planEndDate.replace(/-/g, "/");
     work.departments = that.data.checkedDep;
     work.responsibleList=that.data.checkedResponsible;
 
@@ -357,32 +358,7 @@ Page({
     work.reviewerNum= that.data.checkedReview;
     work.creator=loginUser.name;
     work.creatorNum=loginUser.account;
-    // let data = {
-    //   parentWorkName: that.data.parentWorkName,
-    //   parentId: that.data.parentId,
-    //   workId: that.data.workId,
-    //   workName: that.data.workName,
-    //   description: that.data.description,
-    //   createReson: that.data.createReson,
-    //   planBeginDate: that.data.planBeginDate.replace(/-/g, "/"),
-    //   planEndDate: that.data.planEndDate.replace(/-/g, "/"),
-
-    //   departments: that.data.checkedDep,
-
-    //   level: that.data.level,
-    //   typeId: that.data.typeId,
-    //   typeName: that.data.typeName,
-
-    //   // responsible: '周智远',
-    //   // responsibleNum: '196764',
-    //   responsibleList: that.data.checkedResponsible, 
-
-    //   reviewer: that.data.checkedReviewName,
-    //   reviewerNum: that.data.checkedReview,
-    //   creator: loginUser.name,
-    //   creatorNum: loginUser.account
-    // };
-
+   
     util.onSubmitJson(url, work, method, function(res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
