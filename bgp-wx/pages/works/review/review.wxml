@@ -1,0 +1,74 @@
+<!--pages/works/review/review.wxml-->
+
+<view class="page__bd">
+  <!-- <form bindsubmit="formSubmit"> -->
+  <!--执行日报-->
+  <!-- <view class="weui-cells__title">任务执行日志</view>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell weui-cell_input">
+      <block wx:if="{{work.status!='001'}}">
+        <view class="weui-panel">
+
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+              <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">{{work.remark}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view> -->
+
+
+  <!--图片描述-->
+  <!-- <view class="weui-cells__title"></view>
+  <view class="weui-panel">
+    <view class="weui-panel__hd">附件图片</view>
+    <block wx:for="{{imgList}}" wx:key="this" wx:for-item="image">
+      <view class="weui-uploader__file" bindtap="previewImage" id="{{image}}">
+        <image class="weui-uploader__img" src="{{image}}" mode="aspectFill" data-list="{{imgList}}" data-src="{{image}}" bindtap="imgCheck" />
+      </view>
+    </block>
+  </view> -->
+
+  <view class="weui-cells__title">考核维度评分</view>
+  <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" wx:key="id">
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">{{itm.kpiName}}：</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="selector" bindchange="bindChange_select" value="{{itm.index}}" data-current="{{idx}}" range="{{itm.kpiScores}}" range-key="grade">
+          <view class="picker">
+            {{itm.kpiScores[itm.index].grade}}-{{itm.kpiScores[itm.index].score}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cells__title"></view>
+  </block>
+  <view class="weui-cells__title">请输入审核意见</view>
+  <view class="weui-form-preview">
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" auto-focus auto-height placeholder="请输入完成情况" style="height: 5.3em"  />
+          <!-- <view class="weui-textarea-counter">0/300</view> -->
+        </view>
+      </view>
+    </view>
+  </view>
+  <!--文件l列表  下载-->
+  <!-- <view class="weui-cells__title"></view>
+  <view class="weui-panel">
+    <view class="weui-panel__hd">附件文件</view>
+
+  </view> -->
+
+  <view class="weui-panel weui-form-preview__ft">
+    <button bindtap="reject" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">打回</button>
+    <button bindtap="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
+  </view>
+  <!-- </form> -->
+</view>

@@ -1,0 +1,26 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/register/register",
+    "pages/logs/logs",
+    "pages/rrtest/rrtest",
+    "pages/works/works",
+    "pages/works/list/list",
+    "pages/works/detail/detail",
+    "pages/works/todo/todo",
+    "pages/msg/msg_success",
+    "pages/msg/msg_fail",
+    "pages/works/add/addfirst",
+    "pages/works/review/review",
+    "pages/works/add/addSecond",
+    "pages/works/resolve/resolve",
+    "pages/works/resolveleader/resolveleader",
+    "pages/common/guide/guide"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  }
+}

@@ -1,0 +1,19 @@
+<!--pages/rrtest/rrtest.wxml-->
+<view class="container">
+  <button bindtap="bean_json" class="btn">bean_json</button>
+  <button bindtap="listbean_json" class="btn">listbean_json</button>
+  <button bindtap="mapbean_json" class="btn">mapbean_json</button>
+  <view class="line"></view>
+  <form bindsubmit="json_json">
+    <view>
+      <view >username</view>
+      <input name="name" type="text" class="input_bg"/>
+    </view>
+    <view>
+      <view >age</view>
+      <input name="age" type="text" class="input_bg"/>
+    </view>
+    <button formType="submit" class="btn">json_json</button>
+  </form>
+  <text>{{show}}</text>
+</view>

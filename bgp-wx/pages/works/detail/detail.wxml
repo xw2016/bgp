@@ -1,0 +1,150 @@
+<!--pages/works/detail/workDetail.wxml-->
+<!-- <view class="page"> -->
+<view class="weui-cells__title"></view>
+<view class="page__bd">
+
+  <!--任务名称,任务详情-->
+  <view class="weui-panel">
+    <view class="weui-panel__hd">任务描述</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="weui-media-box__title weui-media-box__title_in-text">{{work.workName}}</view>
+        <view class="{{isShowDetail?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="showdetail" bindtap="showdetail">
+          <block wx:if="{{work.description ==null}}"></block>
+          <block wx:else>{{work.description}}</block>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="weui-cells__title"></view>
+  <view class="weui-form-preview">
+    <view class="weui-panel__hd">任务信息</view>
+    <view class="weui-form-preview">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+
+          <!--任务名称-->
+          <!-- <view class="weui-form-preview__label">任务名称</view>
+          <view class="weui-form-preview__value">
+            {{work.workName}}
+          </view> -->
+          <!-- 所属任务-->
+          <view class="weui-form-preview__label">所属任务</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.parentWorkName ==null}}">本任务</block>
+            <block wx:else>{{work.parentWorkName}}</block>
+          </view>
+          <!-- 责任人 -->
+          <view class="weui-form-preview__label">责任人</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.responsible ==null}}">无</block>
+            <block wx:else>{{work.responsible}}</block>
+          </view>
+          <!-- 审核人 -->
+          <view class="weui-form-preview__label">审核人</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.reviewer ==null}}">无</block>
+            <block wx:else>{{work.reviewer}}</block>
+          </view>
+
+          <!-- 状态-->
+          <view class="weui-form-preview__label">任务状态</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.statusName ==null}}">无</block>
+            <block wx:else>{{work.statusName}}</block>
+          </view>
+
+          <!--计划开始时间-->
+          <view class="weui-form-preview__label">计划开始时间</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.planBeginDate ==null}}">无</block>
+            <block wx:else>{{work.planBeginDate}}</block>
+          </view>
+          <!--计划完成时间-->
+          <view class="weui-form-preview__label">计划完成时间</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.planEndDate ==null}}">无</block>
+            <block wx:else>{{work.planEndDate}}</block>
+          </view>
+          <!--如果已开始，则显示 实际开始时间-->
+          <block wx:if="{{work.status!='001'}}">
+            <view wx:if="{{work.status!='001'}}" class="weui-form-preview__label">实际开始时间</view>
+            <view class="weui-form-preview__value">
+              <block wx:if="{{work.beginDate ==null}}">无</block>
+              <block wx:else>{{work.beginDate}}</block>
+            </view>
+          </block>
+          <!--如果已完成，则显示实际完成时间-->
+          <block wx:if="{{work.status=='003'}}">
+            <view class="weui-form-preview__label">实际完成时间</view>
+            <view class="weui-form-preview__value">
+              <block wx:if="{{work.endDate ==null}}">无</block>
+              <block wx:else>{{work.endDate}}</block>
+            </view>
+          </block>
+        </view>
+      </view>
+    </view>
+
+    <block wx:if="{{loginUser.type!='领导'}}">
+      <!--如果已开始，并且是任务审核人，则显示执行日志-->
+      <view class="weui-cells__title"></view>
+
+      <view class="weui-panel" wx:if="work.status!='001'">
+        <view class="weui-panel__hd">任务执行日志</view>
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_text">
+            <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">
+              <block wx:if="{{work.remark ==null}}">无</block>
+              <block wx:else>{{work.remark}}</block>
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+    <block wx:else>
+      <view class="weui-cells__title"></view>
+      <view class="weui-form-preview">
+        <view class="weui-panel__hd">意见</view>
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <textarea class="weui-textarea" name="remark" bindinput="bindInputRemarkChange" maxlength="500" auto-focus auto-height placeholder="请填写意见" style="height: 5.3em" value="{{work.remark}}" />
+              <!-- <view class="weui-textarea-counter">0/300</view> -->
+            </view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+
+  </view>
+
+
+
+  <view class="weui-panel weui-form-preview__ft">
+    <block wx:if="{{action =='todo'}}">
+      <!--如果是任务责任人，并且未结束，则显示-->
+      <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003')}}">
+        <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">任务交办</button>
+        <block wx:if="{{loginUser.type!='领导'}}">
+          <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">执行任务</button>
+        </block>
+        <block wx:else>
+          <button bindtap="submitWorkLeader" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
+        </block>
+        <!--如果是任务审核人，并且已提交审核，则显示-->
+      </block>
+      <block wx:else>
+        <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">返回</button>
+        <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&work.status=='004'}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
+      </block>
+    </block>
+
+    <block wx:else>
+      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+    </block>
+  </view>
+</view>
+<!-- </view> -->

@@ -1,0 +1,68 @@
+<!--pages/works/works.wxml-->
+<view class="navbar">
+  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
+</view>
+<!--我的代办-->
+<view class="page__bd">
+  <view hidden="{{currentTab!==0}}">
+
+    <view class="search-result">
+      <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower">
+        <view class="result-item" wx:key="unique" wx:for="{{worksList}}" data-idx="{{index}}" bindtap="queryDetail">
+        
+          <view class="weui-cell__bd">
+            <view class="weui-cell__bd" style="display: inline-block; vertical-align: middle">{{item.workName}}</view>
+            <view wx:if="{{deadlineDiff<2}}" class="weui-badge" style="margin-left: 5px;">warning</view>
+          </view>
+          <view class="subtitle">
+            <view>{{item.statusName}}</view>
+          </view>
+        </view>
+        <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+        <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<!--我的已办-->
+<view hidden="{{currentTab!==1}}">
+  <view class="search-result">
+    <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower">
+      <view class="result-item" wx:key="unique" wx:for="{{worksList}}" data-idx="{{index}}" bindtap="queryDetail">
+
+        <text>{{item.workName}}</text>
+        <view class="subtitle">
+          <text>{{item.statusName}}</text>
+        </view>
+      </view>
+      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+    </scroll-view>
+  </view>
+</view>
+
+<!--知识库-->
+<view hidden="{{currentTab!==2}}">
+  <view class="search">
+    <view class="search-bar">
+      <view class="search-wrap">
+        <icon type="search" size="16" class="icon-search" />
+        <input type="text" placeholder="请输入搜索内容" class="search-input" name="searchKeyword" bindinput="bindKeywordInput" value="{{searchKeyword}}" />
+      </view>
+      <view class="search-cancel" bindtap="keywordSearch">搜索</view>
+    </view>
+    <view class="search-result">
+      <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchScrollLower">
+        <view class="result-item" wx:for="{{searchSongList}}" wx:key="unique" data-data="{{item}}">
+          <view class="icon{{item.isonly=='0' ? ' nocopyright' : ''}}"></view>
+          <text class="title">{{item.albumname}}</text>
+          <view class="subtitle">
+            <text wx:for="{{item.singer}}" wx:key="unique">{{item.name}}</text>
+          </view>
+        </view>
+        <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
+        <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
