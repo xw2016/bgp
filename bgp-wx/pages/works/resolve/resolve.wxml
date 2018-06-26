@@ -11,10 +11,10 @@
             <view class="weui-label">任务名称</view>
           </view>
           <view class="weui-cell__bd">
-            <block wx:if="{{pass}}">
+            <block wx:if="{{pass=='N'}}">
               <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
             </block>
-             <block wx:if="{{!pass}}">
+             <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
             </block> 
           </view>
@@ -22,7 +22,7 @@
       </view>
 
       <!--部门-->
-      <block wx:if="{{pass}}">
+      <block wx:if="{{pass=='N'}}">
         <view class="weui-cells__title">请选择所属部门</view>
         <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell weui-cell_input" bindtap='showDepartment'>
@@ -102,7 +102,7 @@
       <!--审核人-->
       <view class="weui-cells__title">请选择发布及审核人</view>
       <view class="weui-cells weui-cells_after-title">
-        <block wx:if="{{pass}}">
+        <block wx:if="{{pass=='N'}}">
           <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
             <view class="weui-cell__hd">
               <view class="weui-label">审核人类型</view>

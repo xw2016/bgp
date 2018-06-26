@@ -29,7 +29,7 @@ Page({
     this.setData({
       work: queryBean,
       loginUser:loginUser,
-      pass:queryBean.pass=='Y'?false:true,
+      pass:queryBean.pass,
       workName: queryBean.pass == 'Y' ? queryBean.workName:'',
       checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer:loginUser.name,
       checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum:loginUser.account,
