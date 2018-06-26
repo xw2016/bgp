@@ -15,37 +15,35 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.setNavigationBarTitle({
       title: '任务交办'
     });
     let queryBean = JSON.parse(options.queryBean);
-    // this.setData(queryBean);
     this.initDepartment();
     this.initUser();
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
-    debugger
     this.setData({
       work: queryBean,
-      loginUser:loginUser,
-      pass:queryBean.pass,
-      workName: queryBean.pass == 'Y' ? queryBean.workName:'',
-      checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer:loginUser.name,
-      checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum:loginUser.account,
+      loginUser: loginUser,
+      pass: queryBean.pass,
+      workName: queryBean.pass == 'Y' ? queryBean.workName : '',
+      checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
+      checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
     })
 
   },
-  hideErrMsg: function () {
+  hideErrMsg: function() {
     this.setData({
       popErrorMsg: ''
     })
   },
-  initUser: function () {
+  initUser: function() {
     let that = this;
     let url = '/work/queryUserList';
     let method = 'POST';
-    util.onSubmit(url, null, method, function (res) {
+    util.onSubmit(url, null, method, function(res) {
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
@@ -63,11 +61,11 @@ Page({
       }
     })
   },
-  initDepartment: function () {
+  initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
     let method = 'POST';
-    util.onSubmit(url, null, method, function (res) {
+    util.onSubmit(url, null, method, function(res) {
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
@@ -81,7 +79,7 @@ Page({
       }
     })
   },
-  showResponsibleType: function () {
+  showResponsibleType: function() {
     let that = this
     let showResponsibleType = that.data.showResponsibleType == false ? true : false
     this.setData({
@@ -92,7 +90,7 @@ Page({
       showResponsible: false
     })
   },
-  showResponsible: function () {
+  showResponsible: function() {
     let that = this
     let showResponsible = that.data.showResponsible == false ? true : false
     this.setData({
@@ -103,7 +101,7 @@ Page({
       showResponsible: showResponsible
     })
   },
-  showReviewType: function () {
+  showReviewType: function() {
     let that = this
     let showReviewType = that.data.showReviewType == false ? true : false
     this.setData({
@@ -114,7 +112,7 @@ Page({
       showResponsible: false
     })
   },
-  showReview: function () {
+  showReview: function() {
     let that = this
     let showReview = that.data.showReview == false ? true : false
     this.setData({
@@ -125,7 +123,7 @@ Page({
       showResponsible: false
     })
   },
-  showDepartment: function () {
+  showDepartment: function() {
     let that = this
     let showDepetment = that.data.showDepetment == false ? true : false
     this.setData({
@@ -136,21 +134,21 @@ Page({
       showResponsible: false
     })
   },
-  checkResponsibleTypeChange: function (e) {  // 责任人类别选择
+  checkResponsibleTypeChange: function(e) { // 责任人类别选择
     var checkboxItems = this.checkUserTypeChange(e);
     this.setData({
       responsibleTypeList: checkboxItems
     });
     var checkList = this.getCheckedUserType(checkboxItems);
     this.setData({
-      checkedResponsibleType: checkList   //已选择的人员类别
+      checkedResponsibleType: checkList //已选择的人员类别
     });
     var checkGroup = this.initCheckUserTypeUsers();
     this.setData({
-      responsibleList: checkGroup   //可选的人员组
+      responsibleList: checkGroup //可选的人员组
     })
   },
-  checkReviewTypeChange: function (e) { //审核人类别选择
+  checkReviewTypeChange: function(e) { //审核人类别选择
     var checkboxItems = this.checkUserTypeChange(e);
     this.setData({
       reviewTypeList: checkboxItems
@@ -164,7 +162,7 @@ Page({
       reviewList: checkGroup
     })
   },
-  checkReviewChange: function (e) {//审核人选择
+  checkReviewChange: function(e) { //审核人选择
     var checkboxItems = this.checkUserChange(e, this.data.reviewList);
     this.setData({
       reviewList: checkboxItems
@@ -174,10 +172,12 @@ Page({
     var checkUserNames = '';
     var checkUserNum = '';
     var checkUserArr = checkUsers.split(",");
-    checkUserArr.forEach(function (item) {
+    if (checkUserArr != '') {
+    checkUserArr.forEach(function(item) {
       checkUserNames = checkUserNames + "," + item.split(":")[1];
       checkUserNum = checkUserNum + "" + item.split(":")[0]
     });
+    }
     if (checkUserNames != '') {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
       checkUserNum = checkUserNum.substr(1, checkUserNum.length);
@@ -187,7 +187,7 @@ Page({
       checkedReview: checkUserNum
     })
   },
-  checkResponsibleChange: function (e) {//责任人选择
+  checkResponsibleChange: function(e) { //责任人选择
     var checkboxItems = this.checkUserChange(e, this.data.responsibleList);
     this.setData({
       responsibleList: checkboxItems
@@ -195,10 +195,12 @@ Page({
     var checkUsers = this.getCheckedUser(checkboxItems);
     var checkUserNames = '';
     var checkUserArr = checkUsers.split(",");
-    checkUserArr.forEach(function (item) {
+    if (checkUserArr != '') {
+    checkUserArr.forEach(function(item) {
       var name = item.split(":")[1];
       checkUserNames = checkUserNames + "," + name;
     });
+    }
     if (checkUserNames != '' && checkUserNames.substr(0, 1) == ",") {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
     }
@@ -207,7 +209,7 @@ Page({
       checkedResponsible: checkUsers
     })
   },
-  checkUserChange: function (e, reviewList) {
+  checkUserChange: function(e, reviewList) {
     console.log('checkReviewChange发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = reviewList,
       values = e.detail.value;
@@ -222,7 +224,7 @@ Page({
     }
     return checkboxItems;
   },
-  checkUserTypeChange: function (e) {
+  checkUserTypeChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = this.data.userTypeList,
       values = e.detail.value;
@@ -238,7 +240,7 @@ Page({
     return checkboxItems;
   },
 
-  checkboxChange: function (e) {
+  checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = this.data.departmentlList,
       values = e.detail.value;
@@ -259,10 +261,10 @@ Page({
       checkedDep: checkedDep
     })
   },
-  getCheckedDep: function () {
+  getCheckedDep: function() {
     var departmentlList = this.data.departmentlList;
     var checked = '';
-    departmentlList.forEach(function (item) {
+    departmentlList.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.departmentName;
       }
@@ -272,10 +274,10 @@ Page({
     }
     return checked;
   },
-  getCheckedUserType: function (list) {
+  getCheckedUserType: function(list) {
     // var list = this.data.userTypeList;
     var checked = '';
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.type;
       }
@@ -285,9 +287,9 @@ Page({
     }
     return checked;
   },
-  getCheckedUser: function (list) {
+  getCheckedUser: function(list) {
     var checked = '';
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.account + ":" + item.name;
       }
@@ -297,14 +299,14 @@ Page({
     }
     return checked;
   },
-  initCheckUserTypeUsers: function () {
+  initCheckUserTypeUsers: function() {
 
     var userlist = this.data.userlist;
     var list = this.data.userTypeList;
     var userGroup = [];
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
-        userlist.forEach(function (user) {
+        userlist.forEach(function(user) {
           if (user.type == item.type) {
             userGroup.push(user);
           }
@@ -313,12 +315,12 @@ Page({
     });
     return userGroup;
   },
-  bindWorkName: function (e) {
+  bindWorkName: function(e) {
     this.setData({
       workName: e.detail.value
     })
   },
-  validateForm: function () {
+  validateForm: function() {
     let wxValidate = app.wxValidate({
       workName: {
         required: true
@@ -333,23 +335,22 @@ Page({
         required: true
       }
     }, {
-        workName: {
-          required: '请填写任务名称'
-        },
-        reviewer: {
-          required: '请选择审核人'
-        },
-        responsible: {
-          required: '请选择负责人'
-        },
-        department: {
-          required: '请选择所属部门'
-        }
-      })
+      workName: {
+        required: '请填写任务名称'
+      },
+      reviewer: {
+        required: '请选择审核人'
+      },
+      responsible: {
+        required: '请选择负责人'
+      },
+      department: {
+        required: '请选择所属部门'
+      }
+    })
     return wxValidate;
   },
-  formSubmit: function (e) {
-
+  formSubmit: function(e) {
     let that = this;
     let validate = this.validateForm();
     if (!validate.checkForm(e)) {
@@ -360,49 +361,21 @@ Page({
       return false;
     };
 
-    // if (typeof that.data.workType === 'undefined') {
-    //   that.setData({
-    //     popErrorMsg: '请选择工作类型'
-    //   })
-    //   return false;
-    // }
-
-
-
-    // let that = this;
     let url = '/work/resolve';
     let method = 'post';
-
     let work = that.data.work;
-   
-    // let beginDate = that.data.beginDate;
+    work.parentWorkName = work.workName;
+    work.parentId = work.workId;
+    work.workId=null;
+    work.workName = that.data.workName;
+    work.departments = work.pass == 'Y' ? work.departments : that.data.checkedDep
+    work.responsibleList = that.data.checkedResponsible;
+    work.reviewer = that.data.checkedReviewName;
+    work.reviewerNum = that.data.checkedReview;
+    work.creator = that.data.loginUser.name;
+    work.creatorNum = that.data.loginUser.account;
     
-    let data = {
-      parentWorkName: work.workName,
-      parentId: work.workId,
-      // workId: that.data.workId,
-      workName: that.data.workName,
-      description: work.pass == 'Y' ?work.description:that.data.description,
-      createReason: work.pass == 'Y' ?work.createReson:that.data.createReson,
-      planBeginDate: work.planBeginDate,
-      planEndDate: work.planEnddate,
-
-      departments: work.pass == 'Y' ? work.departments:that.data.checkedDep,
-
-      level: work.level,
-      typeId: work.typeId ,
-      typeName: work.typeName,
-      pass: work.pass,
-  
-      responsibleList: that.data.checkedResponsible,
-
-      reviewer: that.data.checkedReviewName,
-      reviewerNum: that.data.checkedReview,
-      creator: that.data.loginUser.name,
-      creatorNum: that.data.loginUser.account
-    };
-
-    util.onSubmitJson(url, data, method, function (res) {
+    util.onSubmitJson(url, work, method, function(res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -410,15 +383,15 @@ Page({
       }
     });
   },
-  back: function () {
+  back: function() {
     util.goBack();
   },
-  openSuccess: function () {
+  openSuccess: function() {
     wx.redirectTo({
       url: '../../msg/msg_success'
     })
   },
-  openFail: function () {
+  openFail: function() {
     wx.navigateTo({
       url: '../../msg/msg_fail'
     })

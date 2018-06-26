@@ -1,3 +1,4 @@
+var app = getApp();
 var util = require('../../../utils/util.js');
 Page({
 
@@ -7,7 +8,8 @@ Page({
   data: {
     showDepetment: false,
     showReviewType: false,
-    showReview: false
+    showReview: false,
+    popErrorMsg: ''
   },
 
   /**
@@ -28,6 +30,11 @@ Page({
       loginUser: loginUser,
       checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
       checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
+    })
+  },
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
     })
   },
   initUser: function() {
@@ -163,10 +170,12 @@ Page({
     var checkUserNames = '';
     var checkUserNum = '';
     var checkUserArr = checkUsers.split(",");
+    if (checkUserArr != '') {
     checkUserArr.forEach(function(item) {
       checkUserNames = checkUserNames + "," + item.split(":")[1];
       checkUserNum = checkUserNum + "" + item.split(":")[0]
     });
+    }
     if (checkUserNames != '') {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
       checkUserNum = checkUserNum.substr(1, checkUserNum.length);
@@ -184,10 +193,13 @@ Page({
     var checkUsers = this.getCheckedUser(checkboxItems);
     var checkUserNames = '';
     var checkUserArr = checkUsers.split(",");
-    checkUserArr.forEach(function(item) {
-      var name = item.split(":")[1];
-      checkUserNames = checkUserNames + "," + name;
-    });
+    if (checkUserArr!=''){
+      checkUserArr.forEach(function (item) {
+        var name = item.split(":")[1];
+        checkUserNames = checkUserNames + "," + name;
+      });
+    }
+    
     if (checkUserNames != '' && checkUserNames.substr(0, 1) == ",") {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
     }
@@ -312,52 +324,52 @@ Page({
       remark: e.detail.value
     })
   },
+  validateForm: function () {
+    let wxValidate = app.wxValidate({
+      department: {
+        required: false
+      },
+      reviewer: {
+        required: false
+      },
+      responsible: {
+        required: true
+      }
+    }, {
+        department: {
+          required: '请选择所属部门'
+        },
+        reviewer: {
+          required: '请选择审核人'
+        },
+        responsible: {
+          required: '请选择负责人'
+        }
+      })
+    return wxValidate;
+  },
   formSubmit: function(e) {
     let that = this;
+    let validate = this.validateForm();
+    if (!validate.checkForm(e)) {
+      const error = validate.errorList[0];
+      that.setData({
+        popErrorMsg: error.msg
+      })
+      return false;
+    };
     let url = '/work/submitDelegate';
     let method = 'post';
 
-    // let work = that.data.work
-    // work.responsibleList = that.data.checkedResponsible;
-    // work.creator = that.data.loginUser.name;
-    // work.creatorNum = that.data.loginUser.account;
-    // work.parentWorkName = that.data.workName;
-    // work.parentId = that.data.workId;
-    // work.workName = that.data.workName;
-    // work.pass = that.data.pass;
-    // work.reviewerNum = that.data.checkedReview;
-    // work.review = that.data.checkedReviewName;
-    // work.planBeginDate = that.data.planBeginDate.replace(/-/g, "/");
-    // work.planEndDate = that.data.planEndDate.replace(/-/g, "/");
-    //   work.reviewer=that.data.checkedReviewName;
-    //   reviewerNum: that.data.checkedReview;
-    //   creator: that.data.loginUser.name
-    // let beginDate = that.data.beginDate;
-    let work = {
-      parentWorkName: that.data.workName,
-      parentId: that.data.workId,
-      // workId: that.data.workId,
-      workName: that.data.workName,
-      description: that.data.description,
-      createReason: that.data.createReson,
-      planBeginDate: that.data.planBeginDate,
-      planEndDate: that.data.planEndDate,
-
-      departments: that.data.departments,
-      remark:that.data.remark,
-      level: that.data.level,
-      typeId: that.data.typeId,
-      typeName: that.data.typeName,
-      pass: that.data.pass,
-      // responsible: '周智远',
-      // responsibleNum: '196764',
-      responsibleList: that.data.checkedResponsible,
-
-      reviewer: that.data.checkedReviewName,
-      reviewerNum: that.data.checkedReview,
-      creator: that.data.loginUser.name,
-      creatorNum: that.data.loginUser.account
-    };
+    let work = that.data.work
+    work.workId = null;
+    work.responsibleList = that.data.checkedResponsible;
+    work.creator = that.data.loginUser.name;
+    work.creatorNum = that.data.loginUser.account;
+    work.parentWorkName = that.data.workName;
+    work.parentId = that.data.workId;
+    work.creator = that.data.loginUser.name;
+    work.creatorNum = that.data.loginUser.account;
 
     util.onSubmitJson(url, work, method, function(res) {
       if (res.data.retCode != 200) {
