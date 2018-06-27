@@ -68,7 +68,7 @@
             <block wx:else>{{work.planEndDate}}</block>
           </view>
           <!--如果已开始，则显示 实际开始时间-->
-          <block wx:if="{{work.status!='001'}}">
+          <block wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
             <view wx:if="{{work.status!='001'}}" class="weui-form-preview__label">实际开始时间</view>
             <view class="weui-form-preview__value">
               <block wx:if="{{work.beginDate ==null}}">无</block>
@@ -76,7 +76,7 @@
             </view>
           </block>
           <!--如果已完成，则显示实际完成时间-->
-          <block wx:if="{{work.status=='003'}}">
+          <block wx:if="{{work.status=='004'||work.status=='005'||work.status=='006'||work.status=='007'}}">
             <view class="weui-form-preview__label">实际完成时间</view>
             <view class="weui-form-preview__value">
               <block wx:if="{{work.endDate ==null}}">无</block>
@@ -87,11 +87,13 @@
       </view>
     </view>
 
-    <block wx:if="{{loginUser.type!='领导'}}">
+  </view>
+
+<block wx:if="{{loginUser.type!='领导'}}">
       <!--如果已开始，并且是任务审核人，则显示执行日志-->
       <view class="weui-cells__title"></view>
 
-      <view class="weui-panel" wx:if="work.status!='001'">
+      <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
         <view class="weui-panel__hd">任务执行日志</view>
         <view class="weui-panel__bd">
           <view class="weui-media-box weui-media-box_text">
@@ -117,11 +119,6 @@
         </view>
       </view>
     </block>
-
-
-  </view>
-
-
 
   <view class="weui-panel weui-form-preview__ft">
     <block wx:if="{{action =='todo'}}">
