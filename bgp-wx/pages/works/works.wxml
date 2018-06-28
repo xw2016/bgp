@@ -18,7 +18,7 @@
 <view class="weui-cells weui-cells_after-title" bindtap="gotoWorkList">
   <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-      <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+      <image src="../../resources/images/my1.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
     </view>
     <view class="weui-cell__bd">
       <view>我的任务</view>
@@ -34,7 +34,7 @@
 <view class="weui-cells weui-cells_after-title" bindtap="addWork">
   <view class="weui-cell weui-cell_access">
         <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-      <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+      <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
     </view>
     <view class="weui-cell__bd">
       <view>新增任务</view>

@@ -21,7 +21,7 @@ Page({
   },
   onShow: function () {
     wx.setNavigationBarTitle({
-      title: '首页'
+      title: '任务列表'
     })
     let that = this;
     this.searchWorksList(that.data.action);

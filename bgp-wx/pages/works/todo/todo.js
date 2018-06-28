@@ -77,7 +77,7 @@ Page({
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
-    work.remark = that.data.remark;
+    work.remark = that.data.remark == '' ? work.remark : that.data.remark ;
     work.beginDate = that.data.beginDate;
     work.endDate = that.data.endDate;
     if(work.remark==''){
