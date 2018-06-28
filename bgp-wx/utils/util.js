@@ -252,16 +252,15 @@ function initUser() {
   let method = 'POST';
   let userList = wx.getStorageSync("userlist");
   if (userList == '') {
-    util.onSubmit(url, null, method, function (res) {
+    this.onSubmit(url, null, method, function (res) {
       if (res.data.data == false) {
-        util.openAlert(res.data.msg);
+        this.openAlert(res.data.msg);
       } else {
         var userlist = res.data.data;
         wx.setStorage({
           key: "userlist",
           data: res.data.data
         });
-
       }
     })
   }
@@ -284,7 +283,12 @@ function searchUser(key){
     })
     
   }
-  return targets;
+  let userGroup = [];
+  if(targets!=''){
+    userGroup=this.removeRepeat(targets,"account");
+  }
+ 
+  return userGroup;
 }
 module.exports = {
   formatTime: formatTime,

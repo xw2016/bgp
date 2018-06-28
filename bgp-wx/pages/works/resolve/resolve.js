@@ -318,13 +318,13 @@ Page({
       workName: {
         required: true
       },
+      department: {
+        required: true
+      },
       reviewer: {
         required: true
       },
       responsible: {
-        required: true
-      },
-      department: {
         required: true
       }
     }, {

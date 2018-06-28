@@ -48,7 +48,7 @@
         </view>
       </block>
       <!--负责人类型-->
-      <view class="weui-cells__title">请选择负责人</view>
+      <view class="weui-cells__title">请输入负责人姓名或账号进行查询，多个负责人以"，"隔开</view>
       <view class="weui-cells weui-cells_after-title">
         <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
           <view class="weui-cell__hd">
@@ -98,7 +98,7 @@
 
 
       <!--审核人-->
-      <view class="weui-cells__title">请选择发布及审核人</view>
+      <view class="weui-cells__title">请选择审核人</view>
       <view class="weui-cells weui-cells_after-title">
         <!-- <block wx:if="{{pass=='N'}}">
            <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
