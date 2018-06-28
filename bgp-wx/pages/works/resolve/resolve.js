@@ -9,7 +9,7 @@ Page({
     showDepetment: false,
     showReviewType: false,
     showReview: false,
-    popErrorMsg: ' '
+    popErrorMsg: ''
   },
 
   /**
