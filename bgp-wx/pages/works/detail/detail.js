@@ -56,9 +56,9 @@ Page({
     var queryBean = JSON.stringify(that.data.work);
     let url = '../resolve/resolve?queryBean='+queryBean;
     //判断是否领导
-    if (that.data.loginUser.type=='领导'){
-      url = '../resolveleader/resolveleader?queryBean=' + queryBean;
-    }
+    // if (that.data.loginUser.type=='领导'){
+    //   url = '../resolveleader/resolveleader?queryBean=' + queryBean;
+    // }
     wx.navigateTo({
       // url: '../works/todo/todo?queryBean=' + queryBean,
       url: url 

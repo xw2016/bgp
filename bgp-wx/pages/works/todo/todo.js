@@ -41,7 +41,12 @@ Page({
   //日期选择
   bindDateChange: function (e) {
     this.setData({
-      bindDate: e.detail.value
+      beginDate: e.detail.value
+    })
+  },
+  bindEndDateChange: function (e) {
+    this.setData({
+      endDate: e.detail.value
     })
   },
   bindInputRemarkChange: function (e) {
@@ -56,56 +61,54 @@ Page({
       isShowDetail: showDetaliTmp
     })
   },
-  validateForm: function () {
-    let wxValidate = app.wxValidate({
-      beginDate: { required: true },
-      reamrk: { required: false }
-    },
-      {
-        beginDate: { required: '请选择开始日期' },
-        reamrk: { required: '请填写任务执行情况' }
-      }
-    )
-    return wxValidate;
-  },
+  // validateForm: function () {
+  //   let wxValidate = app.wxValidate({
+  //     beginDate: { required: true },
+  //     reamrk: { required: false }
+  //   },
+  //     {
+  //       beginDate: { required: '请选择开始日期' },
+  //       reamrk: { required: '请填写任务执行情况' }
+  //     }
+  //   )
+  //   return wxValidate;
+  // },
   formSubmit: function (e) {
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
-    let remark = that.data.remark;
-    // let beginDate = that.data.beginDate;
-    let data = {
-      workId: work.workId,
-      // beginDate: (beginDate == null || beginDate == '') ? work.beginDate : beginDate,
-      remark: (remark == null || remark == '') ? work.remark : remark
-    };
-    let method = 'post';
-    util.onSubmit(url, data, method, function (res) {
-
-      if (res.data.data == false) {
-        util.openAlert(res.data.msg);
-      } else {
-        that.openSuccess();
-      }
-    });
+    work.remark = that.data.remark;
+    work.beginDate = that.data.beginDate;
+    work.endDate = that.data.endDate;
+    if(work.remark==''){
+      this.setData({
+        popErrorMsg:"请填写任务执行情况"
+      });
+      return false;
+    }
+    this.submit(url, work)
   },
   formSave: function (e) {
     let that = this;
     let url = '/work/start';
     let work = that.data.work;
-    let remark = that.data.remark;
-    let beginDate = that.data.beginDate;
-    let data = {
-      workId: work.workId,
-      // beginDate: (beginDate == null || beginDate == '') ? work.beginDate : beginDate,
-      remark: (remark == null || remark == '') ? work.remark : remark
-    };
-    let method = 'post';
-    util.onSubmit(url, data, method, function (res) {
-
-      that.openSuccess();
-    });
+    work.remark = that.data.remark;
+    work.beginDate = that.data.beginDate;
+    work.endDate = that.data.endDate;
+    this.submit(url,work)
   },
+submit:function(urls,data){
+  let that = this;
+  let url = urls;
+  let method = 'post';
+  util.onSubmitJson(url, data, method, function (res) {
+    if (res.data.retCode != 200) {
+      util.openAlert(res.data.msg);
+    } else {
+      that.openSuccess();
+    }
+  });
+},
   chooseImage: function (e) {
     var that = this;
     wx.chooseImage({

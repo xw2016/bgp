@@ -1,8 +1,7 @@
-<view class="weui-cells__title"></view>
- <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view> 
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
-    <form bindreset="formReset" bindsubmit='formSubmit'> 
-    <block bindtap='hideErrMsg'> 
+  <form bindreset="formReset" bindsubmit='formSubmit'>
+    <view bindtap='hideErrMsg'>
       <!--任务名称-->
       <view class="weui-cells__title">请填写交办的任务名称</view>
       <view class="weui-cells weui-cells_after-title">
@@ -14,9 +13,9 @@
             <block wx:if="{{pass=='N'}}">
               <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
             </block>
-             <block wx:else>
+            <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
-            </block> 
+            </block>
           </view>
         </view>
       </view>
@@ -51,7 +50,6 @@
       <!--负责人类型-->
       <view class="weui-cells__title">请选择负责人</view>
       <view class="weui-cells weui-cells_after-title">
-
         <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
           <view class="weui-cell__hd">
             <view class="weui-label">负责人类型</view>
@@ -148,13 +146,11 @@
           </label>
         </checkbox-group>
       </block>
-
-
-     </block> 
-
+    </view>
     <view class="weui-panel weui-form-preview__ft">
-      <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">返回</button>
+      <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
       <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
     </view>
-    </form>  
+
+  </form>
 </view>

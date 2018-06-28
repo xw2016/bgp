@@ -1,8 +1,6 @@
-<!--pages/works/todo/todo.wxml-->
-<!-- <view class="page"> -->
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
-  <form bindsubmit="formSubmit">
+  <form  bindreset="formReset" >
   <block  bindtap='hideErrMsg'>
     <!-- <view class="weui-cells weui-cells_after-title"> -->
     <!--任务名称-->
@@ -32,7 +30,7 @@
     <!-- 日期 -->
     <view class="weui-cells__title"></view>
     <view class="weui-panel">
-    <view class="weui-panel__hd">开始执行日期</view>
+    <view class="weui-panel__hd">执行日期</view>
     <view class="weui-cell weui-cell_input">
       <view class="weui-cell__hd">
         <view class="weui-label">开始日期</view>
@@ -40,6 +38,16 @@
       <view class="weui-cell__bd">
         <picker mode="date" name="beginDate" value="{{work.beginDate}}" start="2018-01-01" end="2099-12-31" bindchange="bindDateChange">
           <view class="weui-input">{{beginDate}}</view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_input">
+      <view class="weui-cell__hd">
+        <view class="weui-label">结束日期</view>
+      </view>
+      <view class="weui-cell__bd">
+        <picker mode="date" name="endDate" value="{{work.endDate}}" start="2018-01-01" end="2099-12-31" bindchange="bindDateChange">
+          <view class="weui-input">{{endDate}}</view>
         </picker>
       </view>
     </view>
@@ -76,8 +84,9 @@
     </block>
     <!--图片上传结束-->
     <view class="weui-btn-area">
-      <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
-      <button class="weui-btn" type="default" bindtap="formSave">保存</button>
+       <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
+       <button class="weui-btn" type="default" bindtap="formSave">保存</button> 
+
     </view>
   </form>
 </view>
