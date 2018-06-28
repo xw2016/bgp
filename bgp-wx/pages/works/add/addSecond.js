@@ -21,7 +21,7 @@ Page({
     })
     let queryBean = JSON.parse(options.queryBean);
     this.initDepartment();
-    this.initUser();
+    util.initUser();
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
     this.setData({
@@ -37,28 +37,6 @@ Page({
     })
   },
   
-  initUser: function() {
-    let that = this;
-    let url = '/work/queryUserList';
-    let method = 'POST';
-    util.onSubmit(url, null, method, function(res) {
-      if (res.data.data == false) {
-        util.openAlert(res.data.msg);
-      } else {
-        var userlist = res.data.data;
-        // var userTypeArr = userlList.map(item => {
-        //   return item.type;
-        // })
-        var userTypeList = util.removeRepeat(userlist, "type");
-        that.setData({
-          userTypeList: userTypeList,
-          reviewTypeList: userTypeList,
-          responsibleTypeList:userTypeList,
-          userlist: userlist
-        })
-      }
-    })
-  },
   initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
@@ -144,6 +122,20 @@ Page({
     var checkGroup = this.initCheckUserTypeUsers();
     this.setData({
       responsibleList: checkGroup   //可选的人员组
+    })
+  },
+  bindSearchReviewUser:function(e){
+    let key = e.detail.value;
+    let userList = util.searchUser(key);
+    this.setData({
+      reviewList: userList   //可选的人员组
+    })
+  },
+  bindSearchResponsibleUser: function (e) {
+    let key = e.detail.value;
+    let userList = util.searchUser(key);
+    this.setData({
+      responsibleList: userList   //可选的人员组
     })
   },
   checkReviewTypeChange:function(e){ //审核人类别选择

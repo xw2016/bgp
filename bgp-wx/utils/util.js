@@ -245,6 +245,47 @@ function onLogin(){
 //   };
 //  return true;
 // }
+//初始化用户列表
+function initUser() {
+  let that = this;
+  let url = '/work/queryUserList';
+  let method = 'POST';
+  let userList = wx.getStorageSync("userlist");
+  if (userList == '') {
+    util.onSubmit(url, null, method, function (res) {
+      if (res.data.data == false) {
+        util.openAlert(res.data.msg);
+      } else {
+        var userlist = res.data.data;
+        wx.setStorage({
+          key: "userlist",
+          data: res.data.data
+        });
+
+      }
+    })
+  }
+}
+//用户搜索
+function searchUser(key){
+  let targets = [];
+  let userList = wx.getStorageSync("userlist");
+  if (userList != '' && key!=null){
+    key = key.replace(/，/g, ",");
+    let keyArr =key.split(",");
+    keyArr.forEach(function(k){
+      userList.forEach(function (user) {
+        if (user.name.search(k) != -1) {
+          targets.push(user);
+        } else if (user.account.search(k) != -1) {
+          targets.push(user);
+        }
+      })
+    })
+    
+  }
+  return targets;
+}
 module.exports = {
   formatTime: formatTime,
   onSubmit: onSubmit,
@@ -253,6 +294,8 @@ module.exports = {
   openAlert: openAlert,
   onLogin: onLogin,
   goBack: goBack,
-  removeRepeat: removeRepeat
+  removeRepeat: removeRepeat,
+  initUser: initUser,
+  searchUser: searchUser
   // validateForm
 }

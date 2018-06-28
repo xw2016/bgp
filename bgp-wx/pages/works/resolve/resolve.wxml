@@ -50,7 +50,7 @@
       <!--负责人类型-->
       <view class="weui-cells__title">请选择负责人</view>
       <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
+        <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
           <view class="weui-cell__hd">
             <view class="weui-label">负责人类型</view>
           </view>
@@ -70,7 +70,7 @@
               <view class="weui-cell__bd">{{item.type}}</view>
             </label>
           </checkbox-group>
-        </block>
+        </block> -->
 
         <!--负责人-->
         <view class="weui-cell weui-cell_input" bindtap='showResponsible'>
@@ -78,7 +78,7 @@
             <view class="weui-label">负责人</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" name="responsible" value='{{checkedResponsibleName}}' placeholder="请选择负责人" />
+            <input class="weui-input" name="responsible" value='{{checkedResponsibleName}}' placeholder="请选择负责人" bindinput='bindSearchResponsibleUser'/>
           </view>
         </view>
       </view>
@@ -100,8 +100,8 @@
       <!--审核人-->
       <view class="weui-cells__title">请选择发布及审核人</view>
       <view class="weui-cells weui-cells_after-title">
-        <block wx:if="{{pass=='N'}}">
-          <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
+        <!-- <block wx:if="{{pass=='N'}}">
+           <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
             <view class="weui-cell__hd">
               <view class="weui-label">审核人类型</view>
             </view>
@@ -122,14 +122,14 @@
               </label>
             </checkbox-group>
           </block>
-        </block>
+        </block>  -->
         <!--审核人-->
         <view class="weui-cell weui-cell_input" bindtap='showReview'>
           <view class="weui-cell__hd">
             <view class="weui-label">审核人</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" name="reviewer" value='{{checkedReviewName}}' placeholder="请选择审核人" />
+            <input class="weui-input" name="reviewer" value='{{checkedReviewName}}' placeholder="请选择审核人" bindinput='bindSearchReviewUser'/>
           </view>
         </view>
       </view>
