@@ -80,7 +80,8 @@ Page({
     work.remark = that.data.remark == '' ? work.remark : that.data.remark ;
     work.beginDate = that.data.beginDate;
     work.endDate = that.data.endDate;
-    if(work.remark==''){
+    debugger
+    if(work.remark==''||work.remark==null){
       this.setData({
         popErrorMsg:"请填写任务执行情况"
       });
