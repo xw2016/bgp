@@ -1,4 +1,5 @@
 // pages/works/todo/todo.js
+const app = getApp();
 var util = require('../../../utils/util.js');
 var com = require('../../../lib/js/common.js');
 Page({
@@ -26,17 +27,42 @@ Page({
     let that = this;
     let queryBean = JSON.parse(options.queryBean);
     let beginDate = queryBean.beginDate;
-    console.log("bindDate:" + queryBean.beginDate);
-
+    console.log("queryBean:" + options.queryBean);
     that.setData({
       work: queryBean,
       beginDate: (beginDate == null || beginDate=='') ? util.formatTime(new Date()) : beginDate
     })
+    this.initFile(queryBean.workId);
   },
   hideErrMsg: function () {
     this.setData({
       popErrorMsg: ''
     })
+  },
+  initFile: function (worksId) {
+    let that = this;
+    let url = '/work/queryFileUploadById';
+    let method = 'POST';
+    // let worksId = that.work.workId;
+    let data={
+      worksId:worksId
+    }
+    util.onSubmit(url, data, method, function (res) {
+      debugger
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        let files = [];
+        if (res.data.data!=null){
+          files = res.data.data.map(item => { //获取工作类型总类数组
+            return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+          });
+          that.setData({
+            files: files
+          });
+        }
+      }
+    });
   },
   //日期选择
   bindDateChange: function (e) {

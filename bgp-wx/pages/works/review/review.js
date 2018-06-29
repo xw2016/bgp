@@ -27,6 +27,7 @@ Page({
       loginUser: loginUser
     })
     this.initKpi(queryBean.workId);
+    this.initFile(queryBean.workId);
   },
   initKpi: function (worksId){
     let that = this;
@@ -48,6 +49,20 @@ Page({
         })
       }
     })
+  },
+  initFile: function (worksId){
+    let that = this;
+    let url = '/work/queryFileUploadById';
+    let method = 'post';
+    // let worksId = that.work.workId;
+    util.onSubmit(url, worksId, method, function (res) {
+      debugger
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        imgList:res.data
+      }
+    });
   },
   // 绑定事件，因为不能用this.setData直接设置每个对象的索引值index。
   // 所以用自定义属性current来标记每个数组对象的下标
