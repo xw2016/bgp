@@ -96,6 +96,29 @@ function onSubmitJson(url, data, method, callback) {
     }
   })
 }
+//按工作id查询
+function initFile (worksId) {
+  let that = this;
+  let url = '/work/queryFileUploadById';
+  let method = 'POST';
+  let data = {
+    worksId: worksId
+  }
+  let files = [];
+  this.onSubmit(url, data, method, function (res) {
+    if (res.data.retCode != 200) {
+      this.openAlert(res.data.msg);
+    } else {
+      if (res.data.data != null) {
+        files = res.data.data.map(item => { 
+          return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+        });
+      }
+      debugger
+    }
+  });
+  return files;
+}
 //图片上传
 function onUploadFile(url, tempFilePaths, name, formData) {
   var host = app.globalData.serviceUrl;
@@ -300,6 +323,7 @@ module.exports = {
   goBack: goBack,
   removeRepeat: removeRepeat,
   initUser: initUser,
-  searchUser: searchUser
+  searchUser: searchUser,
+  initFile: initFile
   // validateForm
 }

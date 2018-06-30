@@ -11,16 +11,16 @@ Page({
     popErrorMsg: '',
     beginDate: '',
     remark: '',
-    isShowDetail: false,//是否显示详情
-    files: [],//文件上传
-    work: []  //任务
+    isShowDetail: false, //是否显示详情
+    files: [], //文件上传
+    work: [] //任务
 
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.setNavigationBarTitle({
       title: '任务执行'
     })
@@ -30,11 +30,16 @@ Page({
     console.log("queryBean:" + options.queryBean);
     that.setData({
       work: queryBean,
-      beginDate: (beginDate == null || beginDate=='') ? util.formatTime(new Date()) : beginDate
+      beginDate: (beginDate == null || beginDate == '') ? util.formatTime(new Date()) : beginDate,
+      endDate: beginDate == new Date() ? null : util.formatTime(new Date())
     })
     this.initFile(queryBean.workId);
+    // let files=  util.initFile(queryBean.workId);
+    // that.setData({
+    //   files: files
+    // });
   },
-  hideErrMsg: function () {
+  hideErrMsg: function() {
     this.setData({
       popErrorMsg: ''
     })
@@ -48,7 +53,6 @@ Page({
       worksId:worksId
     }
     util.onSubmit(url, data, method, function (res) {
-      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -59,28 +63,29 @@ Page({
           });
           that.setData({
             files: files
+            // files: ['http://www.f81.net/dv6/UploadFile/2009-10/200910323361764140.jpg']
           });
         }
       }
     });
   },
   //日期选择
-  bindDateChange: function (e) {
+  bindDateChange: function(e) {
     this.setData({
       beginDate: e.detail.value
     })
   },
-  bindEndDateChange: function (e) {
+  bindEndDateChange: function(e) {
     this.setData({
       endDate: e.detail.value
     })
   },
-  bindInputRemarkChange: function (e) {
+  bindInputRemarkChange: function(e) {
     this.setData({
       remark: e.detail.value
     })
   },
-  showdetail: function (e) {
+  showdetail: function(e) {
     let that = this
     let showDetaliTmp = that.data.isShowDetail == false ? true : false
     this.setData({
@@ -99,49 +104,49 @@ Page({
   //   )
   //   return wxValidate;
   // },
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
-    work.remark = that.data.remark == '' ? work.remark : that.data.remark ;
+    work.remark = that.data.remark == '' ? work.remark : that.data.remark;
     work.beginDate = that.data.beginDate;
     work.endDate = that.data.endDate;
-    debugger
-    if(work.remark==''||work.remark==null){
+    
+    if (work.remark == '' || work.remark == null) {
       this.setData({
-        popErrorMsg:"请填写任务执行情况"
+        popErrorMsg: "请填写任务执行情况"
       });
       return false;
     }
     this.submit(url, work)
   },
-  formSave: function (e) {
+  formSave: function(e) {
     let that = this;
     let url = '/work/start';
     let work = that.data.work;
     work.remark = that.data.remark;
     work.beginDate = that.data.beginDate;
-    work.endDate = that.data.endDate;
-    this.submit(url,work)
+    work.endDate = null;
+    this.submit(url, work)
   },
-submit:function(urls,data){
-  let that = this;
-  let url = urls;
-  let method = 'post';
-  util.onSubmitJson(url, data, method, function (res) {
-    if (res.data.retCode != 200) {
-      util.openAlert(res.data.msg);
-    } else {
-      that.openSuccess();
-    }
-  });
-},
-  chooseImage: function (e) {
+  submit: function(urls, data) {
+    let that = this;
+    let url = urls;
+    let method = 'post';
+    util.onSubmitJson(url, data, method, function(res) {
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.openSuccess();
+      }
+    });
+  },
+  chooseImage: function(e) {
     var that = this;
     wx.chooseImage({
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function (res) {
+      success: function(res) {
         //上传文件
         var tempFilePaths = res.tempFilePaths;
 
@@ -162,18 +167,44 @@ submit:function(urls,data){
       }
     })
   },
-  previewImage: function (e) {
+  previewImage: function(e) {
+    // let urls = [];
+    // this.data.files.forEach(function(item){
+    //   if (this.isPicture(item)){
+    //     debugger
+    //     urls.push(item);
+    //   }
+    // });
+    debugger
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.files // 需要预览的图片http链接列表
     })
   },
-  openSuccess: function () {
+isPicture :function (str) {
+    //判断是否是图片 - strFilter必须是小写列举
+    let strFilter = ".jpeg|.gif|.jpg|.png|.bmp|.pic|"
+    if (str.indexOf(".") > -1) {
+      let p = str.lastIndexOf(".");
+      //alert(p);
+      //alert(this.length);
+      let strPostfix = str.substring(p, this.length) + '|';
+      strPostfix = strPostfix.toLowerCase();
+      //alert(strPostfix);
+      if (strFilter.indexOf(strPostfix) > -1) {
+        //alert("True");
+        return true;
+      }
+    }
+    //alert('False');
+    return false;
+  },
+  openSuccess: function() {
     wx.redirectTo({
       url: '../../msg/msg_success'
     })
   },
-  openFail: function () {
+  openFail: function() {
     wx.navigateTo({
       url: '../../msg/msg_fail'
     })

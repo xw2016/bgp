@@ -22,15 +22,32 @@
 
 
   <!--图片描述-->
-  <!-- <view class="weui-cells__title"></view>
-  <view class="weui-panel">
-    <view class="weui-panel__hd">附件图片</view>
-    <block wx:for="{{imgList}}" wx:key="this" wx:for-item="image">
-      <view class="weui-uploader__file" bindtap="previewImage" id="{{image}}">
-        <image class="weui-uploader__img" src="{{image}}" mode="aspectFill" data-list="{{imgList}}" data-src="{{image}}" bindtap="imgCheck" />
+  <view class="weui-cells__title">任务图片</view>
+  <view class="weui-cells">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <view class="weui-uploader">
+          <!-- <view class="weui-uploader__hd">
+            <view class="weui-uploader__title">任务文件</view>
+            <view class="weui-uploader__info">{{files.length}}/8</view>
+          </view> -->
+          <view class="weui-uploader__bd">
+            <view class="weui-uploader__files" id="uploaderFiles">
+              <block wx:for="{{files}}" wx:key="*this">
+                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                </view>
+                <!-- <progress percent="20" show-info /> -->
+              </block>
+            </view>
+            <!-- <view class="weui-uploader__input-box">
+              <view class="weui-uploader__input" bindtap="chooseImage"></view>
+            </view> -->
+          </view>
+        </view>
       </view>
-    </block>
-  </view> -->
+    </view>
+  </view>
 
   <view class="weui-cells__title">考核维度评分</view>
   <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" wx:key="id">
@@ -53,7 +70,7 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" auto-focus auto-height placeholder="请输入完成情况" style="height: 5.3em"  />
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" auto-focus auto-height placeholder="请输入完成情况" style="height: 5.3em" />
           <!-- <view class="weui-textarea-counter">0/300</view> -->
         </view>
       </view>

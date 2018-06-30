@@ -4,7 +4,7 @@
  <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view> 
 <view class="page__bd" >
   <form bindreset="formReset">
-    <block bindtap='hideErrMsg'>
+    <view bindtap='hideErrMsg'>
       <!-- <view class="weui-cells weui-cells_after-title"> -->
       <!--任务名称-->
       <!--任务名称,任务详情-->
@@ -49,7 +49,7 @@
             <view class="weui-label">结束日期</view>
           </view>
           <view class="weui-cell__bd">
-            <picker mode="date" name="endDate" value="{{work.endDate}}" start="2018-01-01" end="2099-12-31" bindchange="bindDateChange">
+            <picker mode="date" name="endDate" value="{{work.endDate}}" start="2018-01-01" end="2099-12-31" bindchange="bindEndDateChange">
               <view class="weui-input">{{endDate}}</view>
             </picker>
           </view>
@@ -84,7 +84,7 @@
           </view>
         </view>
       </view>
-    </block>
+    </view>
     <!--图片上传结束-->
     <view class="weui-btn-area">
       <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>

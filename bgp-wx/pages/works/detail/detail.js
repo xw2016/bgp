@@ -1,3 +1,4 @@
+const app = getApp();
 var util = require('../../../utils/util.js');
 Page({
 
@@ -9,7 +10,8 @@ Page({
     action: 'todo',
     isShowDetail: false,//是否显示详情
     isShowWorkLog:false,
-    userNo:''
+    userNo:'',
+    files: [] //文件上传
   },
   onLoad: function (options) {
     wx.setNavigationBarTitle({
@@ -26,6 +28,46 @@ Page({
       action: action,
       userNo:userNo,
       loginUser: loginUser
+    })
+    if(action =='done'){
+      this.initFile(queryBean.workId);
+    }
+  },
+  initFile: function (worksId) {
+    let that = this;
+    let url = '/work/queryFileUploadById';
+    let method = 'POST';
+    // let worksId = that.work.workId;
+    let data = {
+      worksId: worksId
+    }
+    util.onSubmit(url, data, method, function (res) {
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        let files = [];
+        if (res.data.data != null) {
+          files = res.data.data.map(item => { //获取工作类型总类数组
+            return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+          });
+          that.setData({
+            files: files
+          });
+        }
+      }
+    });
+  },
+  previewImage: function (e) {
+    // let urls = [];
+    // this.data.files.forEach(function(item){
+    //   if (this.isPicture(item)){
+    //     debugger
+    //     urls.push(item);
+    //   }
+    // });
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.files // 需要预览的图片http链接列表
     })
   },
   showdetail: function (e) {

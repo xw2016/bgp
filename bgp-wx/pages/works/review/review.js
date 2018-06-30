@@ -7,7 +7,8 @@ Page({
    */
   data: {
     imgList: [],
-    kpiList:[]
+    kpiList:[],
+    files: [] //文件上传
   },
 
   /**
@@ -50,19 +51,42 @@ Page({
       }
     })
   },
-  initFile: function (worksId){
+  initFile: function (worksId) {
     let that = this;
     let url = '/work/queryFileUploadById';
-    let method = 'post';
+    let method = 'POST';
     // let worksId = that.work.workId;
-    util.onSubmit(url, worksId, method, function (res) {
-      debugger
+    let data = {
+      worksId: worksId
+    }
+    util.onSubmit(url, data, method, function (res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-        imgList:res.data
+        let files = [];
+        if (res.data.data != null) {
+          files = res.data.data.map(item => { //获取工作类型总类数组
+            return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+          });
+          that.setData({
+            files: files
+          });
+        }
       }
     });
+  },
+  previewImage: function (e) {
+    // let urls = [];
+    // this.data.files.forEach(function(item){
+    //   if (this.isPicture(item)){
+    //     debugger
+    //     urls.push(item);
+    //   }
+    // });
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.files // 需要预览的图片http链接列表
+    })
   },
   // 绑定事件，因为不能用this.setData直接设置每个对象的索引值index。
   // 所以用自定义属性current来标记每个数组对象的下标
