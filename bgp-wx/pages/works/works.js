@@ -10,16 +10,16 @@ Page({
   },
 
   onLoad: function () {
+    wx.setNavigationBarTitle({
+      title: '任务中心'
+    })
+
     let loginUser = wx.getStorageSync("loginUser");
     if (loginUser!=null){
       this.setData({
         loginUser: loginUser
       })
     }
-    wx.setNavigationBarTitle({
-      title: '任务中心'
-    })
-
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -46,6 +46,7 @@ Page({
         }
       })
     }
+    this.searchWorksList("todo");
   },
   getUserInfo: function (e) {
     console.log(e)
@@ -54,6 +55,18 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  searchWorksList: function (opt) {
+    let that = this;
+    let url = (opt == 'todo') ? '/work/queryMyTodoWorks' : '/work/queryMyDoneWorks';
+    let data = { responsibleNum: wx.getStorageSync("userNo") };
+    let method = 'post';
+    util.onSubmit(url, data, method, function (res) {
+      that.setData({
+        worksList: res.data.data,
+        todoLength: res.data.data.length
+      });
+    });
   },
   gotoWorkList: function () {
     wx.navigateTo({

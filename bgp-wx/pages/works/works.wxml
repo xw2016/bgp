@@ -17,11 +17,12 @@
 <view class="weui-cells__title"></view>
 <view class="weui-cells weui-cells_after-title" bindtap="gotoWorkList">
   <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
       <image src="../../resources/images/my1.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
     </view>
     <view class="weui-cell__bd">
-      <view>我的任务</view>
+      <view style="display: inline-block; vertical-align: middle">我的任务</view>
+      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{todoLength}}">{{todoLength}}</view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
@@ -33,7 +34,7 @@
 <view class="weui-cells__title"></view>
 <view class="weui-cells weui-cells_after-title" bindtap="addWork">
   <view class="weui-cell weui-cell_access">
-        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
       <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
     </view>
     <view class="weui-cell__bd">
