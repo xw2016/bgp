@@ -1,104 +1,134 @@
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
-<view class="page__bd" >
-<form bindreset="formReset" bindsubmit='next'>
- <view class="weui-cells__title"></view>
-  <view class="weui-cells weui-cells_after-title" bindtap='hideErrMsg'>
-    <!--任务名称-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">任务名称</view>
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__bd">
+    <form bindreset="formReset" bindsubmit='next'>
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title" bindtap='hideErrMsg'>
+        <!--任务名称-->
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd ">
+            <view class="weui-label">任务名称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="workName" bindinput='bindWorkName' placeholder="请输入任务名称" />
+          </view>
+        </view>
       </view>
-      <view class="weui-cell__bd">
-        <input class="weui-input" name="workName" bindinput='bindWorkName' placeholder="请输入任务名称" />
-      </view>
-    </view>
-    <!--任务类型-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">任务类型</view>
-       
-      </view>
-      <view class="weui-cell__bd">
-       <picker  mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange"
-       value="{{typeIndex}}" range="{{workTypeArray}}">
-　　<view class="picker">
-      {{workTypeArray[1][typeIndex[1]]}}
-      <!-- <input name="workType" value='{{workType}}' hidden='true'}></input> -->
-    </view>
-</picker>
-      </view>
-    </view>
-     <view class="weui-cell weui-cell_input">
-      <view bindtap="bindguide" class="weui-agree__link">查看工作指引</view> 
-     </view>
-    <!--非常规任务类型-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">非常规任务类型</view>
-      </view>
-      <view class="weui-cell__bd">
-        <picker mode ="selector" bindchange="bindPickerChange" value="{{levelIndex}}" range="{{workLevelArr}}">
-    <view class="picker">
-        {{workLevelArr[levelIndex]}}
-    </view>
-  </picker>
+      <!--任务类型-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">任务类型</view>
 
-      </view>
-    </view>
-    <!--负责人-->
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{typeIndex}}" range="{{workTypeArray}}">
 
-    <!--发布及审核人-->
+              <view class="weui-select">
+                {{workTypeArray[1][typeIndex[1]]}}
+                <!-- <input name="workType" value='{{workType}}' hidden='true'}></input> -->
+              </view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <!-- <view bindtap="bindguide" class="weui-agree__link">查看工作指引</view> -->
+          <view class="weui-cell weui-cell_link">
+            <view bindtap="bindguide" class="weui-cell__bd">查看工作指引</view>
+          </view>
+        </view>
+      </view>
 
-    <!--所属部门-->
-   
-    <!--政策法律依据-->
+      <!--非常规任务类型-->
+      <!-- <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">非常规任务类型</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker mode="selector" bindchange="bindPickerChange" value="{{levelIndex}}" range="{{workLevelArr}}">
+            <view class="picker">
+              {{workLevelArr[levelIndex]}}
+            </view>
+          </picker>
+        </view>
+      </view> -->
+      <!--负责人-->
 
-    <!--任务描述-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">任务描述</view>
+      <!--发布及审核人-->
+
+      <!--所属部门-->
+
+      <!--政策法律依据-->
+
+      <!--任务描述-->
+      <!-- <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">任务描述</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" bindinput='bindDescription' placeholder="请输入任务描述" />
+        </view>
+      </view> -->
+      <view class="weui-cells__title">任务描述</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" />
+            <!-- <view class="weui-textarea-counter">0/200</view> -->
+          </view>
+        </view>
       </view>
-      <view class="weui-cell__bd">
-         <input class="weui-input" bindinput='bindDescription' placeholder="请输入任务描述" /> 
+      <!--发起理由-->
+      <!-- <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">发起理由</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" bindinput='bindCreateReson' placeholder="请输入发起理由" />
+        </view>
+      </view> -->
+      <view class="weui-cells__title">发起理由</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入发起理由" style="height: 3.3em" />
+            <!-- <view class="weui-textarea-counter">0/200</view> -->
+          </view>
+        </view>
       </view>
-    </view>
-    <!--发起理由-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">发起理由</view>
+      <!--计划开始时间-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划开始日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="planBeginDate" mode="date" value="{{planBeginDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanBeginDateChange">
+            <view class="weui-input">{{planBeginDate}}</view>
+          </picker>
+        </view>
       </view>
-      <view class="weui-cell__bd">
-        <input class="weui-input" bindinput='bindCreateReson' placeholder="请输入发起理由" />
+      <!--计划结束日期-->
+      
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">计划结束日期</view>
+        </view>
+        <view class="weui-cell__bd">
+          <picker name="planEndDate" mode="date" value="{{planEndDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanEndDateChange">
+            <view class="weui-input">{{planEndDate}}</view>
+          </picker>
+        </view>
       </view>
-    </view>
-    <!--计划开始时间-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">计划开始日期</view>
       </view>
-      <view class="weui-cell__bd">
-        <picker name="planBeginDate" mode="date" value="{{planBeginDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanBeginDateChange">
-          <view class="weui-input">{{planBeginDate}}</view>
-        </picker>
+      <view class="weui-panel weui-form-preview__ft">
+        <!-- <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">返回</button> -->
+        <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+        <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">下一步</button>
       </view>
-    </view>
-    <!--计划结束日期-->
-    <view class="weui-cell weui-cell_input">
-      <view class="weui-cell__hd">
-        <view class="weui-label">计划结束日期</view>
-      </view>
-      <view class="weui-cell__bd">
-        <picker name="planEndDate" mode="date" value="{{planEndDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanEndDateChange">
-          <view class="weui-input">{{planEndDate}}</view>
-        </picker>
-      </view>
-    </view>
- </view>
- <view class="weui-panel weui-form-preview__ft">
-      <!-- <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">返回</button> -->
-      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
-      <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">下一步</button>
-    </view>
- 
-</form>
+
+    </form>
+  </view>
 </view>

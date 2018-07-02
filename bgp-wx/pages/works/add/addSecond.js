@@ -162,13 +162,15 @@ Page({
     var checkUserNames = '';
     var checkUserNum ='';
     var checkUserArr = checkUsers.split(",");
-    checkUserArr.forEach(function (item) {
-      checkUserNames = checkUserNames + "," + item.split(":")[1];
-      checkUserNum = checkUserNum + "" + item.split(":")[0]
-    });
-    if (checkUserNames != '') {
+    if (checkUserArr != '') {
+      checkUserArr.forEach(function (item) {
+        var name = item.split(":")[1];
+        checkUserNames = checkUserNames + "," + name;
+      });
+    }
+
+    if (checkUserNames != '' && checkUserNames.substr(0, 1) == ",") {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
-      checkUserNum = checkUserNum.substr(1, checkUserNum.length);
     }
     this.setData({
       checkedReviewName: checkUserNames,
@@ -310,7 +312,7 @@ Page({
       // workName: { required: true },
       // planBeginDate: { required: true },
       // planEndDate: { required: true }
-      department: { required: true },
+      department: { required: false },
       reviewer: { required: true },
       responsible: { required: true }
     },
