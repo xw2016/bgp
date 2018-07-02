@@ -6,11 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    popErrorMsg: '',
     imgList: [],
-    kpiList:[],
+    kpiList: [],
     files: [] //文件上传
   },
-
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -30,7 +35,7 @@ Page({
     this.initKpi(queryBean.workId);
     this.initFile(queryBean.workId);
   },
-  initKpi: function (worksId){
+  initKpi: function (worksId) {
     let that = this;
     let url = '/work/queryWorkKpiById';
     let method = 'POST';
@@ -42,8 +47,10 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         var kpiList = res.data.data;
-        kpiList.forEach(function(item){
-          item.index=0
+        kpiList.forEach(function (item) {
+          item.index = 0
+          let kpiScores = { id: '', kpiScoreId: '', grade: '', score: '' }
+          item.kpiScores.unshift(kpiScores);
         })
         that.setData({
           kpiList: kpiList
@@ -118,12 +125,12 @@ Page({
       urls: imgList // 需要预览的图片http链接列表
     })
   },
-  bindRejectInfoChange:function(e){
+  bindRejectInfoChange: function (e) {
     this.setData({
       rejectInfo: e.detail.value
     })
   },
-  reject:function(){
+  reject: function () {
     let that = this;
     let url = '/work/rejectAudit';
     let method = 'post';
@@ -147,26 +154,41 @@ Page({
     let url = '/work/submitAudit';
     let method = 'post';
     // let data = that.data;
-    let worksResultScores=[];
+    let worksResultScores = [];
     let kpiList = that.data.kpiList;
-    kpiList.forEach(function(item){
-      let score = item.kpiScores[item.index];
-      worksResultScores.push({
-        workId: item.workId,
-        workName: item.workName,
-        kpiScoreId: score.id,
-        kpiName: item.kpiName,
-        grade:score.grade,
-        score: score.score
-      })
-    });
+    let kpiFlag = true;
+    try {
+      kpiList.forEach(function (item) {
+        let score = item.kpiScores[item.index];
+        if (score == null || score.id == '') {
+          that.setData({
+            popErrorMsg: '【' + item.kpiName + '】评分不能为空！'
+          })
+          kpiFlag = false;
+          throw new Error("null score");
+        }
+        worksResultScores.push({
+          workId: item.workId,
+          workName: item.workName,
+          kpiScoreId: score.id,
+          kpiName: item.kpiName,
+          grade: score.grade,
+          score: score.score
+        })
+      });
+    } catch (e) {
+
+    }
+    if (kpiFlag == false) {
+      return false
+    }
     let workAuditVo = {
-      workId:that.data.work.workId,
-      workName:that.data.work.workName,
+      workId: that.data.work.workId,
+      workName: that.data.work.workName,
       worksResultScores: worksResultScores,
       auditUser: that.data.loginUser
     }
-  
+
     this.onSubmit(url, workAuditVo, method, function (res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
@@ -186,7 +208,7 @@ Page({
       url: '../../msg/msg_fail'
     })
   },
-  onSubmit:function(url, data, method, callback) {
+  onSubmit: function (url, data, method, callback) {
     var host = app.globalData.serviceUrl;
     let loginToken = wx.getStorageSync("loginToken");
     let userNo = wx.getStorageSync("userNo");
