@@ -21,7 +21,7 @@
       </view>
 
       <!--部门-->
-      <block wx:if="{{pass=='N'}}">
+      <!-- <block wx:if="{{pass=='N'}}">
         <view class="weui-cells__title">请选择所属部门</view>
         <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell weui-cell_input" bindtap='showDepartment'>
@@ -46,7 +46,7 @@
             </checkbox-group>
           </block>
         </view>
-      </block>
+      </block> -->
       <!--负责人类型-->
       <view class="weui-cells__title">请输入负责人姓名或账号进行查询，多个负责人以"，"隔开</view>
       <view class="weui-cells weui-cells_after-title">

@@ -1,7 +1,7 @@
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
   <form bindreset="formReset" bindsubmit='formSubmit'>
-    <block bindtap='hideErrMsg'>
+    <view bindtap='hideErrMsg'>
       <!--部门-->
       <!-- <view class="weui-cells__title">请选择所属部门</view>
       <view class="weui-cells weui-cells_after-title">
@@ -127,7 +127,7 @@
           </label>
         </checkbox-group>
       </block>
-    </block>
+    </view>
 
     <view class="weui-panel weui-form-preview__ft">
       <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>

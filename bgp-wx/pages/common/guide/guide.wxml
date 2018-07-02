@@ -3,7 +3,7 @@
         <view class="weui-article">
             <view class="weui-article__h1">{{guide.title}}</view>
             <view class="weui-article__section">
-                 <view class="weui-article__title">操作指引:</view> 
+                 <view class="weui-article__title">操作指引</view> 
                 <view class="weui-article__section">
                     <!-- <view class="weui-article__h3">操作指引</view> -->
                     <view class="weui-article__p">

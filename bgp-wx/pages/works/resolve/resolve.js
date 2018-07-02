@@ -28,7 +28,7 @@ Page({
       work: queryBean,
       loginUser: loginUser,
       pass: queryBean.pass,
-      workName: queryBean.pass == 'Y' ? queryBean.workName : '',
+      workName: queryBean.workName,//queryBean.pass == 'Y' ? queryBean.workName : '',
       checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
       checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
     })
@@ -319,7 +319,7 @@ Page({
         required: true
       },
       department: {
-        required: true
+        required: false
       },
       reviewer: {
         required: true
