@@ -77,7 +77,12 @@ addWork:function(){
   wx.navigateTo({
     url: '../works/add/addfirst',
   })
-}
+},
+  myScore:function(){
+    wx.navigateTo({
+      url: '../works/report/report',
+    })
+  }
 
 
 })

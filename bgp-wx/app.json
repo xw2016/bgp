@@ -15,7 +15,8 @@
     "pages/works/add/addSecond",
     "pages/works/resolve/resolve",
     "pages/works/resolveleader/resolveleader",
-    "pages/common/guide/guide"
+    "pages/common/guide/guide",
+    "pages/works/report/report"
   ],
   "window": {
     "backgroundTextStyle": "light",

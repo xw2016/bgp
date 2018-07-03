@@ -43,7 +43,7 @@ Page({
       dictionaryType: '任务级别'
     }
     util.onSubmit(url, data, method, function(res) {
-      if (res.data.data == false) {
+      if (res.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
         var workLevelList = res.data.data;

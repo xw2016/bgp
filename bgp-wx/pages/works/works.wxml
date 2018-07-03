@@ -45,3 +45,18 @@
     </view>
   </view>
 </view>
+<!--任务积分-->
+<view class="weui-cells__title"></view>
+<view class="weui-cells weui-cells_after-title" bindtap="myScore">
+  <view class="weui-cell weui-cell_access">
+    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+      <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+    </view>
+    <view class="weui-cell__bd">
+      <view>我的积分</view>
+    </view>
+    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+      <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
+    </view>
+  </view>
+</view>
