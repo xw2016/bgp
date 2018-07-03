@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+   
   },
 
   /**
@@ -14,6 +14,10 @@ Page({
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '我的积分'
+    });
+    let loginUser = wx.getStorageSync("loginUser");
+    this.setData({
+      loginUser: loginUser
     })
     this.initMyScore();
   },
@@ -23,16 +27,30 @@ Page({
     let url = '/work/queryTalentsReport';
     let method = 'POST';
     let data = {
-      responsible: '王静'
+      responsible: that.data.loginUser.name
     }
     util.onSubmit(url, data, method, function (res) {
-        debugger
-      if (res.retCode != 200) {
+      if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-
+        let kpiSocres = res.data.data.kpiSocres;
+        let socresArr=[]
+        for (let k of Object.keys(kpiSocres)) {
+          let socre = { kpi: k, socre: kpiSocres[k]};
+          socresArr.push(socre);
+        }
+        that.setData({
+          kpiSocres: socresArr.sort()
+        });
       }
     })
+  },
+  compare :function (property){
+    return function(a, b) {
+      var value1 = a[property];
+      var value2 = b[property];
+      return value1 - value2;
+    }
   }
 
 })

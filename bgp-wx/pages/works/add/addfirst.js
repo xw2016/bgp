@@ -27,7 +27,7 @@ Page({
     });
     //获取工作类型数据
     this.initWorkTypeArr();
-    this.initWorkLevel();
+    // this.initWorkLevel();
     // this.wxValidate = util.validateRule();
   },
   hideErrMsg: function() {
