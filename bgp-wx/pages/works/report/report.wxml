@@ -4,18 +4,19 @@
         <view class="page__desc"> </view>
     </view>
     <view class="page__bd page__bd_spacing">
-        <view class="weui-flex">
+        <!-- <view class="weui-flex">
             <view class="weui-flex__item"><view class="placeholder">{{kpiSocres[0].kpi}}:{{kpiSocres[0].socre}}</view></view>
         </view>
         <view class="weui-flex">
             <view class="weui-flex__item"><view class="placeholder">weui</view></view>
             <view class="weui-flex__item"><view class="placeholder">weui</view></view>
+        </view> -->
+        <view wx:for="{{kpiSocres}}">
+        <view wx:if="{{index/3==0}}" class="weui-flex">
+            <view class="weui-flex__item"><input class="placeholder" value="{{kpiSocres[index].kpi}}:{{kpiSocres[index].socre}}"/></view>
+            <view class="weui-flex__item"><input class="placeholder" value="{{kpiSocres[index+1].kpi}}:{{kpiSocres[index+1].socre}}"/></view>
+            <view class="weui-flex__item"><view class="placeholder">{{kpiSocres[index+2].kpi}}:{{kpiSocres[index+2].socre}}</view></view>
         </view>
-        <view class="weui-flex">
-            <view class="weui-flex__item"><view class="placeholder">weui</view></view>
-            <view class="weui-flex__item"><view class="placeholder">weui</view></view>
-            <view class="weui-flex__item"><view class="placeholder">weui</view></view>
-        </view>
-
+</view>
     </view>
 </view>

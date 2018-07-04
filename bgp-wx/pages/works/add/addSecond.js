@@ -20,8 +20,9 @@ Page({
       title: '填写任务信息'
     })
     let queryBean = JSON.parse(options.queryBean);
-    this.initDepartment();
-    util.initUser();
+    // this.initDepartment();
+    this.initUserGroupArray();
+
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
     this.setData({
@@ -110,20 +111,20 @@ Page({
       showResponsible:false
     })
   },
-  checkResponsibleTypeChange:function(e){  // 责任人类别选择
-    var checkboxItems = this.checkUserTypeChange(e);
-    this.setData({
-      responsibleTypeList: checkboxItems
-    });
-    var checkList = this.getCheckedUserType(checkboxItems);
-    this.setData({
-      checkedResponsibleType: checkList   //已选择的人员类别
-    });
-    var checkGroup = this.initCheckUserTypeUsers();
-    this.setData({
-      responsibleList: checkGroup   //可选的人员组
-    })
-  },
+  // checkResponsibleTypeChange:function(e){  // 责任人类别选择
+  //   var checkboxItems = this.checkUserTypeChange(e);
+  //   this.setData({
+  //     responsibleTypeList: checkboxItems
+  //   });
+  //   var checkList = this.getCheckedUserType(checkboxItems);
+  //   this.setData({
+  //     checkedResponsibleType: checkList   //已选择的人员类别
+  //   });
+  //   var checkGroup = this.initCheckUserTypeUsers();
+  //   this.setData({
+  //     responsibleList: checkGroup   //可选的人员组
+  //   })
+  // },
   bindSearchReviewUser:function(e){
     let key = e.detail.value;
     let userList = util.searchUser(key);
@@ -138,20 +139,20 @@ Page({
       responsibleList: userList   //可选的人员组
     })
   },
-  checkReviewTypeChange:function(e){ //审核人类别选择
-    var checkboxItems =  this.checkUserTypeChange(e);
-    this.setData({
-      reviewTypeList: checkboxItems
-    });
-    var checkList = this.getCheckedUserType(checkboxItems);
-    this.setData({
-      checkedReviewType: checkList
-    });
-    var checkGroup = this.initCheckUserTypeUsers();
-    this.setData({
-      reviewList: checkGroup
-    })
-  },
+  // checkReviewTypeChange:function(e){ //审核人类别选择
+  //   var checkboxItems =  this.checkUserTypeChange(e);
+  //   this.setData({
+  //     reviewTypeList: checkboxItems
+  //   });
+  //   var checkList = this.getCheckedUserType(checkboxItems);
+  //   this.setData({
+  //     checkedReviewType: checkList
+  //   });
+  //   var checkGroup = this.initCheckUserTypeUsers();
+  //   this.setData({
+  //     reviewList: checkGroup
+  //   })
+  // },
   checkReviewChange: function (e) {//审核人选择
     var checkboxItems = this.checkUserChange(e,this.data.reviewList);
     this.setData({
@@ -178,7 +179,6 @@ Page({
     })
   },
   checkResponsibleChange:function(e){//责任人选择
-  
     var checkboxItems = this.checkUserChange(e, this.data.responsibleList);
     this.setData({
       responsibleList: checkboxItems
@@ -292,7 +292,6 @@ Page({
     return checked;
   },
   initCheckUserTypeUsers: function() {
-    
     var userlist = this.data.userlist;
     var list = this.data.userTypeList;
     var userGroup = [];
@@ -306,6 +305,64 @@ Page({
       }
     });
     return userGroup;
+  },
+  //人员选择
+  initUserGroupArray:function(){
+    initGroup();
+    util.initUser();
+    let groupList = wx.getStorageSync("groupList");
+    let groupArrs = groupList.map(item => { //获取人员组
+      return item.groupName;
+    });
+    var groupArr = util.removeRepeat(groupArrs, null);
+
+    groupArr.unshift('');
+    var default_type = groupList[0]['type'];
+    if (default_type) {
+      let userArr = ['请选择'];
+      that.setData({
+        userGroupArray: [groupArr, userArr],
+        groupList,
+        groupList,
+        userArr
+      })
+    }
+  },
+  bindResponsibleChange:function(){
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let groupList = this.data.groupList;
+    let userGroupArray = this.data.userGroupArray;
+    let group = userGroupArray[0][e.detail.value[0]];
+    let user = userGroupArray[1][e.detail.value[1]];
+    let userGrpup = {};
+    groupList.forEach(function (item) {
+      if (type == item.type && title == item.title) {
+        workType = item;
+        return;
+      }
+    });
+    this.setData({
+      typeIndex: e.detail.value,
+      workType: workType
+    });
+  },
+  bindResponsibleColumnChange:function(){
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var data = {
+      typeIndex: this.data.typeIndex,
+      workTypeArray: this.data.workTypeArray
+    }
+    switch (e.detail.column) {
+      case 0:
+        data.workTypeArray[1] = this.selectType(data.workTypeArray[0][e.detail.value]);
+        data.typeIndex[0] = e.detail.value;
+        break
+      case 1:
+        data.typeIndex[1] = e.detail.value;;
+        console.log("title:" + data.typeIndex[1]);
+        break;
+    }
+    this.setData(data);
   },
   validateForm: function () {
     let wxValidate = app.wxValidate({

@@ -268,15 +268,39 @@ function onLogin(){
 //   };
 //  return true;
 // }
+//初始化用户组
+function initGroup() {
+  let that = this;
+  let url = '/user/queryGroup';
+  let method = 'POST';
+  let groupList = ''
+  wx.getStorageSync("groupList");
+  if (groupList == '') {
+    this.onSubmit(url, null, method, function (res) {
+      debugger
+      if (res.data.retCode != 200) {
+        this.openAlert(res.data.msg);
+      } else {
+        var usergroupListlist = res.data.data;
+        wx.setStorage({
+          key: "groupList",
+          data: res.data.data
+        });
+      }
+    })
+  }
+}
 //初始化用户列表
 function initUser() {
   let that = this;
-  let url = '/work/queryUserList';
+  let url = '/user/queryUserList';
   let method = 'POST';
-  let userList = wx.getStorageSync("userlist");
+  let userList = '' 
+  wx.getStorageSync("userlist");
   if (userList == '') {
     this.onSubmit(url, null, method, function (res) {
-      if (res.data.data == false) {
+      debugger
+      if (res.data.retCode != 200) {
         this.openAlert(res.data.msg);
       } else {
         var userlist = res.data.data;

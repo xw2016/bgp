@@ -53,8 +53,8 @@
           </checkbox-group>
         </block>  -->
 
-        <!--负责人-->
-        <view class="weui-cell weui-cell_input" bindtap='showResponsible'>
+        <!--负责人 输入搜索方式-->
+        <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsible'>
           <view class="weui-cell__hd">
             <view class="weui-label">负责人</view>
           </view>
@@ -75,9 +75,31 @@
             <view class="weui-cell__bd">{{item.name}}</view>
           </label>
         </checkbox-group>
-      </block>
+      </block> -->
+      <!--负责人 pciker-->
+<view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">负责人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResponsibleColumnChange" value="{{typeIndex}}" range="{{responsibleArray}}">
 
-
+              <view class="weui-select">
+                {{workTypeArray[1][typeIndex[1]]}}
+                <!-- <input name="workType" value='{{workType}}' hidden='true'}></input> -->
+              </view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <!-- <view bindtap="bindguide" class="weui-agree__link">查看工作指引</view> -->
+          <view class="weui-cell weui-cell_link">
+            <view bindtap="bindguide" class="weui-cell__bd">查看工作指引</view>
+          </view>
+        </view>
+      </view>
       <!--审核人-->
       <view class="weui-cells__title">请选择审核人</view>
       <view class="weui-cells weui-cells_after-title">
