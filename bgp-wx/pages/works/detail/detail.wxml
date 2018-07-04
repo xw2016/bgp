@@ -147,6 +147,12 @@
       </view>
     </view>
   </view>
+   <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+    <view class="modal-dialog" hidden="{{modalHidden}}">
+
+      <image class="image" src="{{current}}" mode='aspectFit' />
+
+    </view>
 </block>
 <view class="weui-panel weui-form-preview__ft">
   <block wx:if="{{action =='todo'}}">

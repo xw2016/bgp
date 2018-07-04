@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    modalHidden:true,
     popErrorMsg: '',
     beginDate: '',
     remark: '',
@@ -59,11 +60,12 @@ Page({
         let files = [];
         if (res.data.data!=null){
           files = res.data.data.map(item => { //获取工作类型总类数组
+           
             return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
           });
           that.setData({
-            files: files
-            // files: ['http://www.f81.net/dv6/UploadFile/2009-10/200910323361764140.jpg']
+            files: files,
+            captchaImage:url
           });
         }
       }
@@ -168,17 +170,19 @@ Page({
     })
   },
   previewImage: function(e) {
-    // let urls = [];
-    // this.data.files.forEach(function(item){
-    //   if (this.isPicture(item)){
-    //     debugger
-    //     urls.push(item);
-    //   }
-    // });
-    debugger
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+    this.setData({
+      current: e.currentTarget.id, 
+      modalHidden:false
+    })
+    // wx.previewImage({
+    //   current: e.currentTarget.id, // 当前显示图片的http链接
+    //   urls: this.data.files // 需要预览的图片http链接列表
+    // })
+  },
+  modalCandel: function () {
+    // do something
+    this.setData({
+      modalHidden: true
     })
   },
 isPicture :function (str) {

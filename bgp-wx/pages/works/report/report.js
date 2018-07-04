@@ -42,6 +42,7 @@ Page({
           };
           socresArr.push(socre);
         }
+        // debugger
         that.setData({
           kpiSocres: socresArr.sort(function(socre) {
             return function(a, b) {
@@ -53,7 +54,7 @@ Page({
           })
         });
       }
-      debugger
+      // debugger
     })
   },
   compare: function(property) {

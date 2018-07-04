@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    modalHidden: true,
     popErrorMsg: '',
     imgList: [],
     kpiList: [],
@@ -83,16 +84,19 @@ Page({
     });
   },
   previewImage: function (e) {
-    // let urls = [];
-    // this.data.files.forEach(function(item){
-    //   if (this.isPicture(item)){
-    //     debugger
-    //     urls.push(item);
-    //   }
-    // });
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+    this.setData({
+      current: e.currentTarget.id,
+      modalHidden: false
+    })
+    // wx.previewImage({
+    //   current: e.currentTarget.id, // 当前显示图片的http链接
+    //   urls: this.data.files // 需要预览的图片http链接列表
+    // })
+  },
+  modalCandel: function () {
+    // do something
+    this.setData({
+      modalHidden: true
     })
   },
   // 绑定事件，因为不能用this.setData直接设置每个对象的索引值index。

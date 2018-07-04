@@ -36,7 +36,7 @@
         <!-- 日期 -->
         <view class="weui-cells__title">执行日期</view>
         <view class="weui-cells weui-cells_after-title">
-          
+
           <view class="weui-cell weui-cell_input">
             <view class="weui-cell__hd">
               <view class="weui-label">开始日期</view>
@@ -92,6 +92,21 @@
             </view>
           </view>
         </view>
+
+      </view>
+
+      <!-- <modal title="" hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
+        <view>
+          <image class="image" src="{{current}}" mode='widthFix' />
+        </view>
+
+      </modal> -->
+      <!--弹窗-->
+      <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+      <view class="modal-dialog" hidden="{{modalHidden}}">
+      
+          <image class="image" src="{{current}}" mode='aspectFit' />
+       
       </view>
       <!--图片上传结束-->
       <view class="weui-btn-area">

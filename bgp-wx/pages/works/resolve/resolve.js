@@ -9,6 +9,11 @@ Page({
     showDepetment: false,
     showReviewType: false,
     showReview: false,
+    resIndex: [0, 0],
+    revIndex: [0, 0],
+    checkedResponsible: '',
+    checkedResName: '',
+    reviewer: {},
     popErrorMsg: ''
   },
 
@@ -21,16 +26,23 @@ Page({
     });
     let queryBean = JSON.parse(options.queryBean);
     this.initDepartment();
-    util.initUser();
+    // util.initUser();
+    this.initUserGroupArray();
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
+    let userlist = wx.getStorageSync("userlist");
+    debugger
     this.setData({
       work: queryBean,
       loginUser: loginUser,
       pass: queryBean.pass,
       workName: queryBean.workName,//queryBean.pass == 'Y' ? queryBean.workName : '',
-      checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
-      checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
+      // checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
+      // checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
+      reviewer: {
+        name: loginUser.name, account: loginUser.account
+      },
+      userlist: userlist
     })
 
   },
@@ -313,6 +325,148 @@ Page({
       workName: e.detail.value
     })
   },
+  //人员选择
+  initUserGroupArray: function () {
+    let that = this;
+    let groupList = wx.getStorageSync("groupList");
+    let groupArrs = groupList.map(item => { //获取人员组
+      return item.groupName;
+    });
+    var groupArr = util.removeRepeat(groupArrs, null);
+
+    groupArr.unshift('');
+    var default_type = groupList[0]['groupName'];
+    if (default_type) {
+      let userArr = ['请选择'];
+      that.setData({
+        userGroupArray: [groupArr, userArr],
+        reviewerGroupArr: [groupArr, userArr],
+        responsibleGroupArr: [groupArr, userArr],
+        groupList,
+        groupArr,
+        userArr
+      })
+    }
+  },
+  bindReviewerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let that = this;
+    let groupList = that.data.groupList;
+    let userGroupArray = that.data.userGroupArray;
+    let group = userGroupArray[0][e.detail.value[0]];
+    let user = userGroupArray[1][e.detail.value[1]];
+    let reviewer = {};
+
+    let userlist = that.data.userlist;
+    userlist.forEach(function (item) {
+      if (user == item.name) {
+        reviewer = item;
+        return;
+      }
+    });
+    that.setData({
+      reviewerGroupArr: userGroupArray,
+      revIndex: e.detail.value,
+      reviewer: reviewer
+    });
+  },
+  bindResponsibleChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let that = this;
+    let groupList = that.data.groupList;
+    let userGroupArray = that.data.userGroupArray;
+    let group = userGroupArray[0][e.detail.value[0]];
+    let user = userGroupArray[1][e.detail.value[1]];
+    let responsible = {};
+
+    let userlist = that.data.userlist;
+    if (typeof (user) == 'undefined') {
+      that.setData({
+        responsibleGroupArr: userGroupArray,
+        resIndex: e.detail.value,
+        responsible: '',
+        checkedResName: '',
+        checkedResponsible: ''
+      });
+      return false;
+    }
+    userlist.forEach(function (item) {
+      if (user == item.name) {
+        responsible = item;
+        return;
+      }
+    });
+    let name = that.data.checkedResName;
+    if (name.indexOf(responsible.name) == -1) {
+      let checkedResName = name != '' ? name + "," + responsible.name : '' + responsible.name;
+      let eldRes = that.data.checkedResponsible;
+      let newRes = responsible.account + ":" + responsible.name;
+      let checkedResponsible = eldRes != '' ? (eldRes + "," + newRes) : ('' + newRes);
+      that.setData({
+        responsibleGroupArr: userGroupArray,
+        resIndex: e.detail.value,
+        responsible: responsible,
+        checkedResName: checkedResName,
+        checkedResponsible: checkedResponsible
+      });
+    }
+
+  },
+  bindResColumnChange: function (e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var data = {
+      resIndex: this.data.resIndex,
+      userGroupArray: this.data.userGroupArray
+    }
+    switch (e.detail.column) {
+      case 0:
+        data.userGroupArray[1] = this.selectUser(data.userGroupArray[0][e.detail.value]);
+        data.resIndex[0] = e.detail.value;
+        break
+      case 1:
+        data.resIndex[1] = e.detail.value;;
+        console.log("title:" + data.resIndex[1]);
+        break;
+    }
+    this.setData(data);
+  },
+  bindRevColumnChange: function (e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var data = {
+      revIndex: this.data.revIndex,
+      userGroupArray: this.data.userGroupArray
+    }
+    switch (e.detail.column) {
+      case 0:
+        data.userGroupArray[1] = this.selectUser(data.userGroupArray[0][e.detail.value]);
+        data.revIndex[0] = e.detail.value;
+        break
+      case 1:
+        data.revIndex[1] = e.detail.value;;
+        console.log("title:" + data.revIndex[1]);
+        break;
+    }
+    this.setData(data);
+  },
+  selectUser: function (group) {
+    let that = this;
+    let userlist = that.data.userlist;
+    let userArr = [];
+    if (group != null) {
+      userlist.forEach(function (item) {
+        let groupList = item.userGroupList
+        if (groupList != null) {
+          groupList.forEach(function (g) {
+            if (g.groupName == group) {
+              userArr.push(item.name);
+            }
+          })
+
+        }
+      });
+    }
+    return userArr;
+  },
   validateForm: function() {
     let wxValidate = app.wxValidate({
       workName: {
@@ -322,10 +476,10 @@ Page({
         required: false
       },
       reviewer: {
-        required: true
+        required: false
       },
       responsible: {
-        required: true
+        required: false
       }
     }, {
       workName: {
@@ -345,6 +499,7 @@ Page({
   },
   formSubmit: function(e) {
     let that = this;
+    
     let validate = this.validateForm();
     if (!validate.checkForm(e)) {
       const error = validate.errorList[0];
@@ -353,6 +508,21 @@ Page({
       })
       return false;
     };
+    let reviewer = that.data.reviewer;
+    let responsible = that.data.checkedResponsible;
+    if (responsible == '') {
+      that.setData({
+        popErrorMsg: '请选择负责人'
+      })
+      return false;
+    }
+    if (reviewer == '') {
+      that.setData({
+        popErrorMsg: '请选择审核人'
+      })
+      return false;
+    }
+   
 
     let url = '/work/resolve';
     let method = 'post';
@@ -363,8 +533,10 @@ Page({
     work.workName = that.data.workName;
     work.departments = work.pass == 'Y' ? work.departments : that.data.checkedDep
     work.responsibleList = that.data.checkedResponsible;
-    work.reviewer = that.data.checkedReviewName;
-    work.reviewerNum = that.data.checkedReview;
+    // work.reviewer = that.data.checkedReviewName;
+    // work.reviewerNum = that.data.checkedReview;
+    work.reviewer = that.data.reviewer.name
+    work.reviewerNum = that.data.reviewer.account;
     work.creator = that.data.loginUser.name;
     work.creatorNum = that.data.loginUser.account;
     

@@ -48,6 +48,12 @@
         </view>
       </view>
     </view>
+    <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+    <view class="modal-dialog" hidden="{{modalHidden}}">
+
+      <image class="image" src="{{current}}" mode='aspectFit' />
+
+    </view>
 
     <view class="weui-cells__title">考核维度评分</view>
     <view class="weui-cells weui-cells_after-title">

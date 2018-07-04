@@ -28,7 +28,7 @@
         </block>
       </view> -->
       <!--负责人类型-->
-      <view class="weui-cells__title">请输入负责人姓名或账号进行查询，多个负责人以'，'隔开 </view>
+      <view class="weui-cells__title">请选择负责人，可多选 </view>
 
 
       <!-- 负责人类型
@@ -89,8 +89,8 @@
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
               <view class="weui-select">
-                {{responsibleGroupArr[1][resIndex[1]]}}
-
+                <!-- {{responsibleGroupArr[1][resIndex[1]]}} -->
+                {{checkedResName}}
               </view>
             </picker>
           </view>
@@ -148,8 +148,8 @@
           </label>
         </checkbox-group>
       </block> -->
-<!--审核人pick-->
- <view class="weui-cells__title"></view>
+      <!--审核人pick-->
+      <view class="weui-cells__title"></view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -158,8 +158,8 @@
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}">
               <view class="weui-select">
-                {{reviewerGroupArr[1][revIndex[1]]}}
-
+                <!-- {{reviewerGroupArr[1][revIndex[1]]}} -->
+                {{reviewer.name}}
               </view>
             </picker>
           </view>

@@ -11,6 +11,9 @@ Page({
     showReview: false,
     resIndex:[0,0],
     revIndex:[0,0],
+    checkedResponsible:'',
+    checkedResName:'',
+    reviewer:{},
     popErrorMsg: ''
   },
 
@@ -31,8 +34,8 @@ Page({
     this.setData({
       work: queryBean,
       loginUser: loginUser,
-      checkedReviewName: loginUser.name,
-      checkedReview: loginUser.account,
+      reviewer: {
+        name: loginUser.name, account: loginUser.account},
       userlist: userlist
     })
   },
@@ -334,7 +337,6 @@ Page({
     }
   },
   bindReviewerChange: function (e) {
-    debugger
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -357,7 +359,6 @@ Page({
     });
   },
   bindResponsibleChange:function(e){
-    debugger
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -367,17 +368,40 @@ Page({
     let responsible = {};
    
     let userlist = that.data.userlist;
+
+    if (typeof (user) == 'undefined') {
+      that.setData({
+        responsibleGroupArr: userGroupArray,
+        resIndex: e.detail.value,
+        responsible: '',
+        checkedResName: '',
+        checkedResponsible: ''
+      });
+      return false;
+    }
     userlist.forEach(function (item) {
       if (user == item.name) {
         responsible = item;
         return;
       }
     });
-    that.setData({
-      responsibleGroupArr: userGroupArray,
-      resIndex: e.detail.value,
-      responsible: responsible
-    });
+    let name = that.data.checkedResName;
+    if (name.indexOf(responsible.name)==-1){
+      let checkedResName = name != '' ? name + "," + responsible.name : '' + responsible.name;
+      let eldRes = that.data.checkedResponsible;
+      let newRes = responsible.account + ":" + responsible.name;
+      let checkedResponsible = eldRes != '' ? (eldRes + "," + newRes) : ('' + newRes);
+      that.setData({
+        responsibleGroupArr: userGroupArray,
+        resIndex: e.detail.value,
+        responsible: responsible,
+        checkedResName: checkedResName,
+        checkedResponsible: checkedResponsible
+      });
+    }
+
+    
+    
   },
   bindResColumnChange:function(e){
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
@@ -440,8 +464,8 @@ Page({
       // planBeginDate: { required: true },
       // planEndDate: { required: true }
       department: { required: false },
-      reviewer: { required: true },
-      responsible: { required: true }
+      reviewer: { required: false },
+      responsible: { required: false }
     },
       {
         // workName: { required: '请填写任务名称' },
@@ -456,7 +480,6 @@ Page({
     return wxValidate;
   },
   formSubmit: function(e) {
-    debugger
     let that = this;
     // let validate = this.validateForm();
     // if (!validate.checkForm(e)) {
@@ -467,9 +490,16 @@ Page({
     //   return false;
     // };
     let reviewer = that.data.reviewer;
-    if (reviewer==null){
+    let responsible = that.data.checkedResponsible;
+    if (responsible == '') {
       that.setData({
-        popErrorMsg: error.msg
+        popErrorMsg: '请选择负责人'
+      })
+      return false;
+    }
+    if (reviewer == '') {
+      that.setData({
+        popErrorMsg: '请选择审核人'
       })
       return false;
     }
@@ -479,8 +509,7 @@ Page({
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
     // work.departments = that.data.checkedDep; //暂时屏蔽
-    // work.responsibleList=that.data.checkedResponsible;
-    work.responsibleList ="768672:张三"
+    work.responsibleList=that.data.checkedResponsible;
     // work.reviewer= that.data.checkedReviewName;
     // work.reviewerNum= that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
@@ -489,7 +518,7 @@ Page({
     work.creatorNum=loginUser.account;
    
     util.onSubmitJson(url, work, method, function(res) {
-      debugger
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {

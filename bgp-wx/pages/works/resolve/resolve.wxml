@@ -10,12 +10,12 @@
             <view class="weui-label">任务名称</view>
           </view>
           <view class="weui-cell__bd">
-            <block wx:if="{{pass=='N'}}">
+            <!-- <block wx:if="{{pass=='N'}}"> -->
               <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
-            </block>
+            <!-- </block>
             <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
-            </block>
+            </block> -->
           </view>
         </view>
       </view>
@@ -48,9 +48,9 @@
         </view>
       </block> -->
       <!--负责人类型-->
-      <view class="weui-cells__title">请输入负责人姓名或账号进行查询，多个负责人以"，"隔开</view>
-      <view class="weui-cells weui-cells_after-title">
-        <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
+      <view class="weui-cells__title">请选择负责人，可多选</view>
+      <!-- <view class="weui-cells weui-cells_after-title"> -->
+      <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
           <view class="weui-cell__hd">
             <view class="weui-label">负责人类型</view>
           </view>
@@ -72,7 +72,8 @@
           </checkbox-group>
         </block> -->
 
-        <!--负责人-->
+      <!--负责人-->
+      <!-- <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input" bindtap='showResponsible'>
           <view class="weui-cell__hd">
             <view class="weui-label">负责人</view>
@@ -94,13 +95,29 @@
             <view class="weui-cell__bd">{{item.name}}</view>
           </label>
         </checkbox-group>
-      </block>
-
+      </block> -->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">负责人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
+              <view class="weui-select">
+                <!-- {{responsibleGroupArr[1][resIndex[1]]}} -->
+                {{checkedResName}}
+                <!-- <input type='hidden' name='responsible' value='{{checkedResName}}'></input> -->
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
 
       <!--审核人-->
       <view class="weui-cells__title">请选择审核人</view>
-      <view class="weui-cells weui-cells_after-title">
-        <!-- <block wx:if="{{pass=='N'}}">
+
+      <!-- <block wx:if="{{pass=='N'}}">
            <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
             <view class="weui-cell__hd">
               <view class="weui-label">审核人类型</view>
@@ -123,13 +140,14 @@
             </checkbox-group>
           </block>
         </block>  -->
-        <!--审核人-->
+      <!--审核人-->
+      <!-- <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input" bindtap='showReview'>
           <view class="weui-cell__hd">
             <view class="weui-label">审核人</view>
           </view>
           <view class="weui-cell__bd">
-            <input class="weui-input" name="reviewer" value='{{checkedReviewName}}' placeholder="请选择审核人" bindinput='bindSearchReviewUser'/>
+            <input class="weui-input" name="reviewer" value='{{checkedReviewName}}' placeholder="请选择审核人" bindinput='bindSearchReviewUser' />
           </view>
         </view>
       </view>
@@ -145,8 +163,30 @@
             <view class="weui-cell__bd">{{item.name}}</view>
           </label>
         </checkbox-group>
-      </block>
+      </block> -->
+      <!--审核人pick-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">审核人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}">
+              <view class="weui-select">
+                <!-- {{reviewerGroupArr[1][revIndex[1]]}} -->
+                {{reviewer.name}}
+                <!-- <input type='hidden' name='reviewer' value='{{reviewer.name}}'></input> -->
+
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+
     </view>
+
+
     <view class="weui-panel weui-form-preview__ft">
       <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
       <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
