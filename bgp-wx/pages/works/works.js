@@ -13,7 +13,8 @@ Page({
     wx.setNavigationBarTitle({
       title: '任务中心'
     })
-
+    util.initGroup();
+    util.initUser();
     let loginUser = wx.getStorageSync("loginUser");
     if (loginUser!=null){
       this.setData({

@@ -277,7 +277,6 @@ function initGroup() {
   wx.getStorageSync("groupList");
   if (groupList == '') {
     this.onSubmit(url, null, method, function (res) {
-      debugger
       if (res.data.retCode != 200) {
         this.openAlert(res.data.msg);
       } else {
@@ -299,7 +298,6 @@ function initUser() {
   wx.getStorageSync("userlist");
   if (userList == '') {
     this.onSubmit(url, null, method, function (res) {
-      debugger
       if (res.data.retCode != 200) {
         this.openAlert(res.data.msg);
       } else {
@@ -347,6 +345,7 @@ module.exports = {
   goBack: goBack,
   removeRepeat: removeRepeat,
   initUser: initUser,
+  initGroup:initGroup,
   searchUser: searchUser,
   initFile: initFile
   // validateForm

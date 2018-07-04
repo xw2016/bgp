@@ -9,6 +9,8 @@ Page({
     showDepetment: false,
     showReviewType: false,
     showReview: false,
+    resIndex:[0,0],
+    revIndex:[0,0],
     popErrorMsg: ''
   },
 
@@ -25,11 +27,13 @@ Page({
 
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
+    let userlist = wx.getStorageSync("userlist");
     this.setData({
       work: queryBean,
       loginUser: loginUser,
       checkedReviewName: loginUser.name,
       checkedReview: loginUser.account,
+      userlist: userlist
     })
   },
   hideErrMsg: function () {
@@ -308,8 +312,7 @@ Page({
   },
   //人员选择
   initUserGroupArray:function(){
-    initGroup();
-    util.initUser();
+    let that = this;
     let groupList = wx.getStorageSync("groupList");
     let groupArrs = groupList.map(item => { //获取人员组
       return item.groupName;
@@ -317,52 +320,119 @@ Page({
     var groupArr = util.removeRepeat(groupArrs, null);
 
     groupArr.unshift('');
-    var default_type = groupList[0]['type'];
+    var default_type = groupList[0]['groupName'];
     if (default_type) {
       let userArr = ['请选择'];
       that.setData({
         userGroupArray: [groupArr, userArr],
+        reviewerGroupArr: [groupArr, userArr],
+        responsibleGroupArr: [groupArr, userArr],
         groupList,
-        groupList,
+        groupArr,
         userArr
       })
     }
   },
-  bindResponsibleChange:function(){
+  bindReviewerChange: function (e) {
+    debugger
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    let groupList = this.data.groupList;
-    let userGroupArray = this.data.userGroupArray;
+    let that = this;
+    let groupList = that.data.groupList;
+    let userGroupArray = that.data.userGroupArray;
     let group = userGroupArray[0][e.detail.value[0]];
     let user = userGroupArray[1][e.detail.value[1]];
-    let userGrpup = {};
-    groupList.forEach(function (item) {
-      if (type == item.type && title == item.title) {
-        workType = item;
+    let reviewer = {};
+
+    let userlist = that.data.userlist;
+    userlist.forEach(function (item) {
+      if (user == item.name) {
+        reviewer = item;
         return;
       }
     });
-    this.setData({
-      typeIndex: e.detail.value,
-      workType: workType
+    that.setData({
+      reviewerGroupArr: userGroupArray,
+      revIndex: e.detail.value,
+      reviewer: reviewer
     });
   },
-  bindResponsibleColumnChange:function(){
+  bindResponsibleChange:function(e){
+    debugger
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    let that = this;
+    let groupList = that.data.groupList;
+    let userGroupArray = that.data.userGroupArray;
+    let group = userGroupArray[0][e.detail.value[0]];
+    let user = userGroupArray[1][e.detail.value[1]];
+    let responsible = {};
+   
+    let userlist = that.data.userlist;
+    userlist.forEach(function (item) {
+      if (user == item.name) {
+        responsible = item;
+        return;
+      }
+    });
+    that.setData({
+      responsibleGroupArr: userGroupArray,
+      resIndex: e.detail.value,
+      responsible: responsible
+    });
+  },
+  bindResColumnChange:function(e){
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
-      typeIndex: this.data.typeIndex,
-      workTypeArray: this.data.workTypeArray
+      resIndex: this.data.resIndex,
+      userGroupArray: this.data.userGroupArray
     }
     switch (e.detail.column) {
       case 0:
-        data.workTypeArray[1] = this.selectType(data.workTypeArray[0][e.detail.value]);
-        data.typeIndex[0] = e.detail.value;
+        data.userGroupArray[1] = this.selectUser(data.userGroupArray[0][e.detail.value]);
+        data.resIndex[0] = e.detail.value;
         break
       case 1:
-        data.typeIndex[1] = e.detail.value;;
-        console.log("title:" + data.typeIndex[1]);
+        data.resIndex[1] = e.detail.value;;
+        console.log("title:" + data.resIndex[1]);
         break;
     }
     this.setData(data);
+  },
+  bindRevColumnChange: function (e) {
+    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var data = {
+      revIndex: this.data.revIndex,
+      userGroupArray: this.data.userGroupArray
+    }
+    switch (e.detail.column) {
+      case 0:
+        data.userGroupArray[1] = this.selectUser(data.userGroupArray[0][e.detail.value]);
+        data.revIndex[0] = e.detail.value;
+        break
+      case 1:
+        data.revIndex[1] = e.detail.value;;
+        console.log("title:" + data.revIndex[1]);
+        break;
+    }
+    this.setData(data);
+  },
+  selectUser: function (group) {
+    let that = this;
+    let userlist = that.data.userlist;
+    let userArr = [];
+    if (group != null) {
+      userlist.forEach(function (item) {
+        let groupList = item.userGroupList
+        if (groupList !=null) {
+          groupList.forEach(function(g){
+            if (g.groupName==group){
+              userArr.push(item.name);
+            }
+          })
+          
+        }
+      });
+    }
+    return userArr;
   },
   validateForm: function () {
     let wxValidate = app.wxValidate({
@@ -386,31 +456,40 @@ Page({
     return wxValidate;
   },
   formSubmit: function(e) {
+    debugger
     let that = this;
-    let validate = this.validateForm();
-    
-    if (!validate.checkForm(e)) {
-      const error = validate.errorList[0];
+    // let validate = this.validateForm();
+    // if (!validate.checkForm(e)) {
+    //   const error = validate.errorList[0];
+    //   that.setData({
+    //     popErrorMsg: error.msg
+    //   })
+    //   return false;
+    // };
+    let reviewer = that.data.reviewer;
+    if (reviewer==null){
       that.setData({
         popErrorMsg: error.msg
       })
       return false;
-    };
-
+    }
     let url = '/work/release';
     let method = 'post';
 
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
-    work.departments = that.data.checkedDep;
-    work.responsibleList=that.data.checkedResponsible;
-
-    work.reviewer= that.data.checkedReviewName;
-    work.reviewerNum= that.data.checkedReview;
+    // work.departments = that.data.checkedDep; //暂时屏蔽
+    // work.responsibleList=that.data.checkedResponsible;
+    work.responsibleList ="768672:张三"
+    // work.reviewer= that.data.checkedReviewName;
+    // work.reviewerNum= that.data.checkedReview;
+    work.reviewer = that.data.reviewer.name
+    work.reviewerNum = that.data.reviewer.account;
     work.creator=loginUser.name;
     work.creatorNum=loginUser.account;
    
     util.onSubmitJson(url, work, method, function(res) {
+      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
