@@ -204,7 +204,7 @@
       </view>
     </view>
 
-    <view class="weui-panel weui-form-preview__ft">
+    <view class="weui-panel weui-form-preview__ft fixation-btn">
       <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
       <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
     </view>

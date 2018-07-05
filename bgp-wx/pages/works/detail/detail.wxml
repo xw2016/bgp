@@ -114,68 +114,86 @@
           <view class="weui-cell__bd">
             <textarea class="weui-textarea" name="remark" bindinput="bindInputRemarkChange" maxlength="500" auto-focus auto-height placeholder="请填写意见" style="height: 5.3em" value="{{work.remark}}" />
             <!-- <view class="weui-textarea-counter">0/300</view> -->
-<!-- </view>
+  <!-- </view>
 </view>
 </view>
 </view> 
 </block> -->
-<block  wx:if="{{action =='done'}}">
-  <!--图片描述-->
-  <view class="weui-cells__title">任务图片</view>
-  <view class="weui-cells">
-    <view class="weui-cell">
-      <view class="weui-cell__bd">
-        <view class="weui-uploader">
-          <!-- <view class="weui-uploader__hd">
+  <block wx:if="{{action =='done'&&files.length>0}}">
+    <!--图片描述-->
+    <view class="weui-cells__title">任务图片</view>
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <!-- <view class="weui-uploader__hd">
             <view class="weui-uploader__title">任务文件</view>
             <view class="weui-uploader__info">{{files.length}}/8</view>
           </view> -->
-          <view class="weui-uploader__bd">
-            <view class="weui-uploader__files" id="uploaderFiles">
-              <block wx:for="{{files}}" wx:key="*this">
-                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                  <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                </view>
-                <!-- <progress percent="20" show-info /> -->
-              </block>
-            </view>
-            <!-- <view class="weui-uploader__input-box">
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files" id="uploaderFiles">
+                <block wx:for="{{files}}" wx:key="*this">
+                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                  </view>
+                  <!-- <progress percent="20" show-info /> -->
+                </block>
+              </view>
+              <!-- <view class="weui-uploader__input-box">
               <view class="weui-uploader__input" bindtap="chooseImage"></view>
             </view> -->
+            </view>
           </view>
         </view>
       </view>
     </view>
-  </view>
-   <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+    <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
     <view class="modal-dialog" hidden="{{modalHidden}}">
-
       <image class="image" src="{{current}}" mode='aspectFit' />
-
     </view>
-</block>
-<view class="weui-panel weui-form-preview__ft">
-  <block wx:if="{{action =='todo'}}">
-    <!--如果是任务责任人，并且未结束，则显示-->
-    <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003')}}">
-      <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
-      <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
-      <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
-      <!-- </block>
+  </block>
+  <!--子任务-->
+  <block wx:if="{{subWorkList.length>0}}">
+    <view class="weui-cells__title"></view>
+    <view class="weui-form-preview">
+      <view class="weui-panel__hd">子任务信息</view>
+      <view class="result-item" wx:key="unique" wx:for="{{subWorkList}}" data-idx="{{index}}" bindtap="showSubWorkDetail">
+        <view class="weui-form-preview">
+          <view class="weui-form-preview__hd">
+            <view class="weui-form-preview__item">
+              <view class="weui-form-preview__label">{{index+1}}.</view>
+              <view class="weui-form-preview__value weui-cell_link">
+                {{item.workName}}({{item.statusName}})
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+  <!--审核按钮-->
+  <view class="weui-panel weui-form-preview__ft fixation-btn" >
+    <block wx:if="{{action =='todo'}}">
+      <!--如果是任务责任人，并且未结束，则显示-->
+      <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003')}}">
+        <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
+        <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
+        <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
+        <!-- </block>
         <block wx:else>
           <button bindtap="submitWorkLeader" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
         </block> -->
-      <!--如果是任务审核人，并且已提交审核，则显示-->
+        <!--如果是任务审核人，并且已提交审核，则显示-->
+      </block>
+      <block wx:else>
+        <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary " hover-class="weui-form-preview__btn_active">返回</button>
+        <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&work.status=='004'}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
+      </block>
     </block>
+
     <block wx:else>
       <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
-      <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&work.status=='004'}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
     </block>
-  </block>
-
-  <block wx:else>
-    <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
-  </block>
-</view>
+  </view>
 </view>
 <!-- </view> -->

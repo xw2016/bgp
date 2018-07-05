@@ -109,19 +109,15 @@
        
       </view>
       <!--图片上传结束-->
-      <view class="weui-btn-area">
+       <view class="weui-btn-area ">
         <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
         <button class="weui-btn" type="default" bindtap="formSave">保存</button>
+      </view> 
+    <!-- <view class="weui-panel weui-form-preview__ft fixation-btn">
+      <button bindtap="formSave" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+      <button formType="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
+    </view> -->
 
-      </view>
     </form>
   </view>
 </view>
-<!-- 底部固定 -->
-<!-- <view class="page__hd" style="position:fixed; bottom:0;width: 100%;">
-     <view class="weui-btn-area">
-       <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
-       <button class="weui-btn" type="default" bindtap="formSave">保存</button> 
-
-    </view>    
-</view> -->

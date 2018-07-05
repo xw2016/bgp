@@ -8,11 +8,15 @@ Page({
   data: {
     modalHidden: true,
     work: [],  //任务
+    subWorkList:[],
     action: 'todo',
     isShowDetail: false,//是否显示详情
     isShowWorkLog:false,
     userNo:'',
     files: [] //文件上传
+  },
+  onShow:function(){
+
   },
   onLoad: function (options) {
     wx.setNavigationBarTitle({
@@ -33,7 +37,31 @@ Page({
     if(action =='done'){
       this.initFile(queryBean.workId);
     }
+    this.initSubWork(queryBean.workId);
   },
+  //初始化子任务
+  initSubWork: function (worksId){
+    let that = this;
+    let url = '/work/queryChildWorkById';
+    let method = 'POST';
+    // let worksId = that.work.workId;
+    let data = {
+      worksId: worksId
+    }
+    util.onSubmit(url, data, method, function (res) {
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        let subWorkList = res.data.data;
+        if (subWorkList != null) {
+          that.setData({
+            subWorkList: subWorkList
+          });
+        }
+      }
+    });
+  },
+  //初始化附件
   initFile: function (worksId) {
     let that = this;
     let url = '/work/queryFileUploadById';
@@ -86,6 +114,17 @@ Page({
     let isShowWorkLog = that.data.isShowWorkLog == false ? true : false
     this.setData({
       isShowWorkLog: isShowWorkLog
+    })
+  },
+  //查询详情
+  showSubWorkDetail: function (e) {
+    var that = this
+    var idx = e.currentTarget.dataset.idx;
+    //将对象转为string
+    var queryBean = JSON.stringify(that.data.subWorkList[idx])
+
+    wx.navigateTo({
+      url: '../detail/detail?queryBean=' + queryBean + '&action=done'
     })
   },
   todoWork: function () {

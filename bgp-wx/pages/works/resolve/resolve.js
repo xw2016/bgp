@@ -31,7 +31,7 @@ Page({
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
-    debugger
+    
     this.setData({
       work: queryBean,
       loginUser: loginUser,

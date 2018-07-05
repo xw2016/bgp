@@ -56,3 +56,15 @@ page{
 .one_star{font-size: 20rpx;color: #999;} 
 .danger{ color: #f64400;} 
 .ad_popError{ background: #de352d; color: #fff; height: 58rpx; line-height: 58rpx; font-size: 24rpx; text-align: center; position: absolute; left: 0; top: 0; width: 100%; z-index:3;} 
+
+/**底部按钮固定**/
+.fixation-btn {
+ position: fixed;
+ bottom: 0;
+ width: 100%;
+ }
+ .fixation-btn-top {
+ position: fixed;
+ top: 0;
+ width: 100%;
+ }
