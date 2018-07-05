@@ -1,7 +1,7 @@
 <!--pages/works/detail/workDetail.wxml-->
 <!-- <view class="page"> -->
 <view class="weui-cells__title"></view>
-<view class="page__bd">
+<view class="page__bd fixation-page">
 
   <!--任务名称,任务详情-->
   <view class="weui-panel">
@@ -157,7 +157,7 @@
     <view class="weui-cells__title"></view>
     <view class="weui-form-preview">
       <view class="weui-panel__hd">子任务信息</view>
-      <view class="result-item" wx:key="unique" wx:for="{{subWorkList}}" data-idx="{{index}}" bindtap="showSubWorkDetail">
+      <view class="result-item" wx:for="{{subWorkList}}" data-idx="{{index}}" bindtap="showSubWorkDetail">
         <view class="weui-form-preview">
           <view class="weui-form-preview__hd">
             <view class="weui-form-preview__item">
@@ -171,29 +171,30 @@
       </view>
     </view>
   </block>
-  <!--审核按钮-->
-  <view class="weui-panel weui-form-preview__ft fixation-btn" >
-    <block wx:if="{{action =='todo'}}">
-      <!--如果是任务责任人，并且未结束，则显示-->
-      <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003')}}">
-        <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
-        <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
-        <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
-        <!-- </block>
+</view>
+<!--审核按钮-->
+<view class="weui-panel weui-form-preview__ft fixation-btn">
+  <block wx:if="{{action =='todo'}}">
+    <!--如果是任务责任人，并且未结束，则显示-->
+    <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003')}}">
+      <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
+      <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
+      <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
+      <!-- </block>
         <block wx:else>
           <button bindtap="submitWorkLeader" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
         </block> -->
-        <!--如果是任务审核人，并且已提交审核，则显示-->
-      </block>
-      <block wx:else>
-        <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary " hover-class="weui-form-preview__btn_active">返回</button>
-        <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&work.status=='004'}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
-      </block>
+      <!--如果是任务审核人，并且已提交审核，则显示-->
     </block>
-
     <block wx:else>
-      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary " hover-class="weui-form-preview__btn_active">返回</button>
+      <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&work.status=='004'}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
     </block>
-  </view>
+  </block>
+
+  <block wx:else>
+    <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+  </block>
 </view>
+
 <!-- </view> -->

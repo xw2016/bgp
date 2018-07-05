@@ -1,7 +1,7 @@
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
   <form bindreset="formReset" bindsubmit='formSubmit'>
-    <view bindtap='hideErrMsg'>
+    <view bindtap='hideErrMsg' class="fixation-page">
       <!--任务名称-->
       <view class="weui-cells__title">请填写交办的任务名称</view>
       <view class="weui-cells weui-cells_after-title">

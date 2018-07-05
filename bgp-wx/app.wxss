@@ -63,8 +63,6 @@ page{
  bottom: 0;
  width: 100%;
  }
- .fixation-btn-top {
- position: fixed;
- top: 0;
- width: 100%;
+.fixation-page {
+ margin-bottom: 46px;
  }

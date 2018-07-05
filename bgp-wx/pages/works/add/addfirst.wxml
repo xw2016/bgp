@@ -1,7 +1,7 @@
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
   <form bindreset="formReset" bindsubmit='next'>
-    <view bindtap='hideErrMsg'>
+    <view bindtap='hideErrMsg' class="fixation-page">
 
       <view class="weui-cells__title"></view>
       <view class="weui-cells weui-cells_after-title">
