@@ -125,6 +125,16 @@ Page({
       showResponsible: false
     })
   },
+  bindDescription: function (e) {
+    this.setData({
+      description: e.detail.value
+    })
+  },
+  bindCreateReson: function (e) {
+    this.setData({
+      createReson: e.detail.value
+    })
+  },
   bindSearchReviewUser: function (e) {
     let key = e.detail.value;
     let userList = util.searchUser(key);
@@ -522,7 +532,18 @@ Page({
       })
       return false;
     }
-   
+    // if (util.compareDate(util.formatTime(new Date()), that.data.planBeginDate)) {
+    //   that.setData({
+    //     popErrorMsg: '开始日期不能早于今天'
+    //   })
+    //   return false;
+    // }
+    // if (util.compareDate(that.data.planBeginDate, that.data.planEndDate)) {
+    //   that.setData({
+    //     popErrorMsg: '结束日期不能早于开始日期'
+    //   })
+    //   return false;
+    // }
 
     let url = '/work/resolve';
     let method = 'post';

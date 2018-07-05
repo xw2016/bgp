@@ -252,7 +252,7 @@ Page({
       })
       return false;
     }
-    debugger
+
     if (util.compareDate(util.formatTime(new Date()), that.data.planBeginDate)){
       that.setData({
         popErrorMsg: '开始日期不能早于今天'

@@ -11,7 +11,7 @@
           </view>
           <view class="weui-cell__bd">
             <!-- <block wx:if="{{pass=='N'}}"> -->
-              <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
+            <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
             <!-- </block>
             <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
@@ -183,9 +183,26 @@
           </view>
         </view>
       </view>
-
     </view>
 
+    <view class="weui-cells__title">任务描述</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription' value='{{work.description}}'/>
+          <!-- <view class="weui-textarea-counter">0/200</view> -->
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells__title">发起理由</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" placeholder="请输入发起理由" style="height: 3.3em" bindinput='bindCreateReson' value='{{work.createReson}}'/>
+          <!-- <view class="weui-textarea-counter">0/200</view> -->
+        </view>
+      </view>
+    </view>
 
     <view class="weui-panel weui-form-preview__ft">
       <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
