@@ -5,7 +5,7 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__bd">
     <form bindreset="formReset">
-      <view bindtap='hideErrMsg'>
+      <view bindtap='hideErrMsg' class="fixation-page">
         <!-- <view class="weui-cells weui-cells_after-title"> -->
         <!--任务名称-->
         <!--任务名称,任务详情-->
@@ -109,14 +109,14 @@
        
       </view>
       <!--图片上传结束-->
-       <view class="weui-btn-area ">
+       <!-- <view class="weui-btn-area ">
         <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
         <button class="weui-btn" type="default" bindtap="formSave">保存</button>
-      </view> 
-    <!-- <view class="weui-panel weui-form-preview__ft fixation-btn">
+      </view>  -->
+     <view class="weui-panel weui-form-preview__ft fixation-btn">
       <button bindtap="formSave" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
       <button formType="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
-    </view> -->
+    </view> 
 
     </form>
   </view>
