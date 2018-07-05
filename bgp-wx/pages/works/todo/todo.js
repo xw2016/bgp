@@ -115,9 +115,21 @@ Page({
     work.endDate = that.data.endDate;
     
     if (work.remark == '' || work.remark == null) {
-      this.setData({
+      that.setData({
         popErrorMsg: "请填写任务执行情况"
       });
+      return false;
+    }
+    if (util.compareDate(util.formatTime(new Date()), that.data.beginDate)) {
+      that.setData({
+        popErrorMsg: '开始日期不能早于今天'
+      })
+      return false;
+    }
+    if (util.compareDate(that.data.beginDate, that.data.endDate)) {
+      that.setData({
+        popErrorMsg: '结束日期不能早于开始日期'
+      })
       return false;
     }
     this.submit(url, work)
@@ -132,18 +144,6 @@ Page({
     this.submit(url, work)
   },
   submit: function(urls, data) {
-    if (util.compareDate(util.formatTime(new Date()), that.data.beginDate)) {
-      that.setData({
-        popErrorMsg: '开始日期不能早于今天'
-      })
-      return false;
-    }
-    if (util.compareDate(that.data.planBeginDate, that.data.endDate)) {
-      that.setData({
-        popErrorMsg: '结束日期不能早于开始日期'
-      })
-      return false;
-    }
     let that = this;
     let url = urls;
     let method = 'post';

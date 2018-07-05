@@ -198,7 +198,7 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea class="weui-textarea" placeholder="请输入发起理由" style="height: 3.3em" bindinput='bindCreateReson' value='{{work.createReson}}'/>
+          <textarea class="weui-textarea" placeholder="请输入发起理由" style="height: 3.3em" bindinput='bindCreateReson' value='{{work.createReason}}'/>
           <!-- <view class="weui-textarea-counter">0/200</view> -->
         </view>
       </view>
