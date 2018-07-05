@@ -196,7 +196,8 @@ Page({
         required: true
       },
       planEndDate: {
-        required: true
+        required: true,
+        compareDate: "#planBeginDate"
       },
       reviewer: {
         required: false
@@ -218,7 +219,8 @@ Page({
         required: '请选择计划开始日期'
       },
       planEndDate: {
-        required: '请选择计划结束日期'
+        required: '请选择计划结束日期',
+        compareDate:'结束日期不能早于开始日期'
       },
       reviewer: {
         required: '请选择审核人'
@@ -247,6 +249,19 @@ Page({
     if (typeof  that.data.workType==='undefined'){
       that.setData({
         popErrorMsg: '请选择工作类型'
+      })
+      return false;
+    }
+    debugger
+    if (util.compareDate(util.formatTime(new Date()), that.data.planBeginDate)){
+      that.setData({
+        popErrorMsg: '开始日期不能早于今天'
+      })
+      return false;
+    }
+    if (util.compareDate(that.data.planBeginDate, that.data.planEndDate)){
+      that.setData({
+        popErrorMsg: '结束日期不能早于开始日期'
       })
       return false;
     }

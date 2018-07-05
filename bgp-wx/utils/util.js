@@ -15,6 +15,10 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+//日期比较
+function compareDate(s1, s2) {
+  return ((new Date(s1.replace(/-/g, "\/"))) > (new Date(s2.replace(/-/g, "\/"))));
+}
 function goBack() {
   wx.navigateBack({
     delta: 1
@@ -347,6 +351,7 @@ module.exports = {
   initUser: initUser,
   initGroup:initGroup,
   searchUser: searchUser,
+  compareDate: compareDate,
   initFile: initFile
   // validateForm
 }
