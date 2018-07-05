@@ -346,6 +346,15 @@ Page({
     let reviewer = {};
 
     let userlist = that.data.userlist;
+    if (user == '清空') {
+      that.setData({
+        reviewerGroupArr: userGroupArray,
+        revIndex: e.detail.value,
+        reviewer: ''
+
+      });
+      return false;
+    }
     userlist.forEach(function (item) {
       if (user == item.name) {
         reviewer = item;
@@ -369,7 +378,8 @@ Page({
    
     let userlist = that.data.userlist;
 
-    if (typeof (user) == 'undefined') {
+    // if (typeof (user) == 'undefined') {
+    if (user == '清空') {
       that.setData({
         responsibleGroupArr: userGroupArray,
         resIndex: e.detail.value,
@@ -443,7 +453,7 @@ Page({
     let that = this;
     let userlist = that.data.userlist;
     let userArr = [];
-    if (group != null) {
+    if (group != '') {
       userlist.forEach(function (item) {
         let groupList = item.userGroupList
         if (groupList !=null) {
@@ -452,9 +462,10 @@ Page({
               userArr.push(item.name);
             }
           })
-          
         }
       });
+    }else{
+      userArr.push('清空');
     }
     return userArr;
   },

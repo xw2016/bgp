@@ -1,7 +1,7 @@
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
   <form bindreset="formReset" bindsubmit='formSubmit'>
-    <view bindtap='hideErrMsg' class="fixation-page">
+    <view bindtap='hideErrMsg'>
       <!--任务名称-->
       <view class="weui-cells__title">请填写交办的任务名称</view>
       <view class="weui-cells weui-cells_after-title">
@@ -165,7 +165,6 @@
         </checkbox-group>
       </block> -->
       <!--审核人pick-->
-      <view class="weui-cells__title"></view>
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
@@ -204,7 +203,7 @@
       </view>
     </view>
 
-    <view class="weui-panel weui-form-preview__ft fixation-btn">
+    <view class="weui-panel weui-form-preview__ft ">
       <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
       <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
     </view>
