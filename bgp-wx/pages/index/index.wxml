@@ -18,7 +18,7 @@
 <block wx:if="{{!hasUserInfo && canIUse}}">
   <view class="container">
     <view class="userinfo">
-      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 龙津移动办公 </button>
     </view>
   </view>
 </block>

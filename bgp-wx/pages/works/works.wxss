@@ -29,3 +29,33 @@ page{
   height: 4rpx;  
   background: #FFCC00;  
 } 
+
+.fl text {
+  color:#000;
+}
+.aricle-user-wrap {
+  position: relative;
+}
+.index-poster-name {
+  color:#5a85ce;
+  font-weight:bold;
+  font-size:31rpx;
+  font-family: "Microsoft YaHei",Arial;
+}
+.index-poster-kind {
+  background-color: #5bc3ff;
+  border-radius: 2px;
+  margin-left: 5px;
+  height: 130rpx;
+  font-size: 22rpx;
+  color: #fff;
+  font-family: "Microsoft YaHei",Arial;
+  vertical-align:1px;
+  padding: 0px 5px;
+}
+.index-post-info {
+  font-size:24rpx;
+  font-family: "Microsoft YaHei",Arial;
+  margin-right: 10px;
+  color: #858585;
+}

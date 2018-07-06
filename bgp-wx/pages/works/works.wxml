@@ -2,7 +2,7 @@
 
 <view class="weui-cells__title"></view>
 <!-- 姓名 -->
-<view class="weui-cells weui-cells_after-title">
+<!-- <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
       <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" style="width: 45px; height: 45px; display: block" />
@@ -11,7 +11,27 @@
       <view>{{loginUser.name}}</view>
     </view>
   </view>
+</view> -->
+
+<view>
+  <view style="padding:30rpx 24rpx 16rpx; float:left">
+    <image style="width:40px;height:35px;overflow:hidden;" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+  <view style="padding:30rpx 0px 0px; overflow:hidden; height:110rpx;">
+    <view class="aricle-user-wrap">
+      <text class="index-poster-name">{{loginUser.name}}</text>
+      <!-- <text class="index-poster-kind">V.{{item.User.Level}}</text> -->
+      <!-- <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view> -->
+    </view>
+    <view style="height:40rpx">
+      <text class="index-post-info">待办数 {{myReport.undoneWorkCount}}</text>
+      <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
+       <text class="index-post-info" bindtap="myScore">已得分 {{myReport.finalScore}}</text>
+      <text class="index-post-info" bindtap="myScore">预得分 {{myReport.reserveScore}}</text>
+    </view>
+  </view>
 </view>
+
 
 <!-- 我的任务（跳转） -->
 <view class="weui-cells__title"></view>
@@ -22,7 +42,7 @@
     </view>
     <view class="weui-cell__bd">
       <view style="display: inline-block; vertical-align: middle">我的任务</view>
-      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{todoLength}}">{{todoLength}}</view>
+      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{myReport.undoneWorkCount}}">{{myReport.undoneWorkCount}}</view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
@@ -45,7 +65,7 @@
     </view>
   </view>
 </view>
-<!--任务积分-->
+<!--任务积分
 <view class="weui-cells__title"></view>
 <view class="weui-cells weui-cells_after-title" bindtap="myScore">
   <view class="weui-cell weui-cell_access">
@@ -59,4 +79,4 @@
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
     </view>
   </view>
-</view>
+</view>-->

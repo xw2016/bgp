@@ -9,34 +9,11 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
-  // onLaunch: function () {
-  //   util.onLogin();
-  // },
-  //事件处理函数
-  bindViewTap: function () {
-    //if login success
-    util.onLogin();
-    // var loginToken = wx.getStorageSync("loginToken");
-    // if (loginToken) {
-    //   wx.redirectTo({
-    //     // url: '../logs/logs'
-    //     url: '../works/works'
-    //     // url: '../rrtest/rrtest'
-    //   })
-    // }
 
-    //if login fail
-    //register
-  },
   onLoad: function () {
     wx.setNavigationBarTitle({
       title: '移动办公'
     })
-    // if (app.globalData.flag) {//如果flag为true，退出  
-    //   wx.navigateBack({
-    //     delta: 1
-    //   })
-    // }
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -63,7 +40,10 @@ Page({
         }
       })
     }
-    
+  },
+  //事件处理函数
+  bindViewTap: function () {
+    util.onLogin();
   },
   getUserInfo: function (e) {
     console.log(e)
