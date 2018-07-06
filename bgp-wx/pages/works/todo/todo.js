@@ -54,6 +54,7 @@ Page({
       worksId:worksId
     }
     util.onSubmit(url, data, method, function (res) {
+      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -107,6 +108,7 @@ Page({
   //   return wxValidate;
   // },
   formSubmit: function(e) {
+    debugger
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
@@ -120,9 +122,9 @@ Page({
       });
       return false;
     }
-    if (util.compareDate(util.formatTime(new Date()), that.data.beginDate)) {
+    if (util.compareDate(that.data.work.planBeginDate, that.data.beginDate)) {
       that.setData({
-        popErrorMsg: '开始日期不能早于今天'
+        popErrorMsg: '开始日期不能早于计划开始日期'
       })
       return false;
     }
@@ -147,7 +149,9 @@ Page({
     let that = this;
     let url = urls;
     let method = 'post';
+
     util.onSubmitJson(url, data, method, function(res) {
+ 
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
