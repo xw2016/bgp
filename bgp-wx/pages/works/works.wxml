@@ -29,7 +29,7 @@
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/done.png"></image>
       <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/fscore.png"></image>
-      <text class="index-post-info" bindtap="myScore">已得分 {{myReport.finalScore}}</text>
+      <text class="index-post-info" bindtap="myScore" >已得分 {{myReport.finalScore}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/rscore.png"></image>
       <text class="index-post-info" bindtap="myScore">预得分 {{myReport.reserveScore}}</text>
     </view>
@@ -39,9 +39,11 @@
  <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
 <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
 
- <view class=result-item"/>
+<view class="modal-title">我的积分</view>
+ <view class="result-item"/>
   <view class="result-item" wx:for="{{kpiSocres}}">
     <view class="weui-cell__bd" style="display: inline-block; vertical-align: middle">
+      <image  align="left" style="width:20rpx; height:20rpx;" src="../../resources/images/point.png"></image>
       {{kpiSocres[index].kpi}}:{{kpiSocres[index].socre}}
     </view>
   </view>

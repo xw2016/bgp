@@ -88,7 +88,7 @@ page{
 
 .modal-dialog {
   width: 90%;
-    height: 60%; 
+    height: 55%; 
   overflow: hidden;
   position: fixed;
   top: 20%;
@@ -97,4 +97,10 @@ page{
   background: #f9f9f9;
   /* margin: -180rpx 105rpx; */
   border-radius: 36rpx;
+}
+.modal-title{
+  padding:15px;
+font: 20px "microsoft yahei";
+text-align: center;
+
 }
