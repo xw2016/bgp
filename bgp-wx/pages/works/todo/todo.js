@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    modalHidden:true,
+    modalHidden: true,
     popErrorMsg: '',
     beginDate: '',
     remark: '',
@@ -45,28 +45,52 @@ Page({
       popErrorMsg: ''
     })
   },
-  initFile: function (worksId) {
+  initFile: function(worksId) {
     let that = this;
     let url = '/work/queryFileUploadById';
     let method = 'POST';
     // let worksId = that.work.workId;
-    let data={
-      worksId:worksId
+    let data = {
+      worksId: worksId
     }
-    util.onSubmit(url, data, method, function (res) {
-      debugger
+    util.onSubmit(url, data, method, function(res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-        let files = [];
-        if (res.data.data!=null){
-          files = res.data.data.map(item => { //获取工作类型总类数组
-           
-            return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+        let imgfiles = [];
+        let docfiles = [];
+        let videofiles = [];
+        let audiofiles = [];
+        let otherfiles = [];
+        if (res.data.data != null) {
+          res.data.data.map(item => {
+            item.url=app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+            switch (item.type) {
+              case 'jpg': case 'jpeg':
+                imgfiles.push(item);
+                break;
+              case 'silk':
+                audiofiles.push(item);
+                break;
+              case 'doc':case'docx':case 'txt':
+                docfiles.push(item);
+                break;
+              case 'mp4':
+                videofiles.push(item)
+                break
+              default:
+                otherfiles.push(item);
+
+            }
           });
+          debugger
           that.setData({
-            files: files,
-            captchaImage:url
+            imgfiles: imgfiles,
+            docfiles: docfiles,
+            videofiles: videofiles,
+            audiofiles: audiofiles,
+            otherfiles: otherfiles,
+            captchaImage: url
           });
         }
       }
@@ -108,14 +132,13 @@ Page({
   //   return wxValidate;
   // },
   formSubmit: function(e) {
-    debugger
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
     work.remark = that.data.remark == '' ? work.remark : that.data.remark;
     work.beginDate = that.data.beginDate;
     work.endDate = that.data.endDate;
-    
+
     if (work.remark == '' || work.remark == null) {
       that.setData({
         popErrorMsg: "请填写任务执行情况"
@@ -149,9 +172,7 @@ Page({
     let that = this;
     let url = urls;
     let method = 'post';
-
     util.onSubmitJson(url, data, method, function(res) {
- 
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -187,21 +208,35 @@ Page({
   },
   previewImage: function(e) {
     this.setData({
-      current: e.currentTarget.id, 
-      modalHidden:false
+      current: e.currentTarget.id,
+      modalHidden: false
     })
     // wx.previewImage({
     //   current: e.currentTarget.id, // 当前显示图片的http链接
-    //   urls: this.data.files // 需要预览的图片http链接列表
+    //   urls: this.data.imagfiles // 需要预览的图片http链接列表
     // })
   },
-  modalCandel: function () {
+  bindFileDown:function(e){
+    wx.downloadFile({
+      url: e.currentTarget.id, //仅为示例，并非真实的资源
+      success: function (res) {
+        debugger
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          wx.playVoice({
+            filePath: res.tempFilePath
+          })
+        }
+      }
+    })
+  },
+  modalCandel: function() {
     // do something
     this.setData({
       modalHidden: true
     })
   },
-isPicture :function (str) {
+  isPicture: function(str) {
     //判断是否是图片 - strFilter必须是小写列举
     let strFilter = ".jpeg|.gif|.jpg|.png|.bmp|.pic|"
     if (str.indexOf(".") > -1) {

@@ -5,7 +5,7 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__bd">
     <form bindreset="formReset">
-      <view bindtap='hideErrMsg' >
+      <view bindtap='hideErrMsg'>
         <!-- <view class="weui-cells weui-cells_after-title"> -->
         <!--任务名称-->
         <!--任务名称,任务详情-->
@@ -60,28 +60,23 @@
           </view>
         </view>
 
-        <!--图片上传开始-->
+        <!--文件列表-->
         <view class="weui-cells__title"></view>
-
+        <!--图片上传开始-->
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">
                 <view class="weui-uploader__hd">
                   <view class="weui-uploader__title">图片上传</view>
-                  <view class="weui-uploader__info">{{files.length}}/8</view>
+                  <!-- <view class="weui-uploader__info">{{files.length}}/8</view> -->
                 </view>
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files" id="uploaderFiles">
-                    <block wx:for="{{files}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                        <!-- 删除按钮 -->
-                        <!-- <view class="delete" bindtap="delete" data-index="{{index}}">
-                          <image style="left: {{79 / 2 - 10}}px;" src="../../../resources/images/icon_delete.png" />
-                        </view> -->
+                    <block wx:for="{{imgfiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}">
+                        <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
                       </view>
-                      <!-- <progress percent="20" show-info /> -->
                     </block>
                   </view>
                   <view class="weui-uploader__input-box">
@@ -92,28 +87,49 @@
             </view>
           </view>
         </view>
-
-      </view>
-
-      <!-- <modal title="" hidden="{{modalHidden}}" bindconfirm="modalConfirm" bindcancel="modalCandel">
-        <view>
-          <image class="image" src="{{current}}" mode='widthFix' />
+        <!--文件列表-->
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                  <view class="weui-uploader__title">文件上传</view>
+                  <!-- <view class="weui-uploader__info">{{files.length}}/8</view> -->
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files" id="uploaderFiles">
+                    <block wx:for="{{docfiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
+                       <image wx-if="{{item.type==txt}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+                       <image wx-elif="{{item==doc}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+                        <view  class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+                      </view>
+                    </block>
+                    
+                  </view>
+                  <!-- <view class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                  </view> -->
+                </view>
+              </view>
+            </view>
+          </view>
         </view>
 
-      </modal> -->
+      </view>
       <!--弹窗-->
       <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
       <view class="modal-dialog" hidden="{{modalHidden}}">
-      
-          <image class="image" src="{{current}}" mode='aspectFit' />
-       
+
+        <image class="image" src="{{current}}" mode='aspectFit' />
+
       </view>
       <!--图片上传结束-->
-        <view class="weui-btn-area ">
+      <view class="weui-btn-area ">
         <button class="weui-btn" type="primary" bindtap="formSubmit">提交审核</button>
         <button class="weui-btn" type="default" bindtap="formSave">保存</button>
-      </view>  
-     <!-- <view class="weui-panel weui-form-preview__ft fixation-btn">
+      </view>
+      <!-- <view class="weui-panel weui-form-preview__ft fixation-btn">
       <button bindtap="formSave" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">保存</button>
       <button formType="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
     </view>  -->
