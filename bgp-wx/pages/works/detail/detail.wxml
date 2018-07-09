@@ -36,18 +36,25 @@
             <block wx:else>{{work.parentWorkName}}</block>
           </view>
           <!-- 责任人 -->
-          <view class="weui-form-preview__label">责任人</view>
+          <!-- <view class="weui-form-preview__label">责任人</view>
           <view class="weui-form-preview__value">
             <block wx:if="{{work.responsible ==null}}">无</block>
             <block wx:else>{{work.responsible}}</block>
-          </view>
+          </view> -->
           <!-- 审核人 -->
-          <view class="weui-form-preview__label">审核人</view>
+          <!-- <view class="weui-form-preview__label">审核人</view>
           <view class="weui-form-preview__value">
             <block wx:if="{{work.reviewer ==null}}">无</block>
             <block wx:else>{{work.reviewer}}</block>
+          </view> -->
+          <!--任务类型-->
+          <view class="weui-form-preview__label">任务类型</view>
+          <view class="weui-form-preview__value">
+            <block wx:if="{{work.typeName ==null}}">无</block>
+            <block wx:else>{{work.typeName}}</block>
+            <!-- <view bindtap="bindguide" class="weui-cell_link">查看工作指引</view> -->
           </view>
-
+      
           <!-- 状态-->
           <view class="weui-form-preview__label">任务状态</view>
           <view class="weui-form-preview__value">
@@ -56,17 +63,18 @@
           </view>
 
           <!--计划开始时间-->
-          <view class="weui-form-preview__label">计划开始时间</view>
+          <view class="weui-form-preview__label">计划时间</view>
           <view class="weui-form-preview__value">
-            <block wx:if="{{work.planBeginDate ==null}}">无</block>
-            <block wx:else>{{work.planBeginDate}}</block>
+            <!-- <block wx:if="{{work.planBeginDate ==null}}">无</block>
+            <block wx:else>{{work.planBeginDate}}</block> -->
+            {{work.planBeginDate}} 至 {{work.planEndDate}}
           </view>
           <!--计划完成时间-->
-          <view class="weui-form-preview__label">计划完成时间</view>
+          <!-- <view class="weui-form-preview__label">计划完成时间</view>
           <view class="weui-form-preview__value">
             <block wx:if="{{work.planEndDate ==null}}">无</block>
             <block wx:else>{{work.planEndDate}}</block>
-          </view>
+          </view> -->
           <!--如果已开始，则显示 实际开始时间-->
           <block wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
             <view wx:if="{{work.status!='001'}}" class="weui-form-preview__label">实际开始时间</view>

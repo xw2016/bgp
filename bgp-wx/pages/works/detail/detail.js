@@ -15,9 +15,7 @@ Page({
     userNo:'',
     files: [] //文件上传
   },
-  onShow:function(){
 
-  },
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '任务详情'
@@ -38,6 +36,12 @@ Page({
       this.initFile(queryBean.workId);
     }
     this.initSubWork(queryBean.workId);
+  },
+  bindguide: function () {
+    var queryBean = JSON.stringify(this.data.workType)
+    wx.navigateTo({
+      url: '../../common/guide/guide?queryBean=' + queryBean
+    })
   },
   //初始化子任务
   initSubWork: function (worksId){
