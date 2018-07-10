@@ -76,7 +76,7 @@ Page({
               case 'silk':
                 audiofiles.push(item);
                 break;
-              case 'doc': case 'docx': case 'txt':
+              case 'doc': case 'docx': case 'txt': case 'xls': case 'xlsx':
                 docfiles.push(item);
                 break;
               // case 'txt':

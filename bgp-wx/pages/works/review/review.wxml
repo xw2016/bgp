@@ -22,27 +22,19 @@
   <view bindtap='hideErrMsg' class="fixation-page">
 
     <!--图片描述-->
-    <view class="weui-cells__title">任务图片</view>
+    <!-- <view class="weui-cells__title">任务图片</view>
     <view class="weui-cells">
       <view class="weui-cell">
         <view class="weui-cell__bd">
           <view class="weui-uploader">
-            <!-- <view class="weui-uploader__hd">
-            <view class="weui-uploader__title">任务文件</view>
-            <view class="weui-uploader__info">{{files.length}}/8</view>
-          </view> -->
             <view class="weui-uploader__bd">
               <view class="weui-uploader__files" id="uploaderFiles">
                 <block wx:for="{{files}}" wx:key="*this">
                   <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
                     <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
                   </view>
-                  <!-- <progress percent="20" show-info /> -->
                 </block>
               </view>
-              <!-- <view class="weui-uploader__input-box">
-              <view class="weui-uploader__input" bindtap="chooseImage"></view>
-            </view> -->
             </view>
           </view>
         </view>
@@ -50,10 +42,54 @@
     </view>
     <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
     <view class="modal-dialog" hidden="{{modalHidden}}">
-
       <image class="image" src="{{current}}" mode='aspectFit' />
-
-    </view>
+    </view> -->
+    <block wx:if="{{imgfiles.length>0}}"> 
+    <!--图片描述-->
+    <view class="weui-cells__title">任务图片</view>
+    <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__hd">
+                </view>
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <block wx:for="{{imgfiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      </view>
+                    </block>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+  </block>
+  <block wx:if="{{docfiles.length>0}}">
+  <!--文件列表-->
+        <view class="weui-cells__title">任务相关文档</view>
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <view wx:for="{{docfiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
+                        <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+                        <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+                        <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+  </block>
 
     <view class="weui-cells__title">考核维度评分</view>
     <view class="weui-cells weui-cells_after-title">

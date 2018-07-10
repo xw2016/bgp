@@ -59,6 +59,7 @@ Page({
       }
     })
   },
+  //初始化附件
   initFile: function (worksId) {
     let that = this;
     let url = '/work/queryFileUploadById';
@@ -68,16 +69,49 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function (res) {
+      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-        let files = [];
+        let imgfiles = [];
+        let docfiles = [];
+        let txtfiles = [];
+        let videofiles = [];
+        let audiofiles = [];
+        let otherfiles = [];
         if (res.data.data != null) {
-          files = res.data.data.map(item => { //获取工作类型总类数组
-            return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
+
+          res.data.data.map(item => {
+            item.url = app.globalData.servicePath + item.pathUrl;
+            switch (item.type) {
+              case 'jpg': case 'jpeg':
+                imgfiles.push(item.url);
+                break;
+              case 'silk':
+                audiofiles.push(item);
+                break;
+              case 'doc': case 'docx': case 'txt': case 'xls':case 'xlsx':
+                docfiles.push(item);
+                break;
+              // case 'txt':
+              //   txtfiles.push(item);
+              //   break;
+              case 'mp4':
+                videofiles.push(item)
+                break
+              default:
+                otherfiles.push(item);
+
+            }
           });
+          debugger
           that.setData({
-            files: files
+            imgfiles: imgfiles,
+            docfiles: docfiles,
+            videofiles: videofiles,
+            audiofiles: audiofiles,
+            otherfiles: otherfiles,
+            captchaImage: url
           });
         }
       }

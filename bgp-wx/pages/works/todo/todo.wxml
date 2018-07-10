@@ -98,7 +98,7 @@
                     <view wx:for="{{docfiles}}" wx:key="*this">
                       <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
                         <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
-                         <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+                        <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
                         <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
                       </view>
                     </view>
@@ -113,15 +113,16 @@
               </view>
             </view>
           </view>
+          <!-- </vAAA  -->
+
         </view>
+        <!--弹窗-->
+        <!-- <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+        <view class="modal-dialog" hidden="{{modalHidden}}">
 
-      </view>
-      <!--弹窗-->
-      <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
-      <view class="modal-dialog" hidden="{{modalHidden}}">
-
-        <image class="image" src="{{current}}" mode='aspectFit' />
-
+          <image class="image" src="{{current}}" mode='aspectFit' />
+          </view>
+-->
       </view>
       <!--图片上传结束-->
       <view class="weui-btn-area ">
