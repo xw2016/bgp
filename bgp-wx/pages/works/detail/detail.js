@@ -17,7 +17,7 @@ Page({
   },
 
   onLoad: function (options) {
-    debugger
+    
     wx.setNavigationBarTitle({
       title: '任务详情'
     })
@@ -76,7 +76,7 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function (res) {
-      debugger
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -111,7 +111,7 @@ Page({
 
             }
           });
-          debugger
+          
           that.setData({
             imgfiles: imgfiles,
             docfiles: docfiles,

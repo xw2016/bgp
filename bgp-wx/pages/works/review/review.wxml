@@ -1,7 +1,8 @@
 <!--pages/works/review/review.wxml-->
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
-  <!-- <form bindsubmit="formSubmit"> -->
+   <!-- <form bindsubmit="formSubmit">  -->
+   <view bindtap='hideErrMsg'>
   <!--执行日报-->
   <!-- <view class="weui-cells__title">任务执行日志</view>
   <view class="weui-cells weui-cells_after-title">
@@ -111,7 +112,7 @@
       </block>
     </view>
 
-    <view class="weui-cells__title">请填写审核意见</view>
+    <view class="weui-cells__title">审核意见:若打回，必须填写</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
@@ -125,12 +126,12 @@
     <!-- <view class="weui-cells__title"></view>
   <view class="weui-panel">
     <view class="weui-panel__hd">附件文件</view>
-
-  </view> -->
+-->
+  </view> 
   </view>
   <view class="weui-panel weui-form-preview__ft fixation-btn">
     <button bindtap="reject" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">打回</button>
     <button bindtap="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
   </view>
-  <!-- </form> -->
+   <!-- </form>  -->
 </view>

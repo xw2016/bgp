@@ -12,7 +12,7 @@ Page({
     console.log("works onShow");
     // this.searchWorksList("todo");
     this.queryWorksDetailReport();
-    this.openLoading();
+    // this.openLoading();
   },
   openLoading: function () {
     wx.showToast({

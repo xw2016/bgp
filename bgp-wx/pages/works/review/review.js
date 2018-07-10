@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    rejectInfo:'',
     modalHidden: true,
     popErrorMsg: '',
     imgList: [],
@@ -69,7 +70,6 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function (res) {
-      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -104,7 +104,6 @@ Page({
 
             }
           });
-          debugger
           that.setData({
             imgfiles: imgfiles,
             docfiles: docfiles,
@@ -118,21 +117,34 @@ Page({
     });
   },
   previewImage: function (e) {
-    this.setData({
-      current: e.currentTarget.id,
-      modalHidden: false
-    })
-    // wx.previewImage({
-    //   current: e.currentTarget.id, // 当前显示图片的http链接
-    //   urls: this.data.files // 需要预览的图片http链接列表
+    // this.setData({
+    //   current: e.currentTarget.id,
+    //   modalHidden: false
     // })
-  },
-  modalCandel: function () {
-    // do something
-    this.setData({
-      modalHidden: true
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.imgfiles // 需要预览的图片http链接列表
     })
   },
+  bindFileDown: function (e) {
+    wx.downloadFile({
+      url: e.currentTarget.id,
+      success: function (res) {
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          wx.openDocument({
+            filePath: res.tempFilePath
+          })
+        }
+      }
+    })
+  },
+  // modalCandel: function () {
+  //   // do something
+  //   this.setData({
+  //     modalHidden: true
+  //   })
+  // },
   // 绑定事件，因为不能用this.setData直接设置每个对象的索引值index。
   // 所以用自定义属性current来标记每个数组对象的下标
   bindChange_select: function (ev) {
@@ -172,6 +184,12 @@ Page({
     let that = this;
     let url = '/work/rejectAudit';
     let method = 'post';
+    debugger
+    if(that.data.rejectInfo==''){
+      that.setData({
+        popErrorMsg: '审核意见不能为空！'
+      })
+    }
     let workAuditVo = {
       workId: that.data.work.workId,
       workName: that.data.work.workName,

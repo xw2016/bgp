@@ -91,7 +91,7 @@ Page({
             otherfiles.push(item);
         }
       });
-      
+      debugger
       this.setData({
         files: files,
         imgfiles: imgfiles,
@@ -236,6 +236,7 @@ Page({
     let fileId='';
     let idx=-1;
     let files = that.data.files;
+    
     files.forEach(function(item,index){
    
       if (item.url == e){
@@ -255,7 +256,7 @@ Page({
         if (res.data.retCode != 200) {
           util.openAlert(res.data.msg);
         } else {
-          debugger
+    
           files.splice(idx, 1);
           that.initFileData(files);
         }
