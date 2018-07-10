@@ -124,7 +124,7 @@ function initFile (worksId) {
   return files;
 }
 //图片上传
-function onUploadFile(url, tempFilePaths, name, formData) {
+function onUploadFile(url, tempFilePaths, name, formData,callback) {
   var host = app.globalData.serviceUrl;
   //启动上传等待中...  
   // wx.showToast({
@@ -136,24 +136,32 @@ function onUploadFile(url, tempFilePaths, name, formData) {
   var uploadImgCount = 0;
   let loginToken = wx.getStorageSync("loginToken");
   for (var i = 0, h = tempFilePaths.length; i < h; i++) {
+    
     const uploadTask = wx.uploadFile({
       url: host+'/work/addFileUpload',
       filePath: tempFilePaths[i],
       name: "file",
       header: {
-        'content-type': 'multipart/form-data', "loginToken": loginToken
+        'content-type': 'application/json;charset=UTF-8', "loginToken": loginToken
       },
-      // formData: {
-      //   "workId": that.data.work.workId
-      // },
       formData: formData,
       success: function (res) {
-        var data = res.data
-        console.log(data);
+        
+        let result = JSON.parse(res.data);
+        if (result.retCode!=200){
+          console.log('上传文件失败:' );
+        }
+        var fileData = result.data
+        console.log(fileData);
         //do something
         //如果是最后一张,则隐藏等待中  
         if (uploadImgCount == tempFilePaths.length) {
           wx.hideToast();
+        }
+        if(callback!=null){
+          fileData.url = tempFilePaths[i-1];
+  
+          callback(fileData);
         }
       }
       ,
@@ -168,11 +176,11 @@ function onUploadFile(url, tempFilePaths, name, formData) {
       }
     });
 //监听文件上传进度
-    uploadTask.onProgressUpdate((res) => {
-      console.log('上传进度', res.progress)
-      console.log('已经上传的数据长度', res.totalBytesSent)
-      console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
-    });
+    // uploadTask.onProgressUpdate((res) => {
+    //   console.log('上传进度', res.progress)
+    //   console.log('已经上传的数据长度', res.totalBytesSent)
+    //   console.log('预期需要上传的数据总长度', res.totalBytesExpectedToSend)
+    // });
   }
 }
 function openAlert(content,callback) {
@@ -219,6 +227,7 @@ function onLogin(){
               });
               wx.navigateTo({
                 url: '../works/works'
+                // url:'../rrtest/test'
               })
             }
             else {

@@ -74,7 +74,7 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <block wx:for="{{imgfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item}}">
                         <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
                       </view>
                     </block>
@@ -96,18 +96,13 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <view wx:for="{{docfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
+                      <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}">
                         <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
                         <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
                         <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
                       </view>
                     </view>
-                    <!-- <view wx:for="{{txtfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
-                        <image style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
-                        <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
-                      </view>
-                    </view> -->
+     
                   </view>
                 </view>
               </view>

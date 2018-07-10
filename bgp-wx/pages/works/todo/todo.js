@@ -36,10 +36,7 @@ Page({
       endDate: beginDate == new Date() ? null : util.formatTime(new Date())
     })
     this.initFile(queryBean.workId);
-    // let files=  util.initFile(queryBean.workId);
-    // that.setData({
-    //   files: files
-    // });
+
   },
   hideErrMsg: function() {
     this.setData({
@@ -55,53 +52,55 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function(res) {
-      debugger
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
-        let imgfiles = [];
-        let docfiles = [];
-        let txtfiles = [];
-        let videofiles = [];
-        let audiofiles = [];
-        let otherfiles = [];
-        if (res.data.data != null) {
-          
-          res.data.data.map(item => {
-            item.url = app.globalData.servicePath + item.pathUrl;
-            switch (item.type) {
-              case 'jpg': case 'jpeg':
-                imgfiles.push(item.url);
-                break;
-              case 'silk':
-                audiofiles.push(item);
-                break;
-              case 'doc': case 'docx': case 'txt': case 'xls': case 'xlsx':
-                docfiles.push(item);
-                break;
-              // case 'txt':
-              //   txtfiles.push(item);
-              //   break;
-              case 'mp4':
-                videofiles.push(item)
-                break
-              default:
-                otherfiles.push(item);
-
-            }
-          });
-          debugger
-          that.setData({
-            imgfiles: imgfiles,
-            docfiles: docfiles,
-            videofiles: videofiles,
-            audiofiles: audiofiles,
-            otherfiles: otherfiles,
-            captchaImage: url
-          });
-        }
+        that.initFileData(res.data.data);
       }
     });
+  },
+  //初始化页面附件显示数据
+  initFileData:function(files){
+    let imgfiles = [];
+    let docfiles = [];
+    let txtfiles = [];
+    let videofiles = [];
+    let audiofiles = [];
+    let otherfiles = [];
+    if (files != null) {
+      files.map(item => {
+        
+        if (typeof(item.url) =='undefined'){
+          item.url = app.globalData.servicePath + item.pathUrl;
+        }
+        switch (item.type) {
+          case 'jpg': case 'jpeg':
+            imgfiles.push(item.url);
+            break;
+          case 'silk':
+            audiofiles.push(item);
+            break;
+          case 'doc': case 'docx': case 'txt': case 'xls': case 'xlsx':
+            docfiles.push(item);
+            break;
+          case 'mp4':
+            videofiles.push(item)
+            break
+          default:
+            otherfiles.push(item);
+        }
+      });
+      
+      this.setData({
+        files: files,
+        imgfiles: imgfiles,
+        docfiles: docfiles,
+        videofiles: videofiles,
+        audiofiles: audiofiles,
+        otherfiles: otherfiles
+      });
+    }
   },
   //日期选择
   bindDateChange: function(e) {
@@ -126,18 +125,7 @@ Page({
       isShowDetail: showDetaliTmp
     })
   },
-  // validateForm: function () {
-  //   let wxValidate = app.wxValidate({
-  //     beginDate: { required: true },
-  //     reamrk: { required: false }
-  //   },
-  //     {
-  //       beginDate: { required: '请选择开始日期' },
-  //       reamrk: { required: '请填写任务执行情况' }
-  //     }
-  //   )
-  //   return wxValidate;
-  // },
+
   formSubmit: function(e) {
     let that = this;
     let url = '/work/feedback';
@@ -204,7 +192,11 @@ Page({
           "workName": that.data.work.workName,
           "creator": userNo
         };
-        util.onUploadFile(null, tempFilePaths, "file", formData);
+        util.onUploadFile(null, tempFilePaths, "file", formData,function(e){
+          that.setData({
+            files: that.data.files.concat(e)
+          });
+        });
 
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
         that.setData({
@@ -218,7 +210,7 @@ Page({
     //   current: e.currentTarget.id,
     //   modalHidden: false
     // })
-    debugger
+
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.imgfiles // 需要预览的图片http链接列表
@@ -226,9 +218,8 @@ Page({
   },
   bindFileDown:function(e){
     wx.downloadFile({
-      url: e.currentTarget.id, //仅为示例，并非真实的资源
+      url: e.currentTarget.id, 
       success: function (res) {
-        debugger
         // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
         if (res.statusCode === 200) {
           wx.openDocument({
@@ -238,10 +229,77 @@ Page({
       }
     })
   },
+  delFileUpload:function(e){
+    let that = this;
+    let url ='/work/delFileUpload';
+    let method = 'post';
+    let fileId='';
+    let idx=-1;
+    let files = that.data.files;
+    files.forEach(function(item,index){
+   
+      if (item.url == e){
+        fileId = item.id;
+        idx = index;
+        return false;
+      }
+    })
+    
+    if(fileId==''&&idx>-1){
+      files.splice(idx, 1);
+    }else{
+      let data = {
+        fileId: fileId
+      }
+      util.onSubmit(url, data, method, function (res) {
+        if (res.data.retCode != 200) {
+          util.openAlert(res.data.msg);
+        } else {
+          debugger
+          files.splice(idx, 1);
+          that.initFileData(files);
+        }
+      });
+    }
+    
+  },
   modalCandel: function() {
     // do something
     this.setData({
       modalHidden: true
+    })
+  },
+  openActionImag:function(e){
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['查看','删除'],
+      itemColor:'#007aff',
+      success(res){
+        if(res.tapIndex===0){
+          wx.previewImage({
+            current: e.currentTarget.id, // 当前显示图片的http链接
+            urls: that.data.imgfiles // 需要预览的图片http链接列表
+          })
+        }else if(res.tapIndex===1){
+          console.log('删除' + e.currentTarget.id);
+          that.delFileUpload(e.currentTarget.id);
+        }
+      }
+    })
+  },
+  openActionDoc: function (e) {
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['查看', '删除'],
+      itemColor: '#007aff',
+      success(res) {
+        if (res.tapIndex === 0) {
+          that.bindFileDown(e);
+        } else if (res.tapIndex === 1) {
+          console.log('删除' + e.currentTarget.id);
+          that.delFileUpload(e.currentTarget.id);
+        }
+      }
     })
   },
   openSuccess: function() {
