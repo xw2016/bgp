@@ -39,6 +39,7 @@ function removeRepeat(a,key) {   //去重方法
   }
   return b.sort(function (a, b) { return a - b });
 }
+
 //提交请求（非json）
 function onSubmit(url, data, method, callback) {
   var host = app.globalData.serviceUrl;
@@ -142,11 +143,11 @@ function onUploadFile(url, tempFilePaths, name, formData,callback) {
       filePath: tempFilePaths[i],
       name: "file",
       header: {
-        'content-type': 'multipart/form-data', "loginToken": loginToken
+        'content-type': 'application/json;charset=UTF-8', "loginToken": loginToken
       },
       formData: formData,
       success: function (res) {
-        
+        debugger
         let result = JSON.parse(res.data);
         if (result.retCode!=200){
           console.log('上传文件失败:' );
@@ -196,7 +197,7 @@ function openAlert(content,callback) {
   });
 }
 //后台登录
-function onLogin(){
+function onLogin(callback){
   var host = app.globalData.serviceUrl;
   // 登录
   wx.login({
@@ -238,6 +239,7 @@ function onLogin(){
                 url: '../register/register'
               })
             }
+            callback();
           },
           fail: function (res) {
             console.log('登录失败！'+ res.errMsg);
