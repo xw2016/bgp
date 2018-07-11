@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     account: '',
     password: '',
     code: ''
@@ -30,6 +31,18 @@ Page({
       }
     });
   },
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
+  },
   bindAccount: function (e) {
     let that = this;
     that.setData({
@@ -52,7 +65,11 @@ Page({
       code: that.data.code
     };
     let method = 'post';
+    this.loadingTap();
     util.onSubmit(url, data, method, function (res) {
+      that.setData({
+        loadingHidden: true
+      });
       if (res.data.retCode !=200) {
         util.openAlert(res.data.msg,null);
       } else {
