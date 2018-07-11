@@ -26,7 +26,7 @@
           </view>
         </view>
          <!-- <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view> -->
-        <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
+        <view class="loading complete" hidden="{{!todoLoadingComplete}}">已加载全部</view> 
       </scroll-view>
     </view>
   </view>
@@ -34,7 +34,7 @@
 <!--我的已办-->
 <view hidden="{{currentTab!==1}}">
   <view class="search-result">
-    <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower">
+    <scroll-view scroll-y style="height: 100px;" bindscrolltolower="searchToDoWorksScrollLower">
       <view class="result-item" wx:key="unique" wx:for="{{doneworksList}}" data-idx="{{index}}" bindtap="queryDetail">
 
         <text>{{item.workName}}</text>
@@ -43,7 +43,7 @@
         </view>
       </view>
        <!-- <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view> -->
-      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
+      <view class="loading complete" hidden="{{!doneLoadingComplete}}">已加载全部</view> 
     </scroll-view>
   </view>
 </view>
