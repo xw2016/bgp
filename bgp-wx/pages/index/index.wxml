@@ -1,3 +1,6 @@
+<loading hidden="{{loadingHidden}}">
+        加载中...
+</loading>
 <!--index.wxml-->
 <!-- <view class="container">
   <view class="userinfo">

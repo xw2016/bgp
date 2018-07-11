@@ -1,5 +1,7 @@
 <!-- 任务中心 -->
-
+<loading hidden="{{loadingHidden}}">
+        加载中...
+</loading>
 <view class="weui-cells__title"></view>
 <!-- 姓名 -->
 <!-- <view class="weui-cells weui-cells_after-title">

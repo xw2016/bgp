@@ -4,6 +4,7 @@ const app = getApp()
 var util = require('../../utils/util.js');
 Page({
   data: {
+    loadingHidden: true,
     motto: '龙津',
     userInfo: {},
     hasUserInfo: false,
@@ -41,9 +42,27 @@ Page({
       })
     }
   },
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
+  },
   //事件处理函数
   bindViewTap: function () {
-    util.onLogin();
+    let that = this;
+    that.loadingTap();
+    util.onLogin(function(){
+      that.setData({
+        loadingHidden: true
+      })
+    });
   },
   getUserInfo: function (e) {
     console.log(e)

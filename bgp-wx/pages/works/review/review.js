@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     rejectInfo:'',
     modalHidden: true,
     popErrorMsg: '',
@@ -17,6 +18,18 @@ Page({
     this.setData({
       popErrorMsg: ''
     })
+  },
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
   },
   /**
    * 生命周期函数--监听页面加载
@@ -184,11 +197,11 @@ Page({
     let that = this;
     let url = '/work/rejectAudit';
     let method = 'post';
-    debugger
     if(that.data.rejectInfo==''){
       that.setData({
         popErrorMsg: '审核意见不能为空！'
       })
+      return false;
     }
     let workAuditVo = {
       workId: that.data.work.workId,
@@ -197,7 +210,11 @@ Page({
       // auditUser: that.data.loginUser,
       rejectInfo: that.data.rejectInfo
     }
+    this.loadingTap();
     util.onSubmitJson(url, workAuditVo, method, function (res) {
+      that.setData({
+        loadingHidden: true
+      });
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -244,8 +261,12 @@ Page({
       worksResultScores: worksResultScores,
       auditUser: that.data.loginUser
     }
-
+    this.loadingTap();
     this.onSubmit(url, workAuditVo, method, function (res) {
+      that.setData({
+        loadingHidden: true,
+        worksList: res.data.data
+      });
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -254,6 +275,7 @@ Page({
     });
 
   },
+  
   openSuccess: function () {
     wx.redirectTo({
       url: '../../msg/msg_success'

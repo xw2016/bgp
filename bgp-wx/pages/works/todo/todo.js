@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     modalHidden: true,
     popErrorMsg: '',
     beginDate: '',
@@ -18,7 +19,18 @@ Page({
     work: [] //任务
 
   },
-
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -91,7 +103,7 @@ Page({
             otherfiles.push(item);
         }
       });
-      debugger
+      
       this.setData({
         files: files,
         imgfiles: imgfiles,
@@ -127,6 +139,7 @@ Page({
   },
 
   formSubmit: function(e) {
+    debugger
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
@@ -167,7 +180,12 @@ Page({
     let that = this;
     let url = urls;
     let method = 'post';
+    this.loadingTap();
     util.onSubmitJson(url, data, method, function(res) {
+      that.setData({
+        loadingHidden: true
+      })
+
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -193,6 +211,7 @@ Page({
           "creator": userNo
         };
         util.onUploadFile(null, tempFilePaths, "file", formData,function(e){
+          
           that.setData({
             files: that.data.files.concat(e)
           });
@@ -217,6 +236,8 @@ Page({
     })
   },
   bindFileDown:function(e){
+    var that = this;
+    this.loadingTap();
     wx.downloadFile({
       url: e.currentTarget.id, 
       success: function (res) {
@@ -224,6 +245,9 @@ Page({
         if (res.statusCode === 200) {
           wx.openDocument({
             filePath: res.tempFilePath
+          })
+          that.setData({
+            loadingHidden: true
           })
         }
       }
@@ -252,6 +276,7 @@ Page({
       let data = {
         fileId: fileId
       }
+      
       util.onSubmit(url, data, method, function (res) {
         if (res.data.retCode != 200) {
           util.openAlert(res.data.msg);

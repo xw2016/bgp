@@ -1,4 +1,7 @@
 <!--pages/works/works.wxml-->
+<loading hidden="{{loadingHidden}}">
+        加载中...
+</loading>
 <view class="navbar">
   <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
 </view>

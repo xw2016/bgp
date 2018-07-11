@@ -1,6 +1,9 @@
 <!-- <view class="page__hd" style="position:fixed; top:0;width: 100% ;height:20%">
   <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 </view> -->
+<loading hidden="{{loadingHidden}}">
+        加载中...
+</loading>
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__bd">

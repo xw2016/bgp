@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     navbar: ['我的待办', '我的已办'],
     action: 'todo',
     currentTab: 0,
@@ -18,6 +19,18 @@ Page({
     callbackcount: 15,      //返回数据的个数  
     searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
     searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏 
+  },
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
   },
   onShow: function () {
     wx.setNavigationBarTitle({
@@ -31,8 +44,10 @@ Page({
     let url = (opt == 'todo') ? '/work/queryMyTodoWorks' : '/work/queryMyDoneWorks';
     let data = { responsibleNum: wx.getStorageSync("userNo") };
     let method = 'post';
+    this.loadingTap();
     util.onSubmit(url, data, method, function (res) {
       that.setData({
+        loadingHidden: true,
         worksList: res.data.data
       });
     });
