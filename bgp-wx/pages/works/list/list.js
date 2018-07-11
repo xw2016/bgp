@@ -19,7 +19,8 @@ Page({
     todoPageNum: 1, // 设置加载的第几次，默认是第一次  
     donePageNum: 1,
     callbackcount: 6, //返回数据的个数  
-    searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
+    todoLoading: true, //"上拉加载"的变量，默认false，隐藏 
+    doneLoading:true, 
     doneLoadingComplete: false,
     todoLoadingComplete: false //“没有数据”的变量，默认false，隐藏 
   },
@@ -35,7 +36,7 @@ Page({
       that.update();
     }, 10000);
   },
-  onShow: function() {
+  onLoad: function() {
     wx.setNavigationBarTitle({
       title: '任务列表'
     })
@@ -71,6 +72,7 @@ Page({
       userNo: wx.getStorageSync("userNo")
 
     }
+    debugger
     let method = 'post';
     this.loadingTap();
     util.onSubmitJson(url, page, method, function(res) {
@@ -127,7 +129,7 @@ Page({
       currentTab: currentTab,
       action: action
     })
-
+    debugger
     // this.searchWorksList(this.data.action);
     if ((action == 'todo' && that.data.todoworksList.length == 0) || (action == 'done' && that.data.doneworksList.length == 0)) {
       this.searchWorksPage();
@@ -204,7 +206,7 @@ Page({
 
     let that = this;
     let opt = that.data.action;
-    
+    debugger
     if (opt == 'todo' && !that.data.todoLoadingComplete) {
       that.setData({
         todoPageNum: that.data.todoPageNum + 1, //每次触发上拉事件，把searchPageNum+1
