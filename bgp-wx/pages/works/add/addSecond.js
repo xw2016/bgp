@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     showDepetment: false,
     showReviewType: false,
     showReview: false,
@@ -44,7 +45,18 @@ Page({
       popErrorMsg: ''
     })
   },
-  
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
+  },
   initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
@@ -527,9 +539,11 @@ Page({
     work.reviewerNum = that.data.reviewer.account;
     work.creator=loginUser.name;
     work.creatorNum=loginUser.account;
-   
+    this.loadingTap();
     util.onSubmitJson(url, work, method, function(res) {
-      
+      that.setData({
+        loadingHidden: true
+      });
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
