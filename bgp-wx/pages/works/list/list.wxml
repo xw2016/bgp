@@ -10,8 +10,8 @@
   <view hidden="{{currentTab!==0}}">
 
     <view class="search-result">
-      <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower">
-        <view class="result-item" wx:key="unique" wx:for="{{worksList}}" data-idx="{{index}}" bindtap="queryDetail">
+      <scroll-view scroll-y style="height: 100px;" bindscrolltolower="searchToDoWorksScrollLower">
+        <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}" bindtap="queryDetail">
         
           <view >
           <image wx:if="{{item.status==002}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
@@ -25,8 +25,8 @@
             <view class="subtitle">{{item.statusName}}</view>
           </view>
         </view>
-        <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
-        <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+         <!-- <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view> -->
+        <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
       </scroll-view>
     </view>
   </view>
@@ -35,15 +35,15 @@
 <view hidden="{{currentTab!==1}}">
   <view class="search-result">
     <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower">
-      <view class="result-item" wx:key="unique" wx:for="{{worksList}}" data-idx="{{index}}" bindtap="queryDetail">
+      <view class="result-item" wx:key="unique" wx:for="{{doneworksList}}" data-idx="{{index}}" bindtap="queryDetail">
 
         <text>{{item.workName}}</text>
         <view class="subtitle">
           <text>{{item.statusName}}</text>
         </view>
       </view>
-      <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>
-      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>
+       <!-- <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view> -->
+      <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view> 
     </scroll-view>
   </view>
 </view>

@@ -13,10 +13,11 @@ Page({
     currentTab: 0,
     searchKeyword: '',  //需要搜索的字符  
     searchSongList: [], //放置返回数据的数组  
-    worksList: [],
+    todoworksList: [],
+    doneworksList:[],
     isFromSearch: true,   // 用于判断searchSongList数组是不是空数组，默认true，空的数组  
     searchPageNum: 1,   // 设置加载的第几次，默认是第一次  
-    callbackcount: 15,      //返回数据的个数  
+    callbackcount: 2,      //返回数据的个数  
     searchLoading: false, //"上拉加载"的变量，默认false，隐藏  
     searchLoadingComplete: false  //“没有数据”的变量，默认false，隐藏 
   },
@@ -37,7 +38,10 @@ Page({
       title: '任务列表'
     })
     let that = this;
-    this.searchWorksList(that.data.action);
+    // this.searchWorksList(that.data.action);
+    this.searchWorksPage(that.data.action);
+   
+    
   },
   searchWorksList: function (opt) {
     let that = this;
@@ -50,6 +54,53 @@ Page({
         loadingHidden: true,
         worksList: res.data.data
       });
+    });
+  },
+  searchWorksPage: function () {
+    let that = this;
+    let opt = that.data.action;
+    let url = (opt == 'todo') ? '/work/queryMyTodoWorksPage' : '/work/queryMyDoneWorksPage';
+    let page={
+      size: that.data.callbackcount,
+      current: that.data.searchPageNum,
+      userNo: wx.getStorageSync("userNo")
+
+    }
+    let method = 'post';
+    this.loadingTap();
+    util.onSubmitJson(url, page, method, function (res) {
+      
+      if(res.data.retCode!=200){
+        util.openAlert(res.data.msg);
+      }else{
+        debugger
+        if(res.data.data.records.length>0){
+          let opt = that.data.action;
+          if (opt == 'todo') {
+            that.setData({
+              todoworksList: that.data.todoworksList.concat(res.data.data.records),
+            })
+          }else{
+            that.setData({
+              doneworksList: that.data.doneworksList.concat(res.data.data.records),
+            })
+          }
+          that.setData({
+            loadingHidden: true,
+            // worksList: that.data.worksList.concat(res.data.data.records),
+            searchLoading: true,  //把"上拉加载"的变量设为true，显示
+            searchLoadingComplete: false //把“没有数据”设为false，隐藏
+          });
+        }else{
+          that.setData({
+            loadingHidden: true,
+            searchLoadingComplete: true, //把“没有数据”设为true，显示
+            searchLoading: false  //把"上拉加载"的变量设为false，隐藏
+          });
+        }
+        
+      }
+     
     });
   },
   navbarTap: function (e) {
@@ -66,7 +117,8 @@ Page({
       action: action
     })
 
-    this.searchWorksList(this.data.action);
+    // this.searchWorksList(this.data.action);
+    this.searchWorksPage();
   },
 
   //查询详情
@@ -75,7 +127,10 @@ Page({
     //拿到点击的index下标
     var idx = e.currentTarget.dataset.idx;
     //将对象转为string
-    var queryBean = JSON.stringify(that.data.worksList[idx])
+    let opt = that.data.action;
+    let worksList =opt=='todo'?that.data.todoworksList:that.data.doneworksList;
+    debugger
+    var queryBean = JSON.stringify(worksList[idx])
 
     wx.navigateTo({
       // url: '../works/todo/todo?queryBean=' + queryBean,
@@ -130,14 +185,15 @@ Page({
     this.fetchSearchList();
   },
   //滚动到底部触发事件
-  searchScrollLower: function () {
+  searchToDoWorksScrollLower: function () {
+    
     let that = this;
     if (that.data.searchLoading && !that.data.searchLoadingComplete) {
       that.setData({
         searchPageNum: that.data.searchPageNum + 1,  //每次触发上拉事件，把searchPageNum+1
         isFromSearch: false  //触发到上拉事件，把isFromSearch设为为false
       });
-      that.fetchSearchList();
+      that.searchWorksPage();
     }
   }
 })
