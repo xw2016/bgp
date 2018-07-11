@@ -142,7 +142,7 @@ function onUploadFile(url, tempFilePaths, name, formData,callback) {
       filePath: tempFilePaths[i],
       name: "file",
       header: {
-        'content-type': 'application/json;charset=UTF-8', "loginToken": loginToken
+        'content-type': 'multipart/form-data', "loginToken": loginToken
       },
       formData: formData,
       success: function (res) {

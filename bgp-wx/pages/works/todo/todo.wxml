@@ -88,7 +88,7 @@
           </view>
         </view>
         <!--文件列表-->
-        <view class="weui-cells__title">任务附件</view>
+        <view class="weui-cells__title">任务文档</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
@@ -102,22 +102,40 @@
                         <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
                       </view>
                     </view>
-     
+
                   </view>
                 </view>
               </view>
             </view>
           </view>
-          <!-- </vAAA  -->
 
-        </view>
-        <!--弹窗-->
-        <!-- <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
-        <view class="modal-dialog" hidden="{{modalHidden}}">
+          <!-- <view class="weui-cells__title">任务录音</view>
+       <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
 
-          <image class="image" src="{{current}}" mode='aspectFit' />
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <block wx:for="{{audiofiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="openActionAudio" id="{{item.url}}">
+                         <!-- <image  style="width:70rpx; height:50rpx;" src="../../../resources/images/audio.png"></image> -->
+          <!-- <audio id='audioid' src='{{item.url}}' binderror="audioError" bindplay="audioPlay" bindeneded="playEnd" bindtimeupdate="timeUpdate"> </audio>
+                      </view>
+                    </block>
+                  </view>
+                  <view class="weui-uploader__input-box">
+                    <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode">按住录音（可选）</button>
+                  </view>
+                </view>
+              </view>
+            </view>
           </view>
--->
+        </view>
+        </view> -->
+
+          <!--录音-->
+        </view>
       </view>
       <!--图片上传结束-->
       <view class="weui-btn-area ">

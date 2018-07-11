@@ -13,6 +13,7 @@ Page({
     isShowDetail: false,//是否显示详情
     isShowWorkLog:false,
     userNo:'',
+    workType:'',
     files: [] //文件上传
   },
 
@@ -38,11 +39,37 @@ Page({
     }
     this.initSubWork(queryBean.workId);
   },
-  bindguide: function () {
-    var queryBean = JSON.stringify(this.data.workType)
-    wx.navigateTo({
-      url: '../../common/guide/guide?queryBean=' + queryBean
-    })
+  bindguide: function () {    
+    let that = this;
+    let workType = that.data.workType;
+    if(workType==''){
+      let url = '/work/queryWorkTypeById';
+      let method = 'POST';
+      let data = {
+        typeId: that.data.work.typeId
+      }
+      util.onSubmit(url, data, method, function (res) {
+        if (res.data.retCode != 200) {
+          util.openAlert(res.data.msg);
+        } else {
+          var workType = res.data.data;
+          that.setData({
+            workType: workType
+          })
+          var queryBean = JSON.stringify(workType)
+          wx.navigateTo({
+            url: '../../common/guide/guide?queryBean=' + queryBean
+          })
+        }
+      })
+    }else{
+      var queryBean = JSON.stringify(workType)
+      wx.navigateTo({
+        url: '../../common/guide/guide?queryBean=' + queryBean
+      })
+    }
+    
+   
   },
   //初始化子任务
   initSubWork: function (worksId){
@@ -125,14 +152,28 @@ Page({
     });
   },
   previewImage: function (e) {
-    this.setData({
-      current: e.currentTarget.id,
-      modalHidden: false
-    })
-    // wx.previewImage({
-    //   current: e.currentTarget.id, // 当前显示图片的http链接
-    //   urls: this.data.files // 需要预览的图片http链接列表
+    // this.setData({
+    //   current: e.currentTarget.id,
+    //   modalHidden: false
     // })
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.imgfiles // 需要预览的图片http链接列表
+    })
+  },
+  bindFileDown: function (e) {
+    wx.downloadFile({
+      url: e.currentTarget.id,
+      success: function (res) {
+        debugger
+        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+        if (res.statusCode === 200) {
+          wx.openDocument({
+            filePath: res.tempFilePath
+          })
+        }
+      }
+    })
   },
   modalCandel: function () {
     // do something
