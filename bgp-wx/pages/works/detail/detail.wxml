@@ -52,9 +52,9 @@
           <view class="weui-form-preview__value">
             <block wx:if="{{work.typeName ==null}}">无</block>
             <block wx:else>{{work.typeName}}</block>
-              <view bindtap="bindguide" class="weui-cell_link" style="left">查看工作指引</view>  
+            <view bindtap="bindguide" class="weui-cell_link">查看工作指引</view>
           </view>
-      
+
           <!-- 状态-->
           <view class="weui-form-preview__label">任务状态</view>
           <view class="weui-form-preview__value">
@@ -127,7 +127,7 @@
 </view>
 </view> 
 </block> -->
-   <block wx:if="{{action =='done'&&imgfiles.length>0}}"> 
+  <block wx:if="{{action =='done'&&imgfiles.length>0}}">
     <!--图片描述-->
     <view class="weui-cells__title">任务图片</view>
     <!-- <view class="weui-cells">
@@ -152,47 +152,47 @@
       <image class="image" src="{{current}}" mode='aspectFit' />
     </view> -->
     <view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__hd">
-                </view>
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <block wx:for="{{imgfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                      </view>
-                    </block>
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__hd">
+            </view>
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files">
+                <block wx:for="{{imgfiles}}" wx:key="*this">
+                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
                   </view>
-                </view>
+                </block>
               </view>
             </view>
           </view>
         </view>
+      </view>
+    </view>
   </block>
   <block wx:if="{{action =='done'&&docfiles.length>0}}">
-  <!--文件列表-->
-        <view class="weui-cells__title">任务附件</view>
-        <view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <view wx:for="{{docfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
-                        <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
-                        <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
-                        <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
-                      </view>
-                    </view>
+    <!--文件列表-->
+    <view class="weui-cells__title">任务附件</view>
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files">
+                <view wx:for="{{docfiles}}" wx:key="*this">
+                  <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
+                    <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+                    <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+                    <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
         </view>
+      </view>
+    </view>
   </block>
   <!--子任务-->
   <block wx:if="{{subWorkList.length>0}}">
