@@ -11,7 +11,7 @@ Page({
   },
   onShow: function() {
     console.log("works onShow");
-    // this.searchWorksList("todo");
+    this.searchWorksList("todo");
     this.queryWorksDetailReport();
     // this.openLoading();
   },

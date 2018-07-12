@@ -26,14 +26,14 @@
       <!-- <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view> -->
     </view>
     <view style="height:40rpx">
-      <image style="width:38rpx; height:38rpx;" src="../../resources/images/undone.png"></image>
-      <text class="index-post-info">待办数 {{myReport.undoneWorkCount}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/done.png"></image>
       <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/fscore.png"></image>
       <text class="index-post-info" bindtap="myScore" >已得分 {{myReport.finalScore}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/rscore.png"></image>
       <text class="index-post-info" bindtap="myScore">预得分 {{myReport.reserveScore}}</text>
+       <image style="width:38rpx; height:38rpx;" src="../../resources/images/workload.png"></image>
+      <text class="index-post-info">工作量 {{myReport.workload}}</text> 
     </view>
   </view>
 </view>
@@ -61,7 +61,7 @@
     </view>
     <view class="weui-cell__bd">
       <view style="display: inline-block; vertical-align: middle">我的任务</view>
-      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{myReport.undoneWorkCount}}">{{myReport.undoneWorkCount}}</view>
+      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{todoLength}}">{{todoLength}}</view>
     </view>
     <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>

@@ -14,7 +14,7 @@
           </view>
           <view class="weui-cell__bd">
             <!-- <block wx:if="{{pass=='N'}}"> -->
-            <input class="weui-input" name="workName" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
+            <input class="weui-input" name="workName" bindinput='bindWorkName' placeholder="请输入任务名称" />
             <!-- </block>
             <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />

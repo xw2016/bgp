@@ -577,6 +577,7 @@ Page({
     work.responsibleList = that.data.checkedResponsible;
     // work.reviewer = that.data.checkedReviewName;
     // work.reviewerNum = that.data.checkedReview;
+    work.description = that.data.description;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
     work.creator = that.data.loginUser.name;

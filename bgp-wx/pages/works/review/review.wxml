@@ -48,7 +48,40 @@
     <view class="modal-dialog" hidden="{{modalHidden}}">
       <image class="image" src="{{current}}" mode='aspectFit' />
     </view> -->
-    <block wx:if="{{imgfiles.length>0}}"> 
+    
+
+    <view class="weui-cells__title">考核维度评分</view>
+    <view class="weui-cells weui-cells_after-title">
+      <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" wx:key="id">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">{{itm.kpiName}}：</view>
+          </view>
+
+          <view class="weui-cell__bd">
+            <picker mode="selector" bindchange="bindChange_select" value="{{itm.index}}" data-current="{{idx}}" range="{{itm.kpiScores}}" range-key="grade">
+              <view class="weui-select weui-select_in-select-after">
+                {{itm.kpiScores[itm.index].grade}}-{{itm.kpiScores[itm.index].score}}
+              </view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cells__title"></view>
+      </block>
+    </view>
+
+    <view class="weui-cells__title">审核意见:若打回，必须填写</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" placeholder="请填写审核意见" style="height: 3.3em" />
+          <!-- <view class="weui-textarea-counter">0/300</view> -->
+        </view>
+      </view>
+    </view>
+
+    <!--文件l列表  下载-->
+<block wx:if="{{imgfiles.length>0}}"> 
     <!--图片描述-->
     <view class="weui-cells__title">任务图片</view>
     <view class="weui-cells">
@@ -95,41 +128,6 @@
         </view>
   </block>
 
-    <view class="weui-cells__title">考核维度评分</view>
-    <view class="weui-cells weui-cells_after-title">
-      <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" wx:key="id">
-        <view class="weui-cell weui-cell_select">
-          <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">{{itm.kpiName}}：</view>
-          </view>
-
-          <view class="weui-cell__bd">
-            <picker mode="selector" bindchange="bindChange_select" value="{{itm.index}}" data-current="{{idx}}" range="{{itm.kpiScores}}" range-key="grade">
-              <view class="weui-select weui-select_in-select-after">
-                {{itm.kpiScores[itm.index].grade}}-{{itm.kpiScores[itm.index].score}}
-              </view>
-            </picker>
-          </view>
-        </view>
-        <view class="weui-cells__title"></view>
-      </block>
-    </view>
-
-    <view class="weui-cells__title">审核意见:若打回，必须填写</view>
-    <view class="weui-cells weui-cells_after-title">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" auto-focus placeholder="请填写审核意见" style="height: 3.3em" />
-          <!-- <view class="weui-textarea-counter">0/300</view> -->
-        </view>
-      </view>
-    </view>
-
-    <!--文件l列表  下载-->
-    <!-- <view class="weui-cells__title"></view>
-  <view class="weui-panel">
-    <view class="weui-panel__hd">附件文件</view>
--->
   </view> 
   </view>
   <view class="weui-panel weui-form-preview__ft fixation-btn">

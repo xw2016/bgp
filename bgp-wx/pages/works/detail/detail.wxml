@@ -81,21 +81,22 @@
             <block wx:else>{{work.planEndDate}}</block>
           </view> -->
           <!--如果已开始，则显示 实际开始时间-->
-          <block wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
-            <view wx:if="{{work.status!='001'}}" class="weui-form-preview__label">实际开始时间</view>
+          <!-- <block wx:if="{work.status!='000'&&work.status!='001'&&work.status!='002'}"> -->
+          <view wx:if="{{work.status=='003'}}">
+            <view class="weui-form-preview__label">实际开始时间</view>
             <view class="weui-form-preview__value">
               <block wx:if="{{work.beginDate ==null}}">无</block>
               <block wx:else>{{work.beginDate}}</block>
             </view>
-          </block>
+          </view>
           <!--如果已完成，则显示实际完成时间-->
-          <block wx:if="{{work.status=='004'||work.status=='005'||work.status=='006'||work.status=='007'}}">
-            <view class="weui-form-preview__label">实际完成时间</view>
+          <view wx:elif="{{work.status=='004'||work.status=='005'||work.status=='006'||work.status=='007'}}">
+            <view class="weui-form-preview__label">执行时间</view>
             <view class="weui-form-preview__value">
               <block wx:if="{{work.endDate ==null}}">无</block>
-              <block wx:else>{{work.endDate}}</block>
+              <block wx:else>{{work.beginDate}} 至 {{work.endDate}}</block>
             </view>
-          </block>
+          </view>
         </view>
       </view>
     </view>
