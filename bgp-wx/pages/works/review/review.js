@@ -29,7 +29,7 @@ Page({
         loadingHidden: true
       });
       that.update();
-    }, 10000);
+    }, 15000);
   },
   /**
    * 生命周期函数--监听页面加载
@@ -140,6 +140,8 @@ Page({
     })
   },
   bindFileDown: function (e) {
+    let that = this;
+    that.loadingTap();
     wx.downloadFile({
       url: e.currentTarget.id,
       success: function (res) {
@@ -147,6 +149,9 @@ Page({
         if (res.statusCode === 200) {
           wx.openDocument({
             filePath: res.tempFilePath
+          })
+          that.setData({
+            loadingHidden: true
           })
         }
       }

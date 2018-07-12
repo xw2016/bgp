@@ -29,7 +29,7 @@ Page({
         loadingHidden: true
       });
       that.update();
-    }, 10000);
+    }, 15000);
   },
   /**
    * 生命周期函数--监听页面加载

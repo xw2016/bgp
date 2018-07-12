@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loadingHidden: true,
     modalHidden: true,
     work: [],  //任务
     subWorkList:[],
@@ -16,7 +17,18 @@ Page({
     workType:'',
     files: [] //文件上传
   },
-
+  loadingTap: function () {
+    this.setData({
+      loadingHidden: false
+    });
+    var that = this;
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true
+      });
+      that.update();
+    }, 10000);
+  },
   onLoad: function (options) {
     
     wx.setNavigationBarTitle({
@@ -162,6 +174,8 @@ Page({
     })
   },
   bindFileDown: function (e) {
+    let that = this;
+    that.loadingTap();
     wx.downloadFile({
       url: e.currentTarget.id,
       success: function (res) {
@@ -170,6 +184,9 @@ Page({
         if (res.statusCode === 200) {
           wx.openDocument({
             filePath: res.tempFilePath
+          })
+          that.setData({
+            loadingHidden: true
           })
         }
       }

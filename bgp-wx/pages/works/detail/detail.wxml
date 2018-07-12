@@ -1,5 +1,8 @@
 <!--pages/works/detail/workDetail.wxml-->
 <!-- <view class="page"> -->
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>
 <view class="weui-cells__title"></view>
 <view class="page__bd fixation-page">
 
@@ -13,7 +16,7 @@
           <block wx:if="{{work.description ==null}}"></block>
           <block wx:else>{{work.description}}</block>
         </view>
-      </view> 
+      </view>
     </view>
   </view>
 
@@ -36,11 +39,13 @@
             <block wx:else>{{work.parentWorkName}}</block>
           </view>
           <!-- 责任人 -->
-          <!-- <view class="weui-form-preview__label">责任人</view>
-          <view class="weui-form-preview__value">
-            <block wx:if="{{work.responsible ==null}}">无</block>
-            <block wx:else>{{work.responsible}}</block>
-          </view> -->
+          <view wx:if="{{work.reviewerNum==userNo}}">
+            <view class="weui-form-preview__label">责任人</view>
+            <view class="weui-form-preview__value">
+              <block wx:if="{{work.responsible ==null}}">无</block>
+              <block wx:else>{{work.responsible}}</block>
+            </view>
+          </view>
           <!-- 审核人 -->
           <!-- <view class="weui-form-preview__label">审核人</view>
           <view class="weui-form-preview__value">

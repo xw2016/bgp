@@ -126,6 +126,7 @@ Page({
     }
     this.loadingTap();
     util.onSubmit(url, data, method, function(res) {
+      debugger
       that.setData({
         loadingHidden: true
       })
@@ -141,7 +142,7 @@ Page({
             kpi: k,
             socre: kpiSocres[k]
           };
-          if(socre.kpi=='工作情况'){
+          if(socre.kpi=='完成情况'){
             socreOne=socre;
           }else{
             socresArr.push(socre);

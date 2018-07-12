@@ -19,8 +19,8 @@ Page({
     todoPageNum: 1, // 设置加载的第几次，默认是第一次  
     donePageNum: 1,
     callbackcount: 6, //返回数据的个数  
-    todoLoading: true, //"上拉加载"的变量，默认false，隐藏 
-    doneLoading:true, 
+    todoLoading: false, //"上拉加载"的变量，默认false，隐藏 
+    doneLoading: false,
     doneLoadingComplete: false,
     todoLoadingComplete: false //“没有数据”的变量，默认false，隐藏 
   },
@@ -62,7 +62,6 @@ Page({
     });
   },
   searchWorksPage: function() {
-    
     let that = this;
     let opt = that.data.action;
     let url = (opt == 'todo') ? '/work/queryMyTodoWorksPage' : '/work/queryMyDoneWorksPage';
@@ -72,43 +71,30 @@ Page({
       userNo: wx.getStorageSync("userNo")
 
     }
-    debugger
+
     let method = 'post';
     this.loadingTap();
     util.onSubmitJson(url, page, method, function(res) {
-      
+      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
         let opt = that.data.action;
-        if (res.data.data.records.length > 0) {
-          if (opt == 'todo') {
-            that.setData({
-              loadingHidden: true,
-              todoworksList: that.data.todoworksList.concat(res.data.data.records),
-              todoLoadingComplete: false
-            })
-          } else {
-            that.setData({
-              loadingHidden: true,
-              doneworksList: that.data.doneworksList.concat(res.data.data.records),
-              doneLoadingComplete: false
-            })
-          }
+        if (opt == 'todo') {
+          that.setData({
+            loadingHidden: true,
+            todoworksList: that.data.todoworksList.concat(res.data.data.records),
+            todoLoadingComplete: res.data.data.total <= that.data.todoworksList.length ? true : false,
+            todoLoading: res.data.data.total > that.data.todoworksList.length ? true : false  //show
+          })
         } else {
-          if (opt == 'todo') {
-            that.setData({
-              loadingHidden: true,
-              todoLoadingComplete: true, //把“没有数据”设为true，显示
-              searchLoading: false //把"上拉加载"的变量设为false，隐藏
-            });
-          } else {
-            that.setData({
-              loadingHidden: true,
-              doneLoadingComplete: true, //把“没有数据”设为true，显示
-              searchLoading: false //把"上拉加载"的变量设为false，隐藏
-            });
-          }
+          that.setData({
+            todoLoading: false,
+            loadingHidden: true,
+            doneworksList: that.data.doneworksList.concat(res.data.data.records),
+            doneLoadingComplete: res.data.data.total <= that.data.doneworksList.length ? true : false,
+            doneLoading: res.data.data.total > that.data.doneworksList.length ? true : false
+          })
 
         }
 
@@ -139,7 +125,7 @@ Page({
 
   //查询详情
   queryDetail: function(e) {
-    
+
     var that = this
     //拿到点击的index下标
     var idx = e.currentTarget.dataset.idx;
@@ -219,7 +205,7 @@ Page({
       });
     }
 
-      that.searchWorksPage();
-    
+    that.searchWorksPage();
+
   }
 })

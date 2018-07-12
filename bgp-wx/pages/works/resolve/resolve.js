@@ -62,7 +62,7 @@ Page({
         loadingHidden: true
       });
       that.update();
-    }, 5000);
+    }, 10000);
   },
   initDepartment: function() {
     let that = this;
