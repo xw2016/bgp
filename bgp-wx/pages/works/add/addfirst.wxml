@@ -1,3 +1,6 @@
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page__bd">
   <form bindreset="formReset" bindsubmit='next'>

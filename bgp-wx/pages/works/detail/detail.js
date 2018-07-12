@@ -60,7 +60,11 @@ Page({
       let data = {
         typeId: that.data.work.typeId
       }
+      this.loadingTap();
       util.onSubmit(url, data, method, function (res) {
+        that.setData({
+          loadingHidden: true
+        });
         if (res.data.retCode != 200) {
           util.openAlert(res.data.msg);
         } else {
@@ -80,8 +84,6 @@ Page({
         url: '../../common/guide/guide?queryBean=' + queryBean
       })
     }
-    
-   
   },
   //初始化子任务
   initSubWork: function (worksId){

@@ -75,7 +75,7 @@ Page({
     let method = 'post';
     this.loadingTap();
     util.onSubmitJson(url, page, method, function(res) {
-      debugger
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -115,7 +115,7 @@ Page({
       currentTab: currentTab,
       action: action
     })
-    debugger
+    
     // this.searchWorksList(this.data.action);
     if ((action == 'todo' && that.data.todoworksList.length == 0) || (action == 'done' && that.data.doneworksList.length == 0)) {
       this.searchWorksPage();
@@ -192,7 +192,7 @@ Page({
 
     let that = this;
     let opt = that.data.action;
-    debugger
+    
     if (opt == 'todo' && !that.data.todoLoadingComplete) {
       that.setData({
         todoPageNum: that.data.todoPageNum + 1, //每次触发上拉事件，把searchPageNum+1
