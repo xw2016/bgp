@@ -106,9 +106,9 @@ Page({
     })
   },
   myScore: function() {
-    // wx.navigateTo({
-    //   url: '../works/report/report',
-    // })
+    wx.navigateTo({
+      url: '../rrtest/recordtest',
+    })
     this.initMyScore();
   },
   modalCandel: function () {
