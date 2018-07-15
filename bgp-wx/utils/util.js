@@ -134,6 +134,7 @@ function onUploadFile(url, tempFilePaths, name, formData,callback) {
   //   mask: true,
   //   duration: 10000
   // })
+  debugger
   var uploadImgCount = 0;
   let loginToken = wx.getStorageSync("loginToken");
   for (var i = 0, h = tempFilePaths.length; i < h; i++) {
@@ -226,9 +227,10 @@ function onLogin(callback){
                 key: "loginUser",
                 data: res.data.data.loginUser
               });
+              
               wx.navigateTo({
                 url: '../works/works'
-                // url:'../rrtest/test'
+                // url:'../rrtest/rrtest"'
               })
             }
             else {
