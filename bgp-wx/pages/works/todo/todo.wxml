@@ -2,7 +2,7 @@
   <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 </view> -->
 <loading hidden="{{loadingHidden}}">
-        加载中...
+  加载中...
 </loading>
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
@@ -90,6 +90,40 @@
             </view>
           </view>
         </view>
+        <!--录音列表-->
+        <view class="weui-cells__title">任务语音</view>
+        <view class="weui-cells">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <view class="weui-uploader">
+                <view class="weui-uploader__bd">
+                  <view class="weui-uploader__files">
+                    <view wx:for="{{audiofiles}}" wx:key="*this">
+                      <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}">
+                        <image style="width:50rpx; height:50rpx;" src="../../../resources/images/voice.png"></image>
+                      </view>
+                    </view>
+                  </view>
+                  <view class="weui-uploader__files" bindtap='showAudioOpt'>
+                    <image style="width:50rpx; height:50rpx;" src="../../../resources/images/add.png"></image>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+        <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
+          <view class="modal-title">我的积分</view>
+          <view class="result-item" />
+          <view class="result-item" wx:for="{{kpiSocres}}">
+            <view class="weui-cell__bd" style="display: inline-block; vertical-align: middle">
+              <image align="left" style="width:20rpx; height:20rpx;" src="../../resources/images/point.png"></image>
+              {{kpiSocres[index].kpi}}:{{kpiSocres[index].socre}}
+            </view>
+          </view>
+        </view>
+
         <!--文件列表-->
         <view class="weui-cells__title">任务文档</view>
         <view class="weui-cells">
@@ -136,9 +170,9 @@
           </view>
         </view>
         </view> -->
-
-          <!--录音-->
         </view>
+        <!--录音-->
+
       </view>
       <!--图片上传结束-->
       <view class="weui-btn-area ">

@@ -48,6 +48,7 @@ Page({
       endDate: beginDate == new Date() ? null : util.formatTime(new Date())
     })
     this.initFile(queryBean.workId);
+    this.initRecorderManager();
 
   },
   hideErrMsg: function() {
@@ -55,6 +56,27 @@ Page({
       popErrorMsg: ''
     })
   },
+  initRecorderManager:function(){
+    let that = this;
+    this.recorderManager = wx.getRecorderManager();
+    this.recorderManager.onError(function () {
+      that.tip("录音失败！")
+    });
+    this.recorderManager.onStop(function (res) {
+      that.setData({
+        src: res.tempFilePath
+      })
+      console.log(res.tempFilePath)
+      that.tip("录音完成！" + res.tempFilePath)
+      that.loadingRecord(res);
+    });
+    
+    this.innerAudioContext = wx.createInnerAudioContext();
+    this.innerAudioContext.onError((res) => {
+      that.tip("播放录音失败！")
+    })
+  },
+
   initFile: function(worksId) {
     let that = this;
     let url = '/work/queryFileUploadById';
@@ -90,7 +112,7 @@ Page({
           case 'jpg': case 'jpeg':
             imgfiles.push(item.url);
             break;
-          case 'silk':
+          case 'mp3': case 'm4a': case 'aac':
             audiofiles.push(item);
             break;
           case 'doc': case 'docx': case 'txt': case 'xls': case 'xlsx':
@@ -295,6 +317,28 @@ Page({
       modalHidden: true
     })
   },
+  showAudioOpt:function(){
+    this.setData({
+      modalHidden: false
+    })
+  },
+  openAudio:function(e){
+    let that = this;
+    wx.showActionSheet({
+      itemList: ['收听', '删除'],
+      itemColor: '#007aff',
+      success(res) {
+        if (res.tapIndex === 0) {
+          debugger
+          that.innerAudioContext.src = e.currentTarget.id;
+          that.innerAudioContext.play();
+        } else if (res.tapIndex === 1) {
+          console.log('删除' + e.currentTarget.id);
+          that.delFileUpload(e.currentTarget.id);
+        }
+      }
+    })
+  },
   openActionImag:function(e){
     let that = this;
     wx.showActionSheet({
@@ -327,169 +371,6 @@ Page({
         }
       }
     })
-  },
-  initAudioManager:function(){
-    var that = this;
-    this.recorderManager = wx.getRecorderManager();
-    this.recorderManager.onError(function () {
-      that.tip("录音失败！")
-    });
-    this.recorderManager.onStop(function (res) {
-      that.setData({
-        src: res.tempFilePath
-      })
-      console.log(res.tempFilePath)
-      that.tip("录音完成！")
-    });
-
-    this.innerAudioContext = wx.createInnerAudioContext();
-    this.innerAudioContext.onError((res) => {
-      that.tip("播放录音失败！")
-    })
-
-  },
-   tip: function (msg) {
-    wx.showModal({
-      title: '提示',
-      content: msg,
-      showCancel: false
-    })
-  }
-
-  /**
-   * 录制aac音频
-   */
-  , startRecordAac: function () {
-    this.recorderManager.start({
-      format: 'aac'
-    });
-  }
-
-  /**
-   * 录制mp3音频
-  */
-  , startRecordMp3: function () {
-    this.recorderManager.start({
-      format: 'mp3'
-    });
-  }
-
-  /**
-   * 停止录音
-   */
-  , stopRecord: function () {
-    this.recorderManager.stop()
-  }
-
-  /**
-   * 播放录音
-   */
-  , playRecord: function () {
-    var that = this;
-    var src = this.data.src;
-    if (src == '') {
-      this.tip("请先录音！")
-      return;
-    }
-    this.innerAudioContext.src = this.data.src;
-    this.innerAudioContext.play()
-  },
-  openActionAudio: function (e) {
-    let that = this;
-    wx.showActionSheet({
-      itemList: ['查看', '删除'],
-      itemColor: '#007aff',
-      success(res) {
-        if (res.tapIndex === 0) {
-          wx.playVoice({
-            filePath: e.currentTarget.id // src可以是录音文件临时路径
-          })
-        } else if (res.tapIndex === 1) {
-          console.log('删除' + e.currentTarget.id);
-          that.delFileUpload(e.currentTarget.id);
-        }
-      }
-    })
-  },
-  //录音
-  startRecode: function () {
-    var s = this;
-    console.log("start");
-    wx.startRecord({
-      success: function (res) {
-        console.log(res);
-        var tempFilePath = res.tempFilePath;
-        s.setData({ recodePath: tempFilePath, isRecode: true });
-      },
-      fail: function (res) {
-        console.log("fail");
-        console.log(res);
-        //录音失败
-      }
-    });
-  },
-  endRecode: function () {//结束录音 
-    var s = this;
-    console.log("end");
-    wx.stopRecord();
-    s.setData({ isRecode: false });
-
-
-    wx.showToast();
-    setTimeout(function () {
-      var urls = app.globalData.serviceUrl + "/work/addFileUpload";
-      console.log(s.data.recodePath);
-      let loginToken = wx.getStorageSync("loginToken");
-      let userNo = wx.getStorageSync("userNo");
-      let formData = {
-        "workId": s.data.work.workId,
-        "workName": s.data.work.workName,
-        "creator": userNo
-      };
-      wx.uploadFile({
-        url: urls,
-        filePath: s.data.recodePath,
-        name: 'file',
-        header: {
-          'content-type': 'multipart/form-data', "loginToken": loginToken
-        },
-        formData: formData,
-        success: function (res) {
-          debugger
-          var str = res.data.data;
-          var data = JSON.parse(str);
-          if (data.states == 1) {
-            var cEditData = s.data.editData;
-            cEditData.recodeIdentity = data.identitys;
-            s.setData({ editData: cEditData });
-          }
-          else {
-            wx.showModal({
-              title: '提示',
-              content: data.message,
-              showCancel: false,
-              success: function (res) {
-
-              }
-            });
-          }
-          wx.hideToast();
-        },
-        fail: function (res) {
-          console.log(res);
-          wx.showModal({
-            title: '提示',
-            content: "网络请求失败，请确保网络是否正常",
-            showCancel: false,
-            success: function (res) {
-
-            }
-          });
-          wx.hideToast();
-        }
-      });
-    }, 1000)
-
   },
   openSuccess: function() {
     wx.redirectTo({

@@ -106,9 +106,9 @@ Page({
     })
   },
   myScore: function() {
-    wx.navigateTo({
-      url: '../rrtest/recordtest',
-    })
+    // wx.navigateTo({
+    //   url: '../rrtest/recordtest',
+    // })
     this.initMyScore();
   },
   modalCandel: function () {
@@ -126,7 +126,7 @@ Page({
     }
     this.loadingTap();
     util.onSubmit(url, data, method, function(res) {
-      debugger
+      
       that.setData({
         loadingHidden: true
       })
