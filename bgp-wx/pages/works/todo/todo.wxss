@@ -47,8 +47,18 @@
   display: flex;
 
 }
-
-
+.modal-title-left {
+  background-size:552%;
+  height: 10px;
+  width: 24px;
+  display: inline-block;
+}
+.modal-title-right {
+  background-size:552%;
+  height: 10px;
+  width: 24px;
+  display: inline-block;
+}
 .input {
   width: 100%;
   height: 82rpx;

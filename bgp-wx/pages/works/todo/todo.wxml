@@ -113,17 +113,31 @@
           </view>
         </view>
         <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
-        <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
-          <view class="modal-title">我的积分</view>
-          <view class="result-item" />
-          <view class="result-item" wx:for="{{kpiSocres}}">
-            <view class="weui-cell__bd" style="display: inline-block; vertical-align: middle">
-              <image align="left" style="width:20rpx; height:20rpx;" src="../../resources/images/point.png"></image>
-              {{kpiSocres[index].kpi}}:{{kpiSocres[index].socre}}
+        <view class="modal-dialog" hidden="{{modalHidden}}">
+          <view class="page__bd page__bd_spacing">
+            <view class="weui-flex">
+              <view class="weui-flex__item">
+                <view class="placeholder" bindtap='cleanRecord'>重新录音</view>
+              </view>
+              <view class="weui-flex__item">
+                <view align="right" bindtap='loadingRecord'>完成</view>
+              </view>
+            </view>
+            <view class="weui-flex">
+              <!-- <view class="weui-flex__item">
+                <image align="center"  bindtap="playRecord" mode='aspectFill' style="width:100rpx; height:100rpx;" src="../../../resources/images/playRecord.png"></image>
+              </view> -->
+              <view class="weui-flex__item">
+                <image align="center"  wx:if="{{record=='start'}}" bindtap="startRecord" mode='aspectFill' style="width:200rpx; height:200rpx;" src="../../../resources/images/start.png"></image>
+                <image align="center"  wx:elif="{{record=='end'}}"  bindtap="stopRecord" mode='aspectFill' style="width:200rpx; height:200rpx;" src="../../../resources/images/end.png"></image>
+                 <image align="center" wx:elif="{{record=='play'}}"  bindtap="playRecord" mode='aspectFill' style="width:200rpx; height:200rpx;" src="../../../resources/images/playRecord.png"></image>
+              </view>
+              <!-- <view class="weui-flex__item">
+                <image align="left"  bindtap="stopRecord" mode='aspectFill' style="width:100rpx; height:100rpx;" src="../../../resources/images/end.png"></image>
+              </view> -->
             </view>
           </view>
         </view>
-
         <!--文件列表-->
         <view class="weui-cells__title">任务文档</view>
         <view class="weui-cells">
