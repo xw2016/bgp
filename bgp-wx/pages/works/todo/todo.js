@@ -68,7 +68,7 @@ Page({
         src: res.tempFilePath
       })
       console.log(res.tempFilePath)
-      that.tip("录音完成！")
+      // that.tip("录音完成！")
       // that.loadingRecord(res);
     });
 
@@ -426,6 +426,9 @@ Page({
   loadingRecord: function() {
     let that = this;
     var src = that.data.src;
+    if(src==''){
+      return false;
+    }
     var tempFilePaths = [src];
 
     let loginToken = wx.getStorageSync("loginToken");

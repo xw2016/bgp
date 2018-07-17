@@ -134,11 +134,13 @@ function onUploadFile(url, tempFilePaths, name, formData,callback) {
   //   mask: true,
   //   duration: 10000
   // })
-  debugger
+  
   var uploadImgCount = 0;
   let loginToken = wx.getStorageSync("loginToken");
   for (var i = 0, h = tempFilePaths.length; i < h; i++) {
-    
+    if(tempFilePaths[i]==''){
+      return false;
+    }
     const uploadTask = wx.uploadFile({
       url: host+'/work/addFileUpload',
       filePath: tempFilePaths[i],
@@ -148,7 +150,7 @@ function onUploadFile(url, tempFilePaths, name, formData,callback) {
       },
       formData: formData,
       success: function (res) {
-        debugger
+        
         let result = JSON.parse(res.data);
         if (result.retCode!=200){
           console.log('上传文件失败:' );
