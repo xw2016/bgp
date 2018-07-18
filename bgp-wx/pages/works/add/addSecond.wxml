@@ -91,10 +91,12 @@
           </view>
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
-              <view class="weui-select">
+              <textarea class="weui-textarea" disabled style="height: 3.3em" 
+               placeholder="请选择负责人" placeholder-style="height: 1.65em;line-height: 1.65em"
+              value='{{checkedResName}}'/>
                 <!-- {{responsibleGroupArr[1][resIndex[1]]}} -->
-                {{checkedResName}}
-              </view>
+                
+             
             </picker>
           </view>
         </view>
@@ -102,7 +104,7 @@
 
 
       <!--审核人-->
-      <view class="weui-cells__title">请选择审核人</view>
+      <view class="weui-cells__title">审核人</view>
       <!-- <view class="weui-cells weui-cells_after-title"> -->
 
       <!-- <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
@@ -159,12 +161,11 @@
             <view class="weui-label">审核人</view>
           </view>
           <view class="weui-cell__bd">
-            <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}">
-              <view class="weui-select">
-                <!-- {{reviewerGroupArr[1][revIndex[1]]}} -->
+             <!-- <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}"> -->
+              <view class="my-select"> 
                 {{reviewer.name}}
-              </view>
-            </picker>
+                </view> 
+            <!-- </picker>  -->
           </view>
         </view>
       </view>

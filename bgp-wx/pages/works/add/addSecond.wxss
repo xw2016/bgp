@@ -1,1 +1,21 @@
 /* pages/works/add/addSecond.wxss */
+
+.my-select {
+  position: relative;
+  padding-left: 15px;
+  padding-right: 30px;
+  height: 2.58823529em;
+  min-height: 2.58823529em;
+  line-height: 2.58823529em;
+   /* border-right:1rpx solid #d9d9d9  */
+}
+
+.my-textarea {
+  position: relative;
+  padding-left: 15px;
+  padding-right: 30px;
+  /* height: 4.58823529em;
+  min-height: 4.58823529em;
+  line-height: 4.58823529em; */
+  border-right: 1rpx solid #d9d9d9;
+}
