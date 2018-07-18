@@ -107,7 +107,7 @@ Page({
   },
   myScore: function() {
     // wx.navigateTo({
-    //   url: '../rrtest/recordtest',
+    //   url: '../rrtest/pingfen',
     // })
     this.initMyScore();
   },

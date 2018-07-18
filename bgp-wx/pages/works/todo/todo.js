@@ -170,7 +170,7 @@ Page({
   },
 
   formSubmit: function(e) {
-    debugger
+    
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;

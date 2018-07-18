@@ -52,18 +52,27 @@
 
     <view class="weui-cells__title">考核维度评分</view>
     <view class="weui-cells weui-cells_after-title">
-      <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" wx:key="id">
+      <block wx:for="{{kpiList}}" wx:for-item="itm" wx:for-index="idx" data-idx="{{idx}}" wx:key="id">
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
             <view class="weui-label">{{itm.kpiName}}：</view>
           </view>
 
           <view class="weui-cell__bd">
-            <picker mode="selector" bindchange="bindChange_select" value="{{itm.index}}" data-current="{{idx}}" range="{{itm.kpiScores}}" range-key="grade">
+            <!-- <picker mode="selector" bindchange="bindChange_select" value="{{itm.index}}" data-current="{{idx}}" range="{{itm.kpiScores}}" range-key="grade">
               <view class="weui-select weui-select_in-select-after">
                 {{itm.kpiScores[itm.index].grade}}-{{itm.kpiScores[itm.index].score}}
               </view>
-            </picker>
+            </picker> -->
+             <view class="zan-font-16 my-ib" bindtap="myStarChoose" data-idx="{{idx}}">
+                <block wx:for="{{itm.kpiScores}}" >
+                  <text wx:if="{{stars[idx]>=index+1}}" style="padding-right: .5em;color:red"  data-star="{{index+1}}">★</text>
+                  <text wx:if="{{stars[idx]<index+1}}" style="padding-right: .5em"  data-star="{{index+1}}">☆</text>
+                </block>
+                <text style="text-align: right">{{itm.kpiScores[stars[idx]-1].grade}}</text>
+              </view>
+
+
           </view>
         </view>
         <view class="weui-cells__title"></view>

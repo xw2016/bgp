@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    stars: [0],
     loadingHidden: true,
     rejectInfo:'',
     modalHidden: true,
@@ -62,13 +63,17 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         var kpiList = res.data.data;
+        var stars = that.data.stars;
         kpiList.forEach(function (item) {
-          item.index = 0
-          let kpiScores = { id: '', kpiScoreId: '', grade: '', score: '' }
-          item.kpiScores.unshift(kpiScores);
+          // item.index = 0
+          // let kpiScores = { id: '', kpiScoreId: '', grade: '', score: '' }
+          // item.kpiScores.unshift(kpiScores);
+          stars.push(0);
         })
+        
         that.setData({
-          kpiList: kpiList
+          kpiList: kpiList,
+          stars: stars
         })
       }
     })
@@ -319,5 +324,20 @@ Page({
         }
       }
     })
+  }, 
+  //仿淘宝评分
+  myStarChoose(e) {
+    let that = this;
+    var idx = e.currentTarget.dataset.idx;
+    
+    let star = parseInt(e.target.dataset.star) || 0;
+    let stars = that.data.stars;
+    stars[idx]=star;
+    this.data.kpiList[idx].index = star-1
+    // 把改变某个数组对象index值之后的全新objArray重新 赋值给objArray
+    this.setData({
+      stars: stars,
+      kpiList: this.data.kpiList
+    });
   }
 })

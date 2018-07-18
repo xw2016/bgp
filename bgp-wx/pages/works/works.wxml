@@ -85,7 +85,7 @@
   </view>
 </view>
 <!--任务积分-->
-<!-- <view class="weui-cells__title"></view>
+ <!-- <view class="weui-cells__title"></view>
 <view class="weui-cells weui-cells_after-title" bindtap="myScore">
   <view class="weui-cell weui-cell_access">
     <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
@@ -98,4 +98,4 @@
       <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
     </view>
   </view>
-</view> -->
+</view>  -->
