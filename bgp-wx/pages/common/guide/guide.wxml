@@ -1,3 +1,6 @@
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>
 <view class="page">
     <view class="page__bd">
         <view class="weui-article">
@@ -13,5 +16,26 @@
                 </view>
             </view>
         </view>
+        <!--文件列表-->
+    <view class="weui-cells__title">任务附件</view>
+    <view class="weui-cells">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__bd">
+              <view class="weui-uploader__files">
+                <view wx:for="{{docfiles}}" wx:key="*this">
+                  <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
+                    <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+                    <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+                    <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
     </view>
 </view>

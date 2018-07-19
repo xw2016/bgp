@@ -17,7 +17,8 @@
     "pages/works/resolveleader/resolveleader",
     "pages/common/guide/guide",
     "pages/works/report/report",
-    "pages/rrtest/recordtest"
+    "pages/rrtest/recordtest",
+    "pages/rrtest/pingfen"
   ],
   "window": {
     "backgroundTextStyle": "light",
