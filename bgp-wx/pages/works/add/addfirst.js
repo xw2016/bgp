@@ -293,6 +293,7 @@ Page({
     let url = '/work/add';
     let method = 'post';
     // let data = that.data;
+    let loginUser = wx.getStorageSync("loginUser");
     let data = {
       parentWorkName: '本任务',
       parentId: '0',
@@ -306,7 +307,9 @@ Page({
       level: that.data.workLevel == "请选择" ? "" : that.data.workLevel,
       typeId: that.data.workType.typeId,
       typeName: that.data.workType.title,
-      pass: that.data.workType.unifyKpi == 'Y' ? 'Y' : 'N'
+      pass: that.data.workType.unifyKpi == 'Y' ? 'Y' : 'N',
+      creator : loginUser.name,
+      creatorNum : loginUser.account
 
     };
     util.onSubmitJson(url, data, method, function(res) {

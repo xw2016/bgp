@@ -420,6 +420,33 @@ Page({
       });
       return false;
     }
+
+    if (user == '全选') {
+      let users = userGroupArray[1];
+      let checkedResName = '';
+      let checkedResponsible = '';
+      users.forEach(function (resName) {
+
+        userlist.forEach(function (item) {
+          if (resName == item.name) {
+
+            checkedResName = checkedResName != '' ? checkedResName + "," + item.name : '' + item.name;
+            let newRes = item.account + ":" + item.name;
+            checkedResponsible = checkedResponsible != '' ? (checkedResponsible + "," + newRes) : ('' + newRes);
+          }
+        });
+      })
+      that.setData({
+        responsibleGroupArr: userGroupArray,
+        resIndex: e.detail.value,
+        responsible: responsible,
+        checkedResName: checkedResName,
+        checkedResponsible: checkedResponsible
+      });
+
+      return false;
+    }
+
     userlist.forEach(function (item) {
       if (user == item.name) {
         responsible = item;
@@ -493,6 +520,9 @@ Page({
           })
         }
       });
+      if (userArr.length > 0) {
+        userArr.unshift("全选");
+      }
     }else{
       userArr.push('清空');
     }

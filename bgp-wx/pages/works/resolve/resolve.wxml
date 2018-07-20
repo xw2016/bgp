@@ -107,11 +107,14 @@
           </view>
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
-              <view class="weui-select">
-                <!-- {{responsibleGroupArr[1][resIndex[1]]}} -->
-                {{checkedResName}}
-                <!-- <input type='hidden' name='responsible' value='{{checkedResName}}'></input> -->
-              </view>
+               <scroll-view scroll-y style="height: 4.5em;">
+                <view wx:if="{{checkedResName}}">
+                  {{checkedResName}}
+                </view>
+                <view wx:else>
+                  请选择负责人
+                  </view>
+              </scroll-view>
             </picker>
           </view>
         </view>
@@ -174,14 +177,14 @@
             <view class="weui-label">审核人</view>
           </view>
           <view class="weui-cell__bd">
-            <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}">
-              <view class="weui-select">
+            <!-- <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}"> -->
+              <view class="my-select">
                 <!-- {{reviewerGroupArr[1][revIndex[1]]}} -->
                 {{reviewer.name}}
                 <!-- <input type='hidden' name='reviewer' value='{{reviewer.name}}'></input> -->
 
               </view>
-            </picker>
+            <!-- </picker> -->
           </view>
         </view>
       </view>

@@ -256,14 +256,9 @@ Page({
     })
   },
   previewImage: function(e) {
-    // this.setData({
-    //   current: e.currentTarget.id,
-    //   modalHidden: false
-    // })
-
     wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.imgfiles // 需要预览的图片http链接列表
+      current: e.currentTarget.id, 
+      urls: this.data.imgfiles  
     })
   },
   bindFileDown: function(e) {
@@ -272,7 +267,7 @@ Page({
     wx.downloadFile({
       url: e.currentTarget.id,
       success: function(res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
+         
         if (res.statusCode === 200) {
           wx.openDocument({
             filePath: res.tempFilePath
