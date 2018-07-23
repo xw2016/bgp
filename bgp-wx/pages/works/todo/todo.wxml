@@ -91,7 +91,7 @@
           </view>
         </view>
         <!--录音列表-->
-        <view class="weui-cells__title">任务语音</view>
+        <!-- <view class="weui-cells__title">任务语音</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
@@ -124,9 +124,6 @@
               </view>
             </view>
             <view class="weui-flex">
-              <!-- <view class="weui-flex__item">
-                <image align="center"  bindtap="playRecord" mode='aspectFill' style="width:100rpx; height:100rpx;" src="../../../resources/images/playRecord.png"></image>
-              </view> -->
               <view >
                 <image align="center"  wx:if="{{record=='start'}}" bindtap="startRecord" mode='aspectFill' style="width:200rpx; height:200rpx;" src="../../../resources/images/start.png"></image>
                 <image align="center"  wx:elif="{{record=='end'}}"  bindtap="stopRecord" mode='aspectFill' style="width:200rpx; height:200rpx;" src="../../../resources/images/end.png"></image>
@@ -135,12 +132,9 @@
                    <text class="index-post-info"  wx:elif="{{record=='end'}}" >录音中...点一下结束录音</text>
                     <text class="index-post-info" wx:elif="{{record=='play'}}" >录音结束，点一下试听录音</text>
               </view>
-              <!-- <view class="weui-flex__item">
-                <image align="left"  bindtap="stopRecord" mode='aspectFill' style="width:100rpx; height:100rpx;" src="../../../resources/images/end.png"></image>
-              </view> -->
             </view>
           </view>
-        </view>
+        </view> -->
         <!--文件列表-->
         <view class="weui-cells__title">任务文档</view>
         <view class="weui-cells">

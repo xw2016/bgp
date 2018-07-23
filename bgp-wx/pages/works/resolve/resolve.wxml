@@ -199,15 +199,15 @@
         </view>
       </view>
     </view>
-    <view class="weui-cells__title">发起理由</view>
+
+    <!-- <view class="weui-cells__title">发起理由</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
           <textarea class="weui-textarea" placeholder="请输入发起理由" style="height: 3.3em" bindinput='bindCreateReson' value='{{work.createReason}}'/>
-          <!-- <view class="weui-textarea-counter">0/200</view> -->
         </view>
       </view>
-    </view>
+    </view> -->
 
     <view class="weui-panel weui-form-preview__ft ">
       <button bindtap="back" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>

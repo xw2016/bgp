@@ -95,6 +95,13 @@ Page({
       that.update();
     }, 10000);
   },
+
+  previewImage: function (e) {
+    wx.previewImage({
+      current: e.currentTarget.id, // 当前显示图片的http链接
+      urls: this.data.imgfiles // 需要预览的图片http链接列表
+    })
+  },
   bindFileDown: function (e) {
     let that = this;
     that.loadingTap();
