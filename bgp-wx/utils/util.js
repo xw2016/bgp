@@ -15,6 +15,34 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+function formateTime2(seconds){
+  return[
+    // parseInt(seconds / 60 / 60), //时
+    parseInt(seconds / 60 % 60), //分
+    parseInt( seconds % 60)
+  ].join(":").replace(/\b(\d)\b/g,"0$1");
+}
+
+function CountTime(that){ //计时器
+  var second = that.data.second;
+  if (second == -1) {
+    that.setData({
+      second: 0
+      // secondShow: formateTime2(0)
+    })
+    clearTimeout(that.data.timer);
+    return;
+  }
+  that.setData({
+  timer : setTimeout(function(){
+    that.setData({
+      second:second+1,
+      secondShow:formateTime2(second+1)
+    })
+    CountTime(that);
+  },1000)})
+ 
+}
 //日期比较
 function compareDate(s1, s2) {
   return ((new Date(s1.replace(/-/g, "\/"))) > (new Date(s2.replace(/-/g, "\/"))));
@@ -367,6 +395,7 @@ module.exports = {
   initGroup:initGroup,
   searchUser: searchUser,
   compareDate: compareDate,
-  initFile: initFile
+  initFile: initFile,
+  countTime:CountTime
   // validateForm
 }

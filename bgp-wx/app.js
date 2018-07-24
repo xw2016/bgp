@@ -1,7 +1,7 @@
 //app.js
-import wxValidate from 'utils/wxValidate'
+// import wxValidate from 'utils/wxValidate'
 App({
-  wxValidate: (rules, messages) => new wxValidate(rules, messages),
+  // wxValidate: (rules, messages) => new wxValidate(rules, messages),
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
@@ -32,7 +32,9 @@ App({
   globalData: {
     userInfo: null,
     logout:false,
-    serviceUrl:'https://www.bgpmy.com/web/wx'
-    // serviceUrl:'http://localhost:8080/web/wx'
+    serviceUrl:'https://www.bgpmy.com/web/wx',
+    servicePath: 'https://www.bgpmy.com/'
+        // serviceUrl: 'http://localhost:8080/web/wx',
+        // servicePath: 'http://localhost:8080/'
   }
 })

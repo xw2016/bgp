@@ -40,7 +40,7 @@
           </view>
           <!-- 责任人 -->
           <view wx:if="{{work.reviewerNum==userNo}}">
-            <view class="weui-form-preview__label">责任人</view>
+            <view class="weui-form-preview__label">执行人</view>
             <view class="weui-form-preview__value">
               <block wx:if="{{work.responsible ==null}}">无</block>
               <block wx:else>{{work.responsible}}</block>
@@ -108,7 +108,7 @@
   <view class="weui-cells__title"></view>
 
   <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
-    <view class="weui-panel__hd">任务执行日志</view>
+    <view class="weui-panel__hd">任务反馈</view>
     <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_text">
         <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">

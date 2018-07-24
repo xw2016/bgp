@@ -25,13 +25,13 @@
       <!-- <text class="index-poster-kind">V.{{item.User.Level}}</text> -->
       <!-- <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view> -->
     </view>
-    <view style="height:40rpx">
+    <view style="height:40rpx" bindtap='myScore' >
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/done.png"></image>
       <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/fscore.png"></image>
-      <text class="index-post-info" bindtap="myScore">已得分 {{myReport.finalScore}}</text>
+      <text class="index-post-info">已得分 {{myReport.finalScore}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/rscore.png"></image>
-      <text class="index-post-info" bindtap="myScore">预得分 {{myReport.reserveScore}}</text>
+      <text class="index-post-info" >预得分 {{myReport.reserveScore}}</text>
       <image style="width:38rpx; height:38rpx;" src="../../resources/images/workload.png"></image>
       <text class="index-post-info">工作量 {{myReport.workload}}</text>
     </view>

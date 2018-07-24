@@ -87,7 +87,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">负责人</view>
+            <view class="weui-label">执行人</view>
           </view>
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
@@ -101,21 +101,21 @@
                   {{checkedResName}}
                 </view>
                 <view wx:else>
-                  请选择负责人
-                  </view>
+                  请选择执行人
+                </view>
               </scroll-view>
 
             </picker>
-            </view>
-            </view>
           </view>
+        </view>
+      </view>
 
 
-          <!--审核人-->
-          <view class="weui-cells__title">审核人</view>
-          <!-- <view class="weui-cells weui-cells_after-title"> -->
+      <!--审核人-->
+      <view class="weui-cells__title">审核人</view>
+      <!-- <view class="weui-cells weui-cells_after-title"> -->
 
-          <!-- <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
+      <!-- <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
           <view class="weui-cell__hd">
             <view class="weui-label">审核人类型</view>
           </view>
@@ -137,8 +137,8 @@
           </checkbox-group>
         </block> -->
 
-          <!--审核人-->
-          <!-- <view class="weui-cells weui-cells_after-title">
+      <!--审核人-->
+      <!-- <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_input" bindtap='showReview'>
           <view class="weui-cell__hd">
             <view class="weui-label">审核人</view>
@@ -161,29 +161,31 @@
           </label>
         </checkbox-group>
       </block> -->
-          <!--审核人pick-->
-          <view class="weui-cells__title"></view>
-          <view class="weui-cells weui-cells_after-title">
-            <view class="weui-cell weui-cell_select">
-              <view class="weui-cell__hd weui-cell__hd_in-select-after">
-                <view class="weui-label">审核人</view>
-              </view>
-              <view class="weui-cell__bd">
-                <!-- <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}"> -->
-                <view class="my-select">
-                  {{reviewer.name}}
-                </view>
-                <!-- </picker>  -->
-              </view>
-            </view>
+      <!--审核人pick-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">审核人</view>
           </view>
-
+          <view class="weui-cell__bd">
+            <!-- <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}"> -->
+            <view class="my-select">
+              {{reviewer.name}}
+            </view>
+            <!-- </picker>  -->
+          </view>
         </view>
+      </view>
+<!--新增任务附件-->
 
-        <view class="weui-panel weui-form-preview__ft fixation-btn">
-          <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
-          <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
-        </view>
+
+    </view>
+
+    <view class="weui-panel weui-form-preview__ft fixation-btn">
+      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+      <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
+    </view>
 
   </form>
-  </view>
+</view>

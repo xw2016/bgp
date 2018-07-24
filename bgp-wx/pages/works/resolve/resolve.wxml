@@ -51,7 +51,7 @@
         </view>
       </block> -->
       <!--负责人类型-->
-      <view class="weui-cells__title">请选择负责人，可多选</view>
+      <view class="weui-cells__title">请选择执行人，可多选</view>
       <!-- <view class="weui-cells weui-cells_after-title"> -->
       <!-- <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
           <view class="weui-cell__hd">
@@ -103,7 +103,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell weui-cell_select">
           <view class="weui-cell__hd weui-cell__hd_in-select-after">
-            <view class="weui-label">负责人</view>
+            <view class="weui-label">执行人</view>
           </view>
           <view class="weui-cell__bd">
             <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
@@ -112,7 +112,7 @@
                   {{checkedResName}}
                 </view>
                 <view wx:else>
-                  请选择负责人
+                  请选择执行人
                   </view>
               </scroll-view>
             </picker>

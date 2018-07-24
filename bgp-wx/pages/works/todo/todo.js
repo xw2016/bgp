@@ -8,6 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    second: 0,
+    secondShow: 0,
     record: 'start',
     loadingHidden: true,
     modalHidden: true,
@@ -74,7 +76,7 @@ Page({
 
     this.innerAudioContext = wx.createInnerAudioContext();
     this.innerAudioContext.onError((res) => {
-      
+
       that.tip("播放录音失败！")
     })
   },
@@ -170,7 +172,7 @@ Page({
   },
 
   formSubmit: function(e) {
-    
+
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
@@ -257,8 +259,8 @@ Page({
   },
   previewImage: function(e) {
     wx.previewImage({
-      current: e.currentTarget.id, 
-      urls: this.data.imgfiles  
+      current: e.currentTarget.id,
+      urls: this.data.imgfiles
     })
   },
   bindFileDown: function(e) {
@@ -267,7 +269,7 @@ Page({
     wx.downloadFile({
       url: e.currentTarget.id,
       success: function(res) {
-         
+
         if (res.statusCode === 200) {
           wx.openDocument({
             filePath: res.tempFilePath
@@ -317,9 +319,15 @@ Page({
   },
   modalCandel: function() {
     // do something
-    this.setData({
+    let that = this;
+    that.setData({
       modalHidden: true
     })
+    let record = that.data.record;
+    if(record=='end'){
+      that.stopRecord();
+    }
+    that.cleanRecord();
   },
   showAudioOpt: function() {
     this.setData({
@@ -377,12 +385,16 @@ Page({
   },
   //开始录音
   startRecord: function() {
-    this.setData({
-      record: 'end'
+    let that = this
+    that.setData({
+      record: 'end',
+      second: 0,
+      secondShow: 0
     })
-    this.recorderManager.start({
+    that.recorderManager.start({
       format: 'aac'
     });
+    util.countTime(that);
   },
   //暂停录音
   pauseRecord: function() {
@@ -393,10 +405,13 @@ Page({
   },
   // 停止录音
   stopRecord: function() {
-    this.setData({
-      record: 'play'
+    let that = this
+    that.setData({
+      record: 'play',
+      second: -1
     })
-    this.recorderManager.stop()
+    that.recorderManager.stop()
+    util.countTime(that)
   },
   //播放录音
   playRecord: function() {
@@ -410,18 +425,22 @@ Page({
     that.innerAudioContext.play()
   },
   //重新录音，清空原来录音
-  cleanRecord:function(){
+  cleanRecord: function() {
     let that = this;
+    // that.stopRecord();
     that.setData({
-      src:'',
-      record: 'start'
+      src: '',
+      record: 'start',
+      secondShow: 0
     })
+
+    // util.countTime(that);
   },
   //上传录音
   loadingRecord: function() {
     let that = this;
     var src = that.data.src;
-    if(src==''){
+    if (src == '') {
       return false;
     }
     var tempFilePaths = [src];
@@ -433,34 +452,32 @@ Page({
       "workName": that.data.work.workName,
       "creator": userNo
     };
+    this.loadingTap();
     util.onUploadFile(null, tempFilePaths, "file", formData, function(e) {
-
       that.setData({
-        files: that.data.files.concat(e)
+        files: that.data.files.concat(e),
+        loadingHidden: true
       });
       that.initFileData(that.data.files);
       that.modalCandel();
     });
-    // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-    // that.setData({
-    //   videofiles: that.data.videofiles.concat(res.tempFilePaths)
-    // });
-},
-tip: function(msg) {
-  wx.showModal({
-    title: '提示',
-    content: msg,
-    showCancel: false
-  })
-},
-openSuccess: function() {
-  wx.redirectTo({
-    url: '../../msg/msg_success'
-  })
-},
-openFail: function() {
-  wx.navigateTo({
-    url: '../../msg/msg_fail'
-  })
-}
+
+  },
+  tip: function(msg) {
+    wx.showModal({
+      title: '提示',
+      content: msg,
+      showCancel: false
+    })
+  },
+  openSuccess: function() {
+    wx.redirectTo({
+      url: '../../msg/msg_success'
+    })
+  },
+  openFail: function() {
+    wx.navigateTo({
+      url: '../../msg/msg_fail'
+    })
+  }
 })

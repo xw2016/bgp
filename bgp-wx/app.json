@@ -18,7 +18,9 @@
     "pages/common/guide/guide",
     "pages/works/report/report",
     "pages/rrtest/recordtest",
-    "pages/rrtest/pingfen"
+    "pages/rrtest/pingfen",
+    "pages/works/apply/applyfirst",
+    "pages/works/apply/applySecond"
   ],
   "window": {
     "backgroundTextStyle": "light",
