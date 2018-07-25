@@ -1,7 +1,9 @@
 // pages/works/todo/todo.js
 const app = getApp();
-var util = require('../../../utils/util.js');
-var com = require('../../../lib/js/common.js');
+var util = require('../../../utils/util.js')
+var fileUtil = require('../../../utils/fileUtil.js')
+var imageUtil = require('../../../utils/imageUtil.js');
+var recordUtil = require('../../../utils/recordUtil.js');
 Page({
 
   /**
@@ -34,6 +36,11 @@ Page({
       that.update();
     }, 15000);
   },
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -50,103 +57,10 @@ Page({
       beginDate: (beginDate == null || beginDate == '') ? util.formatTime(new Date()) : beginDate,
       endDate: beginDate == new Date() ? null : util.formatTime(new Date())
     })
-    this.initFile(queryBean.workId);
-    this.initRecorderManager();
-
+    fileUtil.initFile(this);
+    recordUtil.initRecorderManager(this);
   },
-  hideErrMsg: function() {
-    this.setData({
-      popErrorMsg: ''
-    })
-  },
-  initRecorderManager: function() {
-    let that = this;
-    this.recorderManager = wx.getRecorderManager();
-    this.recorderManager.onError(function() {
-      that.tip("录音失败！")
-    });
-    this.recorderManager.onStop(function(res) {
-      that.setData({
-        src: res.tempFilePath
-      })
-      console.log(res.tempFilePath)
-      // that.tip("录音完成！")
-      // that.loadingRecord(res);
-    });
-
-    this.innerAudioContext = wx.createInnerAudioContext();
-    this.innerAudioContext.onError((res) => {
-
-      that.tip("播放录音失败！")
-    })
-  },
-
-  initFile: function(worksId) {
-    let that = this;
-    let url = '/work/queryFileUploadById';
-    let method = 'POST';
-    // let worksId = that.work.workId;
-    let data = {
-      worksId: worksId
-    }
-    util.onSubmit(url, data, method, function(res) {
-
-      if (res.data.retCode != 200) {
-        util.openAlert(res.data.msg);
-      } else {
-        that.initFileData(res.data.data);
-      }
-    });
-  },
-  //初始化页面附件显示数据
-  initFileData: function(files) {
-    let imgfiles = [];
-    let docfiles = [];
-    let txtfiles = [];
-    let videofiles = [];
-    let audiofiles = [];
-    let otherfiles = [];
-    if (files != null) {
-      files.map(item => {
-
-        if (typeof(item.url) == 'undefined') {
-          item.url = app.globalData.servicePath + item.pathUrl;
-        }
-        switch (item.type) {
-          case 'jpg':
-          case 'jpeg':
-            imgfiles.push(item.url);
-            break;
-          case 'mp3':
-          case 'm4a':
-          case 'aac':
-            audiofiles.push(item);
-            break;
-          case 'doc':
-          case 'docx':
-          case 'txt':
-          case 'xls':
-          case 'xlsx':
-            docfiles.push(item);
-            break;
-          case 'mp4':
-            videofiles.push(item)
-            break
-          default:
-            otherfiles.push(item);
-        }
-      });
-
-      this.setData({
-        files: files,
-        imgfiles: imgfiles,
-        docfiles: docfiles,
-        videofiles: videofiles,
-        audiofiles: audiofiles,
-        otherfiles: otherfiles
-      });
-    }
-  },
+  
   //日期选择
   bindDateChange: function(e) {
     this.setData({
@@ -226,36 +140,9 @@ Page({
       }
     });
   },
+  //图片
   chooseImage: function(e) {
-    var that = this;
-    wx.chooseImage({
-      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
-        //上传文件
-        var tempFilePaths = res.tempFilePaths;
-
-        var uploadImgCount = 0;
-        let loginToken = wx.getStorageSync("loginToken");
-        let userNo = wx.getStorageSync("userNo");
-        let formData = {
-          "workId": that.data.work.workId,
-          "workName": that.data.work.workName,
-          "creator": userNo
-        };
-        util.onUploadFile(null, tempFilePaths, "file", formData, function(e) {
-
-          that.setData({
-            files: that.data.files.concat(e)
-          });
-        });
-
-        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        that.setData({
-          imgfiles: that.data.imgfiles.concat(res.tempFilePaths)
-        });
-      }
-    })
+   imageUtil.chooseImage(this,e)
   },
   previewImage: function(e) {
     wx.previewImage({
@@ -263,206 +150,71 @@ Page({
       urls: this.data.imgfiles
     })
   },
+  openActionImag: function (e) {
+    imageUtil.openActionImag(this,e)
+  },
+  //文件查看
   bindFileDown: function(e) {
-    var that = this;
-    this.loadingTap();
-    wx.downloadFile({
-      url: e.currentTarget.id,
-      success: function(res) {
-
-        if (res.statusCode === 200) {
-          wx.openDocument({
-            filePath: res.tempFilePath
-          })
-          that.setData({
-            loadingHidden: true
-          })
-        }
-      }
-    })
+    fileUtil.bindFileDown(this,e)
   },
-  delFileUpload: function(e) {
-    let that = this;
-    let url = '/work/delFileUpload';
-    let method = 'post';
-    let fileId = '';
-    let idx = -1;
-    let files = that.data.files;
-
-    files.forEach(function(item, index) {
-
-      if (item.url == e) {
-        fileId = item.id;
-        idx = index;
-        return false;
-      }
-    })
-
-    if (fileId == '' && idx > -1) {
-      files.splice(idx, 1);
-    } else {
-      let data = {
-        fileId: fileId
-      }
-
-      util.onSubmit(url, data, method, function(res) {
-        if (res.data.retCode != 200) {
-          util.openAlert(res.data.msg);
-        } else {
-
-          files.splice(idx, 1);
-          that.initFileData(files);
-        }
-      });
-    }
-
+  
+  
+  openActionDoc: function(e) { 
+    fileUtil.openActionDoc(this,e)
   },
-  modalCandel: function() {
+
+  modalCandel: function () {
     // do something
     let that = this;
     that.setData({
       modalHidden: true
     })
     let record = that.data.record;
-    if(record=='end'){
+    if (record == 'end') {
       that.stopRecord();
     }
     that.cleanRecord();
   },
-  showAudioOpt: function() {
+  showAudioOpt: function () {
     this.setData({
       modalHidden: false
     })
   },
-  openAudio: function(e) {
-    let that = this;
-    wx.showActionSheet({
-      itemList: ['收听', '删除'],
-      itemColor: '#007aff',
-      success(res) {
-        if (res.tapIndex === 0) {
-          that.innerAudioContext.src = e.currentTarget.id;
-          that.innerAudioContext.play()
-        } else if (res.tapIndex === 1) {
-          console.log('删除' + e.currentTarget.id);
-          that.delFileUpload(e.currentTarget.id);
-        }
-      }
-    })
-  },
-  openActionImag: function(e) {
-    let that = this;
-    wx.showActionSheet({
-      itemList: ['查看', '删除'],
-      itemColor: '#007aff',
-      success(res) {
-        if (res.tapIndex === 0) {
-          wx.previewImage({
-            current: e.currentTarget.id, // 当前显示图片的http链接
-            urls: that.data.imgfiles // 需要预览的图片http链接列表
-          })
-        } else if (res.tapIndex === 1) {
-          console.log('删除' + e.currentTarget.id);
-          that.delFileUpload(e.currentTarget.id);
-        }
-      }
-    })
-  },
-  openActionDoc: function(e) {
-    let that = this;
-    wx.showActionSheet({
-      itemList: ['查看', '删除'],
-      itemColor: '#007aff',
-      success(res) {
-        if (res.tapIndex === 0) {
-          that.bindFileDown(e);
-        } else if (res.tapIndex === 1) {
-          console.log('删除' + e.currentTarget.id);
-          that.delFileUpload(e.currentTarget.id);
-        }
-      }
-    })
-  },
   //开始录音
-  startRecord: function() {
-    let that = this
-    that.setData({
-      record: 'end',
-      second: 0,
-      secondShow: 0
-    })
-    that.recorderManager.start({
-      format: 'aac'
-    });
-    util.countTime(that);
+  startRecord: function () {
+
+    recordUtil.startRecord(this)
   },
   //暂停录音
-  pauseRecord: function() {
-    this.recorderManager.pause()
+  pauseRecord: function () {
+    recordUtil.pauseRecord(this)
   },
-  resumeRecord: function() {
-    this.recorderManager.resume()
+  //
+  resumeRecord: function () {
+    recordUtil.resumeRecord(this);
   },
   // 停止录音
-  stopRecord: function() {
-    let that = this
-    that.setData({
-      record: 'play',
-      second: -1
-    })
-    that.recorderManager.stop()
-    util.countTime(that)
+  stopRecord: function () {
+    recordUtil.stopRecord(this)
   },
   //播放录音
-  playRecord: function() {
-    var that = this;
-    var src = that.data.src;
-    if (src == '') {
-      that.tip("请先录音！")
-      return;
-    }
-    that.innerAudioContext.src = that.data.src;
-    that.innerAudioContext.play()
+  playRecord: function () {
+    recordUtil.playRecord(this);
   },
   //重新录音，清空原来录音
-  cleanRecord: function() {
-    let that = this;
-    // that.stopRecord();
-    that.setData({
-      src: '',
-      record: 'start',
-      secondShow: 0
-    })
-
-    // util.countTime(that);
+  cleanRecord: function () {
+    recordUtil.cleanRecord(this);
   },
   //上传录音
-  loadingRecord: function() {
-    let that = this;
-    var src = that.data.src;
-    if (src == '') {
-      return false;
-    }
-    var tempFilePaths = [src];
-
-    let loginToken = wx.getStorageSync("loginToken");
-    let userNo = wx.getStorageSync("userNo");
-    let formData = {
-      "workId": that.data.work.workId,
-      "workName": that.data.work.workName,
-      "creator": userNo
-    };
-    this.loadingTap();
-    util.onUploadFile(null, tempFilePaths, "file", formData, function(e) {
-      that.setData({
-        files: that.data.files.concat(e),
-        loadingHidden: true
-      });
-      that.initFileData(that.data.files);
-      that.modalCandel();
-    });
+  loadingRecord: function () {
+    recordUtil.loadingRecord(this)
 
   },
+  //录音文件操作：试听，删除
+  openAudio: function (e) {
+    recordUtil.openAudio(this, e)
+  },
+//
   tip: function(msg) {
     wx.showModal({
       title: '提示',

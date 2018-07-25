@@ -1,20 +1,29 @@
 var app = getApp();
-var util = require('../../../utils/util.js');
+var util = require('../../../utils/util.js')
+var fileUtil = require('../../../utils/fileUtil.js')
+var imageUtil = require('../../../utils/imageUtil.js');
+var recordUtil = require('../../../utils/recordUtil.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    second: 0,
+    secondShow: 0,
+    record: 'start',
     loadingHidden: true,
+    modalHidden: true,
+    imgfiles: [],
+    files: [], //文件上传
     showDepetment: false,
     showReviewType: false,
     showReview: false,
-    resIndex:[0,0],
-    revIndex:[0,0],
-    checkedResponsible:'',
-    checkedResName:'',
-    reviewer:{},
+    resIndex: [0, 0],
+    revIndex: [0, 0],
+    checkedResponsible: '',
+    checkedResName: '',
+    reviewer: {},
     popErrorMsg: ''
   },
 
@@ -36,27 +45,102 @@ Page({
       work: queryBean,
       loginUser: loginUser,
       reviewer: {
-        name: loginUser.name, account: loginUser.account},
+        name: loginUser.name,
+        account: loginUser.account
+      },
       userlist: userlist
     })
+
+    fileUtil.initFile(this);
+    recordUtil.initRecorderManager(this);
   },
-  hideErrMsg: function () {
+
+  //提示语
+  hideErrMsg: function() {
     this.setData({
       popErrorMsg: ''
     })
   },
-  loadingTap: function () {
+  loadingTap: function() {
     this.setData({
       loadingHidden: false
     });
     var that = this;
-    setTimeout(function () {
+    setTimeout(function() {
       that.setData({
         loadingHidden: true
       });
       that.update();
     }, 10000);
   },
+  tip: function (msg) {
+    wx.showModal({
+      title: '提示',
+      content: msg,
+      showCancel: false
+    })
+  },
+  //图片操作
+  chooseImage: function(e) {
+    imageUtil.chooseImage(this, e)
+  },
+  openActionImag: function(e) {
+    imageUtil.openActionImag(this, e);
+  },
+  //录音操作
+  
+  modalCandel: function() {
+    // do something
+    let that = this;
+    that.setData({
+      modalHidden: true
+    })
+    let record = that.data.record;
+    if (record == 'end') {
+      that.stopRecord();
+    }
+    that.cleanRecord();
+  },
+  showAudioOpt: function() {
+    this.setData({
+      modalHidden: false
+    })
+  },
+  //开始录音
+  startRecord: function () {
+    
+    recordUtil.startRecord(this)
+  },
+  //暂停录音
+  pauseRecord: function () {
+    recordUtil.pauseRecord(this)
+  },
+  //
+  resumeRecord: function () {
+    recordUtil.resumeRecord(this);
+  },
+  // 停止录音
+  stopRecord: function () {
+    recordUtil.stopRecord(this)
+  },
+  //播放录音
+  playRecord: function () {
+    recordUtil.playRecord(this);
+  },
+  //重新录音，清空原来录音
+  cleanRecord: function () {
+    recordUtil.cleanRecord(this);
+  },
+  //上传录音
+  loadingRecord: function () {
+    recordUtil.loadingRecord(this)
+
+  },
+  //录音文件操作：试听，删除
+  openAudio: function (e) {
+    recordUtil.openAudio(this,e)
+  },
+//
   initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
@@ -75,7 +159,7 @@ Page({
       }
     })
   },
-  showResponsibleType:function(){
+  showResponsibleType: function() {
     let that = this
     let showResponsibleType = that.data.showResponsibleType == false ? true : false
     this.setData({
@@ -83,10 +167,10 @@ Page({
       showDepetment: false,
       showReview: false,
       showResponsibleType: showResponsibleType,
-      showResponsible:false
+      showResponsible: false
     })
   },
-  showResponsible:function(){
+  showResponsible: function() {
     let that = this
     let showResponsible = that.data.showResponsible == false ? true : false
     this.setData({
@@ -104,8 +188,8 @@ Page({
       showReviewType: showReviewType,
       showDepetment: false,
       showReview: false,
-      showResponsibleType:false,
-      showResponsible:false
+      showResponsibleType: false,
+      showResponsible: false
     })
   },
   showReview: function() {
@@ -115,8 +199,8 @@ Page({
       showReviewType: false,
       showDepetment: false,
       showReview: showReview,
-      showResponsibleType:false,
-      showResponsible:false
+      showResponsibleType: false,
+      showResponsible: false
     })
   },
   showDepartment: function() {
@@ -126,8 +210,8 @@ Page({
       showDepetment: showDepetment,
       showReviewType: false,
       showReview: false,
-      showResponsibleType:false,
-      showResponsible:false
+      showResponsibleType: false,
+      showResponsible: false
     })
   },
   // checkResponsibleTypeChange:function(e){  // 责任人类别选择
@@ -144,18 +228,18 @@ Page({
   //     responsibleList: checkGroup   //可选的人员组
   //   })
   // },
-  bindSearchReviewUser:function(e){
+  bindSearchReviewUser: function(e) {
     let key = e.detail.value;
     let userList = util.searchUser(key);
     this.setData({
-      reviewList: userList   //可选的人员组
+      reviewList: userList //可选的人员组
     })
   },
-  bindSearchResponsibleUser: function (e) {
+  bindSearchResponsibleUser: function(e) {
     let key = e.detail.value;
     let userList = util.searchUser(key);
     this.setData({
-      responsibleList: userList   //可选的人员组
+      responsibleList: userList //可选的人员组
     })
   },
   // checkReviewTypeChange:function(e){ //审核人类别选择
@@ -172,18 +256,18 @@ Page({
   //     reviewList: checkGroup
   //   })
   // },
-  checkReviewChange: function (e) {//审核人选择
-    var checkboxItems = this.checkUserChange(e,this.data.reviewList);
+  checkReviewChange: function(e) { //审核人选择
+    var checkboxItems = this.checkUserChange(e, this.data.reviewList);
     this.setData({
       reviewList: checkboxItems
     })
     var checkUsers = this.getCheckedUser(checkboxItems);
 
     var checkUserNames = '';
-    var checkUserNum ='';
+    var checkUserNum = '';
     var checkUserArr = checkUsers.split(",");
     if (checkUserArr != '') {
-      checkUserArr.forEach(function (item) {
+      checkUserArr.forEach(function(item) {
         var name = item.split(":")[1];
         checkUserNames = checkUserNames + "," + name;
       });
@@ -197,22 +281,22 @@ Page({
       checkedReview: checkUserNum
     })
   },
-  checkResponsibleChange:function(e){//责任人选择
+  checkResponsibleChange: function(e) { //责任人选择
     var checkboxItems = this.checkUserChange(e, this.data.responsibleList);
     this.setData({
       responsibleList: checkboxItems
     })
     var checkUsers = this.getCheckedUser(checkboxItems);
-    var checkUserNames ='';
+    var checkUserNames = '';
     var checkUserArr = checkUsers.split(",");
-    if(checkUserArr!=''){
-      checkUserArr.forEach(function (item) {
+    if (checkUserArr != '') {
+      checkUserArr.forEach(function(item) {
         var name = item.split(":")[1];
         checkUserNames = checkUserNames + "," + name;
       });
     }
 
-    if (checkUserNames != '' && checkUserNames.substr(0,1)==",") {
+    if (checkUserNames != '' && checkUserNames.substr(0, 1) == ",") {
       checkUserNames = checkUserNames.substr(1, checkUserNames.length);
     }
     this.setData({
@@ -220,7 +304,7 @@ Page({
       checkedResponsible: checkUsers
     })
   },
-  checkUserChange: function (e,reviewList){
+  checkUserChange: function(e, reviewList) {
     console.log('checkReviewChange发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = reviewList,
       values = e.detail.value;
@@ -248,9 +332,9 @@ Page({
         }
       }
     }
-   return checkboxItems;
+    return checkboxItems;
   },
-  
+
   checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = this.data.departmentlList,
@@ -285,7 +369,7 @@ Page({
     }
     return checked;
   },
-  getCheckedUserType: function (list) {
+  getCheckedUserType: function(list) {
     // var list = this.data.userTypeList;
     var checked = '';
     list.forEach(function(item) {
@@ -298,11 +382,11 @@ Page({
     }
     return checked;
   },
-  getCheckedUser:function(list){
+  getCheckedUser: function(list) {
     var checked = '';
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
-        checked = checked + "," + item.account+":"+item.name;
+        checked = checked + "," + item.account + ":" + item.name;
       }
     });
     if (checked != '') {
@@ -317,16 +401,16 @@ Page({
     list.forEach(function(item) {
       if (item.checked == true) {
         userlist.forEach(function(user) {
-            if(user.type==item.type){
-              userGroup.push(user);
-            }
+          if (user.type == item.type) {
+            userGroup.push(user);
+          }
         })
       }
     });
     return userGroup;
   },
   //人员选择
-  initUserGroupArray:function(){
+  initUserGroupArray: function() {
     let that = this;
     let groupList = wx.getStorageSync("groupList");
     let groupArrs = groupList.map(item => { //获取人员组
@@ -348,7 +432,7 @@ Page({
       })
     }
   },
-  bindReviewerChange: function (e) {
+  bindReviewerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -367,7 +451,7 @@ Page({
       });
       return false;
     }
-    userlist.forEach(function (item) {
+    userlist.forEach(function(item) {
       if (user == item.name) {
         reviewer = item;
         return;
@@ -379,7 +463,7 @@ Page({
       reviewer: reviewer
     });
   },
-  bindResponsibleChange:function(e){
+  bindResponsibleChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -387,10 +471,10 @@ Page({
     let group = userGroupArray[0][e.detail.value[0]];
     let user = userGroupArray[1][e.detail.value[1]];
     let responsible = {};
-   
+
     let userlist = that.data.userlist;
 
-    if (typeof (user) == 'undefined') {
+    if (typeof(user) == 'undefined') {
       return false;
     }
     if (user == '清空') {
@@ -403,15 +487,15 @@ Page({
       });
       return false;
     }
-    if(user =='全选'){
+    if (user == '全选') {
       let users = userGroupArray[1];
       let checkedResName = '';
       let checkedResponsible = '';
-      users.forEach(function (resName){
+      users.forEach(function(resName) {
 
-        userlist.forEach(function (item) {
+        userlist.forEach(function(item) {
           if (resName == item.name) {
-            
+
             checkedResName = checkedResName != '' ? checkedResName + "," + item.name : '' + item.name;
             let newRes = item.account + ":" + item.name;
             checkedResponsible = checkedResponsible != '' ? (checkedResponsible + "," + newRes) : ('' + newRes);
@@ -425,17 +509,17 @@ Page({
         checkedResName: checkedResName,
         checkedResponsible: checkedResponsible
       });
-      
+
       return false;
     }
-    userlist.forEach(function (item) {
+    userlist.forEach(function(item) {
       if (user == item.name) {
         responsible = item;
         return;
       }
     });
     let name = that.data.checkedResName;
-    if (name.indexOf(responsible.name)==-1){
+    if (name.indexOf(responsible.name) == -1) {
       let checkedResName = name != '' ? name + "," + responsible.name : '' + responsible.name;
       let eldRes = that.data.checkedResponsible;
       let newRes = responsible.account + ":" + responsible.name;
@@ -449,10 +533,10 @@ Page({
       });
     }
 
-    
-    
+
+
   },
-  bindResColumnChange:function(e){
+  bindResColumnChange: function(e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       resIndex: this.data.resIndex,
@@ -470,7 +554,7 @@ Page({
     }
     this.setData(data);
   },
-  bindRevColumnChange: function (e) {
+  bindRevColumnChange: function(e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       revIndex: this.data.revIndex,
@@ -488,48 +572,58 @@ Page({
     }
     this.setData(data);
   },
-  selectUser: function (group) {
+  selectUser: function(group) {
     let that = this;
     let userlist = that.data.userlist;
     let userArr = [];
     if (group != '') {
-      userlist.forEach(function (item) {
+      userlist.forEach(function(item) {
         let groupList = item.userGroupList
-        if (groupList !=null) {
-          groupList.forEach(function(g){
-            if (g.groupName==group){
+        if (groupList != null) {
+          groupList.forEach(function(g) {
+            if (g.groupName == group) {
               userArr.push(item.name);
             }
           })
         }
       });
-      if(userArr.length>0){
+      if (userArr.length > 0) {
         userArr.unshift("全选");
       }
-    }else{
+    } else {
       userArr.push('清空');
     }
     return userArr;
   },
-  validateForm: function () {
+  validateForm: function() {
     let wxValidate = app.wxValidate({
       // workName: { required: true },
       // planBeginDate: { required: true },
       // planEndDate: { required: true }
-      department: { required: false },
-      reviewer: { required: false },
-      responsible: { required: false }
-    },
-      {
-        // workName: { required: '请填写任务名称' },
-        // planBeginDate: { required: '请选择计划开始日期' },
-        // planEndDate: { required: '请选择计划结束日期' }
-        department: { required: '请选择所属部门' },
-        reviewer: { required: '请选择审核人' },
-        responsible: { required: '请选择负责人' }
-        
+      department: {
+        required: false
+      },
+      reviewer: {
+        required: false
+      },
+      responsible: {
+        required: false
       }
-    )
+    }, {
+      // workName: { required: '请填写任务名称' },
+      // planBeginDate: { required: '请选择计划开始日期' },
+      // planEndDate: { required: '请选择计划结束日期' }
+      department: {
+        required: '请选择所属部门'
+      },
+      reviewer: {
+        required: '请选择审核人'
+      },
+      responsible: {
+        required: '请选择负责人'
+      }
+
+    })
     return wxValidate;
   },
   formSubmit: function(e) {
@@ -562,13 +656,13 @@ Page({
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
     // work.departments = that.data.checkedDep; //暂时屏蔽
-    work.responsibleList=that.data.checkedResponsible;
+    work.responsibleList = that.data.checkedResponsible;
     // work.reviewer= that.data.checkedReviewName;
     // work.reviewerNum= that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
-    work.creator=loginUser.name;
-    work.creatorNum=loginUser.account;
+    work.creator = loginUser.name;
+    work.creatorNum = loginUser.account;
     this.loadingTap();
     util.onSubmitJson(url, work, method, function(res) {
       that.setData({

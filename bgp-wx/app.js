@@ -1,7 +1,7 @@
 //app.js
-// import wxValidate from 'utils/wxValidate'
+import wxValidate from 'utils/wxValidate'
 App({
-  // wxValidate: (rules, messages) => new wxValidate(rules, messages),
+  wxValidate: (rules, messages) => new wxValidate(rules, messages),
   onLaunch: function () {
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
