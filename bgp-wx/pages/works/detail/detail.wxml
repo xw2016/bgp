@@ -19,7 +19,66 @@
       </view>
     </view>
   </view>
+  <!--任务附件-->
+  <view class="weui-cells__title"></view>
+  <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
+  <view class="weui-panel__hd">任务附件(创建人上传)</view>
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_text">
+      <!--图片-->
+      <view wx:for="{{imgfiles}}" wx:key="*this">
+        <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType==add}}">
+          <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+        </view>
+      </view>
+      <!--录音-->
+      <view wx:for="{{audiofiles}}" wx:key="*this">
+        <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType==add}}">
+          <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+        </view>
+      </view>
+    </view>
+    </view>
+  </view>
 
+  <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
+  <!--如果已开始，并且是任务审核人，则显示执行日志-->
+  <view class="weui-cells__title"></view>
+  <view class="weui-panel">
+    <view class="weui-panel__hd">任务反馈</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">
+          <block wx:if="{{work.remark ==null}}">无</block>
+          <block wx:else>{{work.remark}}</block>
+        </view>
+      </view>
+    </view>
+  </view>
+  <!-- </block> -->
+ <!--任务附件-->
+  <view class="weui-cells__title"></view>
+  <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
+  <view class="weui-panel__hd">任务反馈附件(执行人上传)</view>
+  <view class="weui-panel__bd">
+    <view class="weui-media-box weui-media-box_text">
+      <!--图片-->
+      <view wx:for="{{imgfiles}}" wx:key="*this">
+        <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType==execute}}">
+          <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+        </view>
+      </view>
+      <!--录音-->
+      <view wx:for="{{audiofiles}}" wx:key="*this">
+        <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType==execute}}">
+          <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+        </view>
+      </view>
+    </view>
+    </view>
+  </view>
+
+  <!--任务信息-->
   <view class="weui-cells__title"></view>
   <view class="weui-form-preview">
     <view class="weui-panel__hd">任务信息</view>
@@ -103,22 +162,7 @@
 
   </view>
 
-  <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
-  <!--如果已开始，并且是任务审核人，则显示执行日志-->
-  <view class="weui-cells__title"></view>
 
-  <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
-    <view class="weui-panel__hd">任务反馈</view>
-    <view class="weui-panel__bd">
-      <view class="weui-media-box weui-media-box_text">
-        <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">
-          <block wx:if="{{work.remark ==null}}">无</block>
-          <block wx:else>{{work.remark}}</block>
-        </view>
-      </view>
-    </view>
-  </view>
-  <!-- </block> -->
   <!-- <block wx:else>
     <view class="weui-cells__title"></view>
     <view class="weui-form-preview">
@@ -133,73 +177,8 @@
 </view>
 </view> 
 </block> -->
-  <block wx:if="{{action =='done'&&imgfiles.length>0}}">
-    <!--图片描述-->
-    <view class="weui-cells__title">任务图片</view>
-    <!-- <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files" id="uploaderFiles">
-                <block wx:for="{{files}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                  </view>
-                </block>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-    <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
-    <view class="modal-dialog" hidden="{{modalHidden}}">
-      <image class="image" src="{{current}}" mode='aspectFit' />
-    </view> -->
-    <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__hd">
-            </view>
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files">
-                <block wx:for="{{imgfiles}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                  </view>
-                </block>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </block>
-  <block wx:if="{{action =='done'&&docfiles.length>0}}">
-    <!--文件列表-->
-    <view class="weui-cells__title">任务附件</view>
-    <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files">
-                <view wx:for="{{docfiles}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
-                    <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
-                    <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
-                    <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
-                  </view>
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </view>
-    </view>
-  </block>
+
+
   <!--子任务-->
   <block wx:if="{{subWorkList.length>0}}">
     <view class="weui-cells__title"></view>

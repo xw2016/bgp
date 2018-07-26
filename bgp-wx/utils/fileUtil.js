@@ -32,7 +32,7 @@ function initFileData(that,files) {
       switch (item.type) {
         case 'jpg':
         case 'jpeg':
-          imgfiles.push(item.url);
+          imgfiles.push(item);
           break;
         case 'mp3':
         case 'm4a':

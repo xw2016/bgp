@@ -1,19 +1,25 @@
 const app = getApp();
-var util = require('../../../utils/util.js');
+var util = require('../../../utils/util.js')
+var fileUtil = require('../../../utils/fileUtil.js')
+var imageUtil = require('../../../utils/imageUtil.js');
+var recordUtil = require('../../../utils/recordUtil.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    stars: [0],
+    second: 0,
+    secondShow: 0,
+    record: 'start',
     loadingHidden: true,
-    rejectInfo:'',
     modalHidden: true,
+    imgfiles: [],
+    files: [], //文件上传
+    stars: [0],
+    rejectInfo:'',
     popErrorMsg: '',
-    imgList: [],
-    kpiList: [],
-    files: [] //文件上传
+    kpiList: []
   },
   hideErrMsg: function () {
     this.setData({
@@ -49,7 +55,8 @@ Page({
       loginUser: loginUser
     })
     this.initKpi(queryBean.workId);
-    this.initFile(queryBean.workId);
+    fileUtil.initFile(this);
+    recordUtil.initRecorderManager(this);
   },
   initKpi: function (worksId) {
     let that = this;
@@ -78,97 +85,22 @@ Page({
       }
     })
   },
-  //初始化附件
-  initFile: function (worksId) {
-    let that = this;
-    let url = '/work/queryFileUploadById';
-    let method = 'POST';
-    // let worksId = that.work.workId;
-    let data = {
-      worksId: worksId
-    }
-    util.onSubmit(url, data, method, function (res) {
-      if (res.data.retCode != 200) {
-        util.openAlert(res.data.msg);
-      } else {
-        let imgfiles = [];
-        let docfiles = [];
-        let txtfiles = [];
-        let videofiles = [];
-        let audiofiles = [];
-        let otherfiles = [];
-        if (res.data.data != null) {
 
-          res.data.data.map(item => {
-            item.url = app.globalData.servicePath + item.pathUrl;
-            switch (item.type) {
-              case 'jpg': case 'jpeg':
-                imgfiles.push(item.url);
-                break;
-              case 'silk':
-                audiofiles.push(item);
-                break;
-              case 'doc': case 'docx': case 'txt': case 'xls':case 'xlsx':
-                docfiles.push(item);
-                break;
-              // case 'txt':
-              //   txtfiles.push(item);
-              //   break;
-              case 'mp4':
-                videofiles.push(item)
-                break
-              default:
-                otherfiles.push(item);
-
-            }
-          });
-          that.setData({
-            imgfiles: imgfiles,
-            docfiles: docfiles,
-            videofiles: videofiles,
-            audiofiles: audiofiles,
-            otherfiles: otherfiles,
-            captchaImage: url
-          });
-        }
-      }
-    });
-  },
   previewImage: function (e) {
-    // this.setData({
-    //   current: e.currentTarget.id,
-    //   modalHidden: false
-    // })
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
       urls: this.data.imgfiles // 需要预览的图片http链接列表
     })
   },
   bindFileDown: function (e) {
-    let that = this;
-    that.loadingTap();
-    wx.downloadFile({
-      url: e.currentTarget.id,
-      success: function (res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        if (res.statusCode === 200) {
-          wx.openDocument({
-            filePath: res.tempFilePath
-          })
-          that.setData({
-            loadingHidden: true
-          })
-        }
-      }
-    })
+   fileUtil.bindFileDown(this,e)
   },
-  // modalCandel: function () {
-  //   // do something
-  //   this.setData({
-  //     modalHidden: true
-  //   })
-  // },
-  // 绑定事件，因为不能用this.setData直接设置每个对象的索引值index。
+
+  //录音文件操作：试听，删除
+  openAudio: function (e) {
+    this.innerAudioContext.src = e.currentTarget.id;
+    this.innerAudioContext.play()
+  },
   // 所以用自定义属性current来标记每个数组对象的下标
   bindChange_select: function (ev) {
     console.log('picker发送选择改变，携带值为', ev.detail.value);

@@ -61,7 +61,7 @@
         </view>
 
         <!--文件列表-->
-        <view class="weui-cells__title">图片上传</view>
+        <view class="weui-cells__title">任务反馈图片上传</view>
         <!--图片上传开始-->
         <view class="weui-cells">
           <view class="weui-cell">
@@ -88,7 +88,7 @@
           </view>
         </view>
         <!--录音列表-->
-        <view class="weui-cells__title">任务语音</view>
+        <view class="weui-cells__title">任务反馈语音</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
@@ -150,7 +150,7 @@
           </view>
         </view>
         <!--文件列表-->
-        <view class="weui-cells__title">任务文档</view>
+        <view class="weui-cells__title">任务反馈文档</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">

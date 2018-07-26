@@ -36,6 +36,11 @@ function chooseImage(that,e) {
 //图片查看、删除操作
 function openActionImag(that,e) {
   // let that = this;
+  let imgfileUrl =[];
+  let imgfiles = that.data.imgfiles;
+  imgfiles.forEach(function (item){
+    imgfileUrl.push(item.url)
+  })
   wx.showActionSheet({
     itemList: ['查看', '删除'],
     itemColor: '#007aff',
@@ -43,7 +48,7 @@ function openActionImag(that,e) {
       if (res.tapIndex === 0) {
         wx.previewImage({
           current: e.currentTarget.id, // 当前显示图片的http链接
-          urls: that.data.imgfiles // 需要预览的图片http链接列表
+          urls: imgfileUrl // 需要预览的图片http链接列表
         })
       } else if (res.tapIndex === 1) {
         console.log('删除' + e.currentTarget.id);
@@ -52,7 +57,19 @@ function openActionImag(that,e) {
     }
   })
 }
-
+//图片预览
+function previewImage(that,e){
+  debugger
+  let imgfileUrl = [];
+  let imgfiles = that.data.imgfiles;
+  imgfiles.forEach(function (item) {
+    imgfileUrl.push(item.url)
+  })
+  wx.previewImage({
+    current: e.currentTarget.id, // 当前显示图片的http链接
+    urls: imgfileUrl // 需要预览的图片http链接列表
+  })
+}
 function openAlert(content, callback) {
   wx.showModal({
     content: content,
@@ -68,5 +85,6 @@ function openAlert(content, callback) {
 
 module.exports = {
   chooseImage: chooseImage,
-  openActionImag: openActionImag
+  openActionImag: openActionImag,
+  previewImage: previewImage
 }
