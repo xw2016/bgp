@@ -50,6 +50,7 @@ Page({
     })
     let that = this;
     let queryBean = JSON.parse(options.queryBean);
+    queryBean.fileType ='execute';
     let beginDate = queryBean.beginDate;
     console.log("queryBean:" + options.queryBean);
     that.setData({
