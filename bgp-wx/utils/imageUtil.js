@@ -16,7 +16,8 @@ function chooseImage(that,e) {
       let formData = {
         "workId": that.data.work.workId,
         "workName": that.data.work.workName,
-        "creator": userNo
+        "creator": userNo,
+        "fileType": that.data.work.fileType
       };
       fileUtil.onUploadFile(null, tempFilePaths, "file", formData, function (e) {
 

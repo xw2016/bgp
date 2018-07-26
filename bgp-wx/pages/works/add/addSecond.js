@@ -35,6 +35,7 @@ Page({
       title: '填写任务信息'
     })
     let queryBean = JSON.parse(options.queryBean);
+    queryBean.fileType = "add";
     // this.initDepartment();
     this.initUserGroupArray();
 
