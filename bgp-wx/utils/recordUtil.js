@@ -7,6 +7,8 @@ function initRecorderManager(that) {
   that.recorderManager = wx.getRecorderManager();
   that.recorderManager.onError(function () {
     that.tip("录音失败！")
+    cleanRecord(that);
+    countTime(that);
   });
   that.recorderManager.onStop(function (res) {
     that.setData({
