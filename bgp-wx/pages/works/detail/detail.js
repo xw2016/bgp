@@ -49,8 +49,36 @@ Page({
     if(action =='done'){
       this.initFile(queryBean.workId);
     }
+    if(action =='todo'){
+      //更新任务接收状态
+      this.updateWorkStatus(queryBean);
+    }
     this.initSubWork(queryBean.workId);
+    
   },
+  updateWorkStatus:function(work){
+    
+    let that = this;
+    let url = '';
+    if(work.status=='002'||work.status=='042'){//改为执行接收
+      url = '/work/updateWorkReceive'
+    } else if (work.status == '004') {//改为审核接收
+      url = '/work/updateWorkWaitReceive'
+    }
+    let method = 'POST';
+    let data = {
+      worksId: that.data.work.workId
+    }
+    util.onSubmit(url, data, method, function (res) {
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } 
+    })
+    //查看待启动、审核打回的任务,改为执行接收
+
+    //查看待审核任务，改为审核接收
+  },
+  //查看工作指引
   bindguide: function () {    
     let that = this;
     let workType = that.data.workType;

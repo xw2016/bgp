@@ -15,9 +15,9 @@
         <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}" bindtap="queryDetail">
         
           <view >
-          <image wx:if="{{item.status==002}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
+          <image wx:if="{{item.status==002||item.status==021||item.status==042}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
           <image wx:elif="{{item.status==003}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/doing.png"></image>
-          <image wx:elif="{{item.status==004}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitreview.png"></image>
+          <image wx:elif="{{item.status==004||item.status==041}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitreview.png"></image>
           <image wx:else style="width:38rpx; height:38rpx;" src="../../../resources/images/otherstatus.png"></image>
             <view style="display: inline-block; vertical-align: middle">{{item.workName}}</view>
             <!-- <view wx:if="{{deadlineDiff<2}}" class="weui-badge" style="margin-left: 5px;">warning</view> -->
