@@ -38,6 +38,13 @@ Page({
       that.update();
     }, 15000);
   },
+  tip: function (msg) {
+    wx.showModal({
+      title: '提示',
+      content: msg,
+      showCancel: false
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -47,6 +54,7 @@ Page({
     })
     let that = this;
     let queryBean = JSON.parse(options.queryBean);
+    queryBean.fileType='audit';
     this.setData({
       work: queryBean
     });
@@ -85,22 +93,69 @@ Page({
       }
     })
   },
+//文件操作
+  //图片操作
+  chooseImage: function (e) {
+    imageUtil.chooseImage(this, e)
+  },
+  openActionImag: function (e) {
+    imageUtil.openActionImag(this, e);
+  },
+  //录音操作
 
-  previewImage: function (e) {
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.imgfiles // 需要预览的图片http链接列表
+  modalCandel: function () {
+    // do something
+    let that = this;
+    that.setData({
+      modalHidden: true
+    })
+    let record = that.data.record;
+    if (record == 'end') {
+      that.stopRecord();
+    }
+    that.cleanRecord();
+  },
+  showAudioOpt: function () {
+    this.setData({
+      modalHidden: false
     })
   },
-  bindFileDown: function (e) {
-   fileUtil.bindFileDown(this,e)
-  },
+  //开始录音
+  startRecord: function () {
 
+    recordUtil.startRecord(this)
+  },
+  //暂停录音
+  pauseRecord: function () {
+    recordUtil.pauseRecord(this)
+  },
+  //
+  resumeRecord: function () {
+    recordUtil.resumeRecord(this);
+  },
+  // 停止录音
+  stopRecord: function () {
+    recordUtil.stopRecord(this)
+  },
+  //播放录音
+  playRecord: function () {
+    recordUtil.playRecord(this);
+  },
+  //重新录音，清空原来录音
+  cleanRecord: function () {
+    recordUtil.cleanRecord(this);
+  },
+  //上传录音
+  loadingRecord: function () {
+    recordUtil.loadingRecord(this)
+
+  },
   //录音文件操作：试听，删除
   openAudio: function (e) {
-    this.innerAudioContext.src = e.currentTarget.id;
-    this.innerAudioContext.play()
+    recordUtil.openAudio(this, e)
   },
+
+
   // 所以用自定义属性current来标记每个数组对象的下标
   bindChange_select: function (ev) {
     console.log('picker发送选择改变，携带值为', ev.detail.value);
@@ -120,16 +175,7 @@ Page({
       isShowWorkLog: isShowWorkLog
     })
   },
-  //图片点击事件
-  imgCheck: function (event) {
-    var src = event.currentTarget.dataset.src;//获取data-src
-    var imgList = event.currentTarget.dataset.list;//获取data-list
-    //图片预览
-    wx.previewImage({
-      current: src, // 当前显示图片的http链接
-      urls: imgList // 需要预览的图片http链接列表
-    })
-  },
+  
   bindRejectInfoChange: function (e) {
     this.setData({
       rejectInfo: e.detail.value

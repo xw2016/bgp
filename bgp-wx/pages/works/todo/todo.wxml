@@ -74,8 +74,8 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <block wx:for="{{imgfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item}}">
-                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
+                        <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
                       </view>
                     </block>
                   </view>
@@ -96,7 +96,7 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <view wx:for="{{audiofiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}">
+                      <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
                         <image style="width:50rpx; height:50rpx;" src="../../../resources/images/voice.png"></image>
                       </view>
                     </view>
@@ -158,7 +158,7 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <view wx:for="{{docfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}">
+                      <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
                         <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
                         <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
                         <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>

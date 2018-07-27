@@ -89,35 +89,36 @@
         </view>
       </view>
 <!--添加审核文件-->
-
-
-      <!--文件l列表  下载-->
-      <block wx:if="{{imgfiles.length>0}}">
-        <!--图片描述-->
-        <view class="weui-cells__title">任务反馈图片</view>
+<!--新增任务附件-->
+<!--文件列表-->
+        <view class="weui-cells__title">添加任务审核图片</view>
+        <!--图片上传开始-->
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
               <view class="weui-uploader">
                 <view class="weui-uploader__hd">
+                  <!-- <view class="weui-uploader__title"></view> -->
+                  <!-- <view class="weui-uploader__info">{{files.length}}/8</view> -->
                 </view>
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <block wx:for="{{imgfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item.url}}"  wx:if="{{item.workType=='audit'}}">
+                        <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
                       </view>
                     </block>
+                  </view>
+                  <view class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
         </view>
-      </block>
-      <!--录音-->
-      <block wx:if='{{audiofiles.length>0}}'>
-        <view class="weui-cells__title">任务反馈语音</view>
+        <!--录音列表-->
+        <view class="weui-cells__title">添加任务审核语音</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
@@ -125,45 +126,60 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <view wx:for="{{audiofiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}">
+                      <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}"  wx:if="{{item.workType=='audit'}}">
                         <image style="width:50rpx; height:50rpx;" src="../../../resources/images/voice.png"></image>
                       </view>
                     </view>
                   </view>
-                  <!-- <view class="weui-uploader__files" bindtap='showAudioOpt'>
+                  <view class="weui-uploader__files" bindtap='showAudioOpt'>
                     <image style="width:50rpx; height:50rpx;" src="../../../resources/images/add.png"></image>
-                  </view> -->
-                </view>
-              </view>
-            </view>
-          </view>
-        </view>
-      </block>
-
-      <!--文档列表-->
-      <block wx:if="{{docfiles.length>0}}">
-
-        <view class="weui-cells__title">任务反馈文档</view>
-        <view class="weui-cells">
-          <view class="weui-cell">
-            <view class="weui-cell__bd">
-              <view class="weui-uploader">
-                <view class="weui-uploader__bd">
-                  <view class="weui-uploader__files">
-                    <view wx:for="{{docfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
-                        <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
-                        <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
-                        <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
-                      </view>
-                    </view>
                   </view>
                 </view>
               </view>
             </view>
           </view>
         </view>
-      </block>
+        <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+        <view class="modal-dialog" hidden="{{modalHidden}}">
+          <view class="page__bd page__bd_spacing">
+            <view class='weui-flex'>
+              <view class='weui-flex__item'>
+                <button class='weui-btn' type='default' disabled='true' wx:if="{{record=='start'}}">点一下开始录音</button>
+                <button class='weui-btn' type='default' disabled='true' wx:elif="{{record=='end'}}">录音中({{secondShow}})...点一下结束录音</button>
+                <button class='weui-btn' type='default' disabled='true' wx:elif="{{record=='play'}}">录音结束({{secondShow}})，点一下试听录音</button>
+              </view>
+            </view>
+            <view class="weui-flex">
+              <view class='weui-flex__item'></view>
+              <view class='weui-flex__item'>
+                <image wx:if="{{record=='start'}}" bindtap="startRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/start.png"></image>
+                <image wx:elif="{{record=='end'}}" bindtap="stopRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/end.png"></image>
+                <image wx:elif="{{record=='play'}}" bindtap="playRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/playRecord.png"></image>
+              </view>
+              <view class='weui-flex__item'></view>
+            </view>
+
+            <view class="weui-flex">
+            <block wx:if="{{record=='play'}}">
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='cleanRecord'>重新录音</button>
+              </view>
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='loadingRecord'>完成录音</button>
+              </view>
+              </block>
+              <block wx:else>
+<view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='cleanRecord' disabled='true'>重新录音</button>
+              </view>
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='loadingRecord' disabled='true'>完成录音</button>
+              </view>
+              </block>
+            </view>
+          </view>
+        </view>
+
 
     </view>
   </view>

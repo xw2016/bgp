@@ -20,16 +20,20 @@ function chooseImage(that,e) {
         "fileType": that.data.work.fileType
       };
       fileUtil.onUploadFile(null, tempFilePaths, "file", formData, function (e) {
-
         that.setData({
-          files: that.data.files.concat(e)
+          files: that.data.files.concat(e),
+          imgfiles: that.data.imgfiles.concat(e)
         });
       });
 
       // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-      that.setData({
-        imgfiles: that.data.imgfiles.concat(res.tempFilePaths)
-      });
+      // let imgFileArr =res.tempFilePaths;
+      // imgFileArr.forEach(function(item){
+      //   that.setData({
+      //     imgfiles: that.data.imgfiles.concat({url:item})
+      //   });
+      // })
+     
     }
   })
 }

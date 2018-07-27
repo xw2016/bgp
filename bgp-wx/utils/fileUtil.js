@@ -148,7 +148,6 @@ function onUploadFile(url, tempFilePaths, name, formData, callback) {
       },
       formData: formData,
       success: function (res) {
-
         let result = JSON.parse(res.data);
         if (result.retCode != 200) {
           console.log('上传文件失败:');

@@ -191,8 +191,8 @@
                 <view class="weui-uploader__bd">
                   <view class="weui-uploader__files">
                     <block wx:for="{{imgfiles}}" wx:key="*this">
-                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item}}">
-                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                      <view class="weui-uploader__file" bindtap="openActionImag" id="{{item.url}}">
+                        <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
                       </view>
                     </block>
                   </view>

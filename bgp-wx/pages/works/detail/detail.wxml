@@ -19,62 +19,103 @@
       </view>
     </view>
   </view>
-  <!--任务附件-->
+  <!--任务描述附件，所有状态可见-->
   <view class="weui-cells__title"></view>
-  <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
-  <view class="weui-panel__hd">任务附件(创建人上传)</view>
-  <view class="weui-panel__bd">
-    <view class="weui-media-box weui-media-box_text">
-      <!--图片-->
-      <view wx:for="{{imgfiles}}" wx:key="*this">
-        <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType==add}}">
-          <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+  <view class="weui-panel">
+    <view class="weui-panel__hd">任务附件(创建人上传)</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <!--图片-->
+        <view wx:for="{{imgfiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType=='add'}}">
+            <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+          </view>
+        </view>
+        <!--录音-->
+        <view wx:for="{{audiofiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType=='add'}}">
+            <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+          </view>
         </view>
       </view>
-      <!--录音-->
-      <view wx:for="{{audiofiles}}" wx:key="*this">
-        <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType==add}}">
-          <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
-        </view>
-      </view>
-    </view>
     </view>
   </view>
 
   <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
   <!--如果已开始，并且是任务审核人，则显示执行日志-->
   <view class="weui-cells__title"></view>
-  <view class="weui-panel">
-    <view class="weui-panel__hd">任务反馈</view>
+  <view class="weui-panel" wx:if="{{work.status=='004'||work.status=='041'||work.status=='005'}}">
+    <view class="weui-panel__hd">任务反馈内容（文字、图片、录音等）</view>
     <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_text">
         <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">
+          <!--文字-->
+          描述：
           <block wx:if="{{work.remark ==null}}">无</block>
           <block wx:else>{{work.remark}}</block>
         </view>
       </view>
+
+      <view class="weui-media-box weui-media-box_text">
+        <view wx:for="{{docfiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}"  wx:if="{{item.workType=='execute'}}">
+            <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+            <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+            <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+          </view>
+        </view>
+
+        <view wx:for="{{imgfiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
+            <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+          </view>
+        </view>
+        <view wx:for="{{audiofiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
+            <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+          </view>
+        </view>
+
+      </view>
     </view>
   </view>
   <!-- </block> -->
- <!--任务附件-->
+  <!--任务审核附件，审核、完成可见-->
   <view class="weui-cells__title"></view>
-  <view class="weui-panel" wx:if="{{work.status!='000'&&work.status!='001'&&work.status!='002'}}">
-  <view class="weui-panel__hd">任务反馈附件(执行人上传)</view>
-  <view class="weui-panel__bd">
-    <view class="weui-media-box weui-media-box_text">
-      <!--图片-->
-      <view wx:for="{{imgfiles}}" wx:key="*this">
-        <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType==execute}}">
-          <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+  <view class="weui-panel" wx:if="{{work.rejectInfo!=null&&(work.status=='005'||work.status=='042'||work.status=='021'||work.status=='003'||work.status=='002')}}">
+    <view class="weui-panel__hd">任务审核内容（文字、图片、录音等）</view>
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_text">
+        <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">
+          <!--文字-->
+          审核意见：
+          <block wx:if="{{work.rejectInfo ==null}}">无</block>
+          <block wx:else>{{work.rejectInfo}}</block>
         </view>
       </view>
-      <!--录音-->
-      <view wx:for="{{audiofiles}}" wx:key="*this">
-        <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType==execute}}">
-          <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+
+      <view class="weui-media-box weui-media-box_text">
+
+        <view wx:for="{{docfiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}"  wx:if="{{item.workType=='audit'}}">
+            <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+            <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+            <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+          </view>
         </view>
+
+        <view wx:for="{{imgfiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.workType=='audit'}}">
+            <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+          </view>
+        </view>
+        <view wx:for="{{audiofiles}}" wx:key="*this">
+          <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType=='audit'}}">
+            <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+          </view>
+        </view>
+
       </view>
-    </view>
     </view>
   </view>
 
@@ -161,22 +202,6 @@
     </view>
 
   </view>
-
-
-  <!-- <block wx:else>
-    <view class="weui-cells__title"></view>
-    <view class="weui-form-preview">
-      <view class="weui-panel__hd">意见</view>
-      <view class="weui-cells weui-cells_after-title">
-        <view class="weui-cell">
-          <view class="weui-cell__bd">
-            <textarea class="weui-textarea" name="remark" bindinput="bindInputRemarkChange" maxlength="500" auto-focus auto-height placeholder="请填写意见" style="height: 5.3em" value="{{work.remark}}" />
-            <!-- <view class="weui-textarea-counter">0/300</view> -->
-  <!-- </view>
-</view>
-</view>
-</view> 
-</block> -->
 
 
   <!--子任务-->
