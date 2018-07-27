@@ -1,12 +1,21 @@
 var app = getApp();
-var util = require('../../../utils/util.js');
+var util = require('../../../utils/util.js')
+var fileUtil = require('../../../utils/fileUtil.js')
+var imageUtil = require('../../../utils/imageUtil.js');
+var recordUtil = require('../../../utils/recordUtil.js');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    second: 0,
+    secondShow: 0,
+    record: 'start',
     loadingHidden: true,
+    modalHidden: true,
+    imgfiles: [],
+    files: [], //文件上传
     showDepetment: false,
     showReviewType: false,
     showReview: false,
@@ -26,26 +35,27 @@ Page({
       title: '任务交办'
     });
     let queryBean = JSON.parse(options.queryBean);
+    this.setData({
+      workParent:queryBean
+    })
+    this.saveDreft(function(that){
+      that.setData({
+        loginUser: loginUser,
+        pass: queryBean.pass,
+        reviewer: {
+          name: loginUser.name, account: loginUser.account
+        },
+        userlist: userlist
+      })
+      fileUtil.initFile(that);
+      recordUtil.initRecorderManager(that);
+    })
+
     this.initDepartment();
-    // util.initUser();
     this.initUserGroupArray();
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
-    
-    this.setData({
-      work: queryBean,
-      loginUser: loginUser,
-      pass: queryBean.pass,
-      workName: queryBean.workName,//queryBean.pass == 'Y' ? queryBean.workName : '',
-      // checkedReviewName: queryBean.pass == 'Y' ? queryBean.reviewer : loginUser.name,
-      // checkedReview: queryBean.pass == 'Y' ? queryBean.reviewerNum : loginUser.account,
-      reviewer: {
-        name: loginUser.name, account: loginUser.account
-      },
-      userlist: userlist
-    })
-
   },
   hideErrMsg: function() {
     this.setData({
@@ -64,6 +74,74 @@ Page({
       that.update();
     }, 10000);
   },
+  tip: function (msg) {
+    wx.showModal({
+      title: '提示',
+      content: msg,
+      showCancel: false
+    })
+  },
+  //图片操作
+  chooseImage: function (e) {
+    imageUtil.chooseImage(this, e)
+  },
+  openActionImag: function (e) {
+    imageUtil.openActionImag(this, e);
+  },
+  //录音操作
+
+  modalCandel: function () {
+    // do something
+    let that = this;
+    that.setData({
+      modalHidden: true
+    })
+    let record = that.data.record;
+    if (record == 'end') {
+      that.stopRecord();
+    }
+    that.cleanRecord();
+  },
+  showAudioOpt: function () {
+    this.setData({
+      modalHidden: false
+    })
+  },
+  //开始录音
+  startRecord: function () {
+
+    recordUtil.startRecord(this)
+  },
+  //暂停录音
+  pauseRecord: function () {
+    recordUtil.pauseRecord(this)
+  },
+  //
+  resumeRecord: function () {
+    recordUtil.resumeRecord(this);
+  },
+  // 停止录音
+  stopRecord: function () {
+    recordUtil.stopRecord(this)
+  },
+  //播放录音
+  playRecord: function () {
+    recordUtil.playRecord(this);
+  },
+  //重新录音，清空原来录音
+  cleanRecord: function () {
+    recordUtil.cleanRecord(this);
+  },
+  //上传录音
+  loadingRecord: function () {
+    recordUtil.loadingRecord(this)
+
+  },
+  //录音文件操作：试听，删除
+  openAudio: function (e) {
+    recordUtil.openAudio(this, e)
+  },
+  //初始化部门
   initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
@@ -558,9 +636,51 @@ Page({
     })
     return wxValidate;
   },
+  //保存草稿
+  saveDreft:function(callback){
+    let that = this;
+    let url = '/work/add';
+    let method = 'post';
+    // let data = that.data;
+    let workParent = that.data.workParent;
+    let work ={};
+    work.parentWorkName = workParent.workName;
+    work.parentId = workParent.workId;
+    work.workName = workParent.workName+"(交办)"
+    work.workId = null;
+    work.typeId=workParent.workTypeId;
+    work.typeName = workParent.typeName;
+    work.description =workParent.description;
+    work.level = workParent.level;
+    work.reviewer = that.data.reviewer.name
+    work.reviewerNum = that.data.reviewer.account;
+    work.planBeginDate = workParent.planBeginDate;
+    work.planEndDate = workParent.planEndDate;
+    work.departments = workParent.departments;
+    work.createReson = workParent.createReson;
+    work.addWorkType= workParent.addWorkType;
+    work.fileType = 'add';
+  
+    that.loadingTap();
+
+    util.onSubmitJson(url, work, method, function (res) {
+      
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.setData({
+          work: res.data.data
+        });
+        that.setData({
+          loadingHidden: true
+        })
+        callback(that);
+      }
+    });
+  },
+  //交办任务
   formSubmit: function(e) {
     let that = this;
-    
     let validate = this.validateForm();
     if (!validate.checkForm(e)) {
       const error = validate.errorList[0];
@@ -599,17 +719,17 @@ Page({
     let url = '/work/resolve';
     let method = 'post';
     let work = that.data.work;
-    work.parentWorkName = work.workName;
-    work.parentId = work.workId;
-    work.workId=null;
+    // work.parentWorkName = work.workName;
+    // work.parentId = work.workId;
+    // work.workId=null;
+    // work.departments = work.pass == 'Y' ? work.departments : that.data.checkedDep
+
     work.workName = that.data.workName;
-    work.departments = work.pass == 'Y' ? work.departments : that.data.checkedDep
     work.responsibleList = that.data.checkedResponsible;
     // work.reviewer = that.data.checkedReviewName;
     // work.reviewerNum = that.data.checkedReview;
-    work.description = that.data.description;
-    work.reviewer = that.data.reviewer.name
-    work.reviewerNum = that.data.reviewer.account;
+    // work.description = that.data.description;
+
     work.creator = that.data.loginUser.name;
     work.creatorNum = that.data.loginUser.account;
     this.loadingTap();

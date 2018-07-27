@@ -178,7 +178,7 @@
       </view>
 <!--新增任务附件-->
 <!--文件列表-->
-        <view class="weui-cells__title">任务图片</view>
+        <view class="weui-cells__title">添加任务图片</view>
         <!--图片上传开始-->
         <view class="weui-cells">
           <view class="weui-cell">
@@ -205,7 +205,7 @@
           </view>
         </view>
         <!--录音列表-->
-        <view class="weui-cells__title">任务语音</view>
+        <view class="weui-cells__title">添加任务语音</view>
         <view class="weui-cells">
           <view class="weui-cell">
             <view class="weui-cell__bd">
