@@ -31,7 +31,7 @@ Page({
         loadingHidden: true
       });
       that.update();
-    }, 10000);
+    }, 15000);
   },
 
   onLoad: function (options) {
@@ -127,6 +127,7 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function (res) {
+      debugger
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -140,6 +141,7 @@ Page({
     });
   },
   
+  //文件操作
   previewImage: function (e) {
     imageUtil.previewImage(this,e);
   },
@@ -151,7 +153,9 @@ Page({
     this.innerAudioContext.src = e.currentTarget.id;
     this.innerAudioContext.play()
   },
-
+  openActionDoc: function (e) {
+    fileUtil.bindFileDown(this, e)
+  },
 
   showdetail: function (e) {
     let that = this
@@ -171,6 +175,7 @@ Page({
   showSubWorkDetail: function (e) {
     var that = this
     var idx = e.currentTarget.dataset.idx;
+    debugger
     //将对象转为string
     var queryBean = JSON.stringify(that.data.subWorkList[idx])
 

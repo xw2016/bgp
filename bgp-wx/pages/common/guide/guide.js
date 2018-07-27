@@ -27,11 +27,6 @@ Page({
     
     this.initFile();
   },
- //初始化附件
-  initFile: function (typeId) {
-    let url = '/work/queryGuideFileById';
-    fileUtil.initFileByUrl(this,url);
-  },
   loadingTap: function () {
     this.setData({
       loadingHidden: false
@@ -44,14 +39,26 @@ Page({
       that.update();
     }, 10000);
   },
-
-  previewImage: function (e) {
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.imgfiles // 需要预览的图片http链接列表
-    })
+ //初始化附件
+  initFile: function () {
+    let url = '/work/queryGuideFileById';
+    let worksId = this.data.guide.typeId;
+    let data = {
+      typeId: worksId
+    }
+    fileUtil.initFileByUrl(this,url,data);
   },
-  bindFileDown: function (e) {
-   fileUtil.bindFileDown(this,e)
-  }
+  
+  //文件操作
+  previewImage: function (e) {
+    imageUtil.previewImage(this, e);
+  },
+  openActionDoc: function (e) {
+    fileUtil.bindFileDown(this, e)
+  },
+  //录音文件操作：试听
+  openAudio: function (e) {
+    this.innerAudioContext.src = e.currentTarget.id;
+    this.innerAudioContext.play()
+  },
 })

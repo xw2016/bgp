@@ -2,61 +2,80 @@
   加载中...
 </loading>
 <view class="page">
-    <view class="page__bd">
-        <view class="weui-article">
-            <view class="weui-article__h1">{{guide.title}}</view>
-            <view class="weui-article__section">
-                 <view class="weui-article__title">操作指引</view> 
-                <view class="weui-article__section">
-                    <!-- <view class="weui-article__h3">操作指引</view> -->
-                    <view class="weui-article__p">
-{{guide.description}}
-                    </view>
-  
-                </view>
-            </view>
-        </view>
-        <!--文件列表-->
-    <view class="weui-cells__title">任务附件</view>
-    <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files">
-                <view wx:for="{{docfiles}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="bindFileDown" id="{{item.url}}">
-                    <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
-                    <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
-                    <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
-                  </view>
-                </view>
-              </view>
-            </view>
+  <view class="page__bd">
+    <view class="weui-article">
+      <view class="weui-article__h1">{{guide.title}}</view>
+      <view class="weui-article__section">
+        <view class="weui-article__title">操作指引</view>
+        <view class="weui-article__section">
+          <!-- <view class="weui-article__h3">操作指引</view> -->
+          <view class="weui-article__p">
+            {{guide.description}}
           </view>
+
         </view>
       </view>
     </view>
-<!--图片描述-->
+    <!--文件列表-->
     <view class="weui-cells__title"></view>
-    <view class="weui-cells">
-      <view class="weui-cell">
-        <view class="weui-cell__bd">
-          <view class="weui-uploader">
-            <view class="weui-uploader__hd">
+    <view class="weui-panel">
+      <view class="weui-panel__hd">法律附件</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view wx:for="{{docfiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}" wx:if="{{item.isLegal=='1'}}">
+              <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+              <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+              <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
             </view>
-            <view class="weui-uploader__bd">
-              <view class="weui-uploader__files">
-                <block wx:for="{{imgfiles}}" wx:key="*this">
-                  <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                  </view>
-                </block>
-              </view>
+          </view>
+
+          <view wx:for="{{imgfiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.isLegal=='1'}}">
+              <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+            </view>
+          </view>
+          <view wx:for="{{audiofiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.isLegal=='1'}}">
+              <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
             </view>
           </view>
         </view>
       </view>
     </view>
+
+<view class="weui-cells__title"></view>
+    <view class="weui-panel">
+      <view class="weui-panel__hd">指引附件</view>
+      <view class="weui-panel__bd">
+        <view class="weui-media-box weui-media-box_text">
+          <view wx:for="{{docfiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="openActionDoc" id="{{item.url}}" wx:if="{{item.isLegal=='0'}}">
+              <image wx:if="{{item.type=='doc'||item.type=='docx'}}" style="width:50rpx; height:50rpx;" src="../../../resources/images/doc.png"></image>
+              <image wx:else style="width:50rpx; height:50rpx;" src="../../../resources/images/txt.png"></image>
+              <view class="weui-cell__bd weui-cell_link">{{item.originName}}</view>
+            </view>
+          </view>
+
+          <view wx:for="{{imgfiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="previewImage" id="{{item.url}}" wx:if="{{item.isLegal=='0'}}">
+              <image style="width:70rpx; height:70rpx;" src="{{item.url}}" mode="aspectFill" />
+            </view>
+          </view>
+          <view wx:for="{{audiofiles}}" wx:key="*this">
+            <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.isLegal=='0'}}">
+              <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
+
+  </view>
 </view>
+<view class="weui-cells__title"></view>
+      <view class='weui-flex'>
+        <view class='weui-flex__item'>
+          <image mode='aspectFill' style="width:100%; height:20rpx;" src="../../../resources/images/bottom.png"></image>
+        </view>
+      </view>

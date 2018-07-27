@@ -97,12 +97,12 @@
                   <view class="weui-uploader__files">
                     <view wx:for="{{audiofiles}}" wx:key="*this">
                       <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}" wx:if="{{item.workType=='execute'}}">
-                        <image style="width:50rpx; height:50rpx;" src="../../../resources/images/voice.png"></image>
+                        <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice2.png"></image>
                       </view>
                     </view>
                   </view>
                   <view class="weui-uploader__files" bindtap='showAudioOpt'>
-                    <image style="width:50rpx; height:50rpx;" src="../../../resources/images/add.png"></image>
+                    <image style="width:70rpx; height:70rpx;" src="../../../resources/images/addvoice.png"></image>
                   </view>
                 </view>
               </view>
@@ -170,9 +170,8 @@
               </view>
             </view>
           </view>
-
         </view>
-        <!--录音-->
+       
 
       </view>
       <!--图片上传结束-->

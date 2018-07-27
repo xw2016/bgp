@@ -648,7 +648,7 @@ Page({
     work.parentId = workParent.workId;
     work.workName = workParent.workName+"(交办)"
     work.workId = null;
-    work.typeId=workParent.workTypeId;
+    work.typeId=workParent.typeId;
     work.typeName = workParent.typeName;
     work.description =workParent.description;
     work.level = workParent.level;
@@ -660,7 +660,7 @@ Page({
     work.createReson = workParent.createReson;
     work.addWorkType= workParent.addWorkType;
     work.fileType = 'add';
-  
+    debugger
     that.loadingTap();
 
     util.onSubmitJson(url, work, method, function (res) {

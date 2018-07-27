@@ -3,15 +3,15 @@ const app= getApp();
 //查询任务附件
 function initFile(that){
   let url = '/work/queryFileUploadById';
-  initFileByUrl(that,url);
-} 
-function initFileByUrl (that,url) {
-  // let url = '/work/queryFileUploadById';
-  let method = 'POST';
   let worksId = that.data.work.workId;
   let data = {
     worksId: worksId
   }
+  initFileByUrl(that,url,data);
+} 
+function initFileByUrl (that,url,data) {
+  let method = 'POST';
+  
   onSubmit(url, data, method, function (res) {
     if (res.data.retCode != 200) {
       openAlert(res.data.msg);
@@ -95,20 +95,21 @@ function openActionDoc(that,e) {
         that.bindFileDown(e);
       } else if (res.tapIndex === 1) {
         console.log('删除' + e.currentTarget.id);
-        delFileUpload(e.currentTarget.id);
+        delFileUpload(that,e.currentTarget.id);
       }
     }
   })
 }
 //删除文件
 function delFileUpload(that,e) {
+  
   // let that = this;
   let url = '/work/delFileUpload';
   let method = 'post';
   let fileId = '';
   let idx = -1;
   let files = that.data.files;
-
+  
   files.forEach(function (item, index) {
     if (item.url == e) {
       fileId = item.id;

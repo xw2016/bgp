@@ -246,12 +246,12 @@
                   <view class="weui-uploader__files">
                     <view wx:for="{{audiofiles}}" wx:key="*this">
                       <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}">
-                        <image style="width:50rpx; height:50rpx;" src="../../../resources/images/voice.png"></image>
+                        <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice2.png"></image>
                       </view>
                     </view>
                   </view>
                   <view class="weui-uploader__files" bindtap='showAudioOpt'>
-                    <image style="width:50rpx; height:50rpx;" src="../../../resources/images/add.png"></image>
+                    <image style="width:70rpx; height:70rpx;" src="../../../resources/images/addvoice.png"></image>
                   </view>
                 </view>
               </view>
@@ -300,7 +300,12 @@
         </view>
 
 
-
+ <view class="weui-cells__title"></view>
+      <view class='weui-flex'>
+        <view class='weui-flex__item'>
+          <image mode='aspectFill' style="width:100%; height:20rpx;" src="../../../resources/images/bottom.png"></image>
+        </view>
+      </view>
 
 
     <view class="weui-panel weui-form-preview__ft ">
