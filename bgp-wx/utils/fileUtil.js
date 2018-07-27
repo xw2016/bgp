@@ -1,8 +1,12 @@
 
 const app= getApp();
 //查询任务附件
-function initFile (that) {
+function initFile(that){
   let url = '/work/queryFileUploadById';
+  initFileByUrl(that,url);
+} 
+function initFileByUrl (that,url) {
+  // let url = '/work/queryFileUploadById';
   let method = 'POST';
   let worksId = that.data.work.workId;
   let data = {
@@ -254,6 +258,7 @@ function openAlert(content, callback) {
 }
 module.exports = {
   initFile: initFile,
+  initFileByUrl: initFileByUrl,
   initFileData: initFileData,
   delFileUpload:delFileUpload,
   onUploadFile: onUploadFile,

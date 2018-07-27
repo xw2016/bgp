@@ -1,5 +1,8 @@
 const app = getApp();
 var util = require('../../../utils/util.js');
+var fileUtil = require('../../../utils/fileUtil.js')
+var imageUtil = require('../../../utils/imageUtil.js');
+var recordUtil = require('../../../utils/recordUtil.js');
 Page({
 
   /**
@@ -21,67 +24,13 @@ Page({
     this.setData({
       guide: queryBean
     });
-    this.initFile(queryBean.typeId);
+    
+    this.initFile();
   },
  //初始化附件
   initFile: function (typeId) {
-    let that = this;
     let url = '/work/queryGuideFileById';
-    let method = 'POST';
-    // let worksId = that.work.workId;
-    let data = {
-      typeId: typeId
-    }
-    
-    util.onSubmit(url, data, method, function (res) {
-      
-      if (res.data.retCode != 200) {
-        util.openAlert(res.data.msg);
-      } else {
-        let imgfiles = [];
-        let docfiles = [];
-        let txtfiles = [];
-        let videofiles = [];
-        let audiofiles = [];
-        let otherfiles = [];
-        if (res.data.data != null) {
-
-          res.data.data.map(item => {
-            
-            item.url = app.globalData.servicePath + item.pathUrl;
-            switch (item.type) {
-              case 'jpg': case 'jpeg':
-                imgfiles.push(item.url);
-                break;
-              case 'silk':
-                audiofiles.push(item);
-                break;
-              case 'doc': case 'docx': case 'txt': case 'xls': case 'xlsx':
-                docfiles.push(item);
-                break;
-              // case 'txt':
-              //   txtfiles.push(item);
-              //   break;
-              case 'mp4':
-                videofiles.push(item)
-                break
-              default:
-                otherfiles.push(item);
-
-            }
-          });
-
-          that.setData({
-            imgfiles: imgfiles,
-            docfiles: docfiles,
-            videofiles: videofiles,
-            audiofiles: audiofiles,
-            otherfiles: otherfiles,
-            captchaImage: url
-          });
-        }
-      }
-    });
+    fileUtil.initFileByUrl(this,url);
   },
   loadingTap: function () {
     this.setData({
@@ -103,21 +52,6 @@ Page({
     })
   },
   bindFileDown: function (e) {
-    let that = this;
-    that.loadingTap();
-    wx.downloadFile({
-      url: e.currentTarget.id,
-      success: function (res) {
-        // 只要服务器有响应数据，就会把响应内容写入文件并进入 success 回调，业务需要自行判断是否下载到了想要的内容
-        if (res.statusCode === 200) {
-          wx.openDocument({
-            filePath: res.tempFilePath
-          })
-          that.setData({
-            loadingHidden: true
-          })
-        }
-      }
-    })
+   fileUtil.bindFileDown(this,e)
   }
 })

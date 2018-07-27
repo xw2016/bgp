@@ -63,7 +63,6 @@ function openActionImag(that,e) {
 }
 //图片预览
 function previewImage(that,e){
-  debugger
   let imgfileUrl = [];
   let imgfiles = that.data.imgfiles;
   imgfiles.forEach(function (item) {
