@@ -19,11 +19,15 @@ function chooseImage(that,e) {
         "creator": userNo,
         "fileType": that.data.work.fileType
       };
+      that.loadingTap();
       fileUtil.onUploadFile(null, tempFilePaths, "file", formData, function (e) {
         that.setData({
           files: that.data.files.concat(e),
           imgfiles: that.data.imgfiles.concat(e)
         });
+        that.setData({
+          loadingHidden: true
+        })
       });
 
       // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片

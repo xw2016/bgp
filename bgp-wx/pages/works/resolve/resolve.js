@@ -34,28 +34,29 @@ Page({
     wx.setNavigationBarTitle({
       title: '任务交办'
     });
+    //默认审核人
+    debugger
+    let loginUser = wx.getStorageSync("loginUser");
+    let userlist = wx.getStorageSync("userlist");
     let queryBean = JSON.parse(options.queryBean);
     this.setData({
-      workParent:queryBean
+      workParent:queryBean,
+      loginUser: loginUser,
+      userlist: userlist,
+      pass: queryBean.pass,
+      reviewer: {
+        name: loginUser.name,
+        account: loginUser.account
+      }
     })
     this.saveDreft(function(that){
-      that.setData({
-        loginUser: loginUser,
-        pass: queryBean.pass,
-        reviewer: {
-          name: loginUser.name, account: loginUser.account
-        },
-        userlist: userlist
-      })
       fileUtil.initFile(that);
       recordUtil.initRecorderManager(that);
     })
 
     this.initDepartment();
     this.initUserGroupArray();
-    //默认审核人
-    let loginUser = wx.getStorageSync("loginUser");
-    let userlist = wx.getStorageSync("userlist");
+    
   },
   hideErrMsg: function() {
     this.setData({

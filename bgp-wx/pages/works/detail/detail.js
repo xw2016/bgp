@@ -150,8 +150,7 @@ Page({
   },
   //录音文件操作：试听
   openAudio: function (e) {
-    this.innerAudioContext.src = e.currentTarget.id;
-    this.innerAudioContext.play()
+   recordUtil.openAudio2(this,e)
   },
   openActionDoc: function (e) {
     fileUtil.bindFileDown(this, e)

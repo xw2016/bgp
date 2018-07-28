@@ -38,6 +38,16 @@ function openAudio(that,e) {
     }
   })
 }
+function openAudio2(that, e) {
+  // let that = this;
+  wx.showActionSheet({
+    itemList: ['收听'],
+    itemColor: '#007aff',
+    success(res) {
+        that.innerAudioContext.src = e.currentTarget.id;
+    }
+  })
+}
 //开始录音
 function startRecord(that) {
   // let that = this
@@ -47,6 +57,8 @@ function startRecord(that) {
     secondShow: 0
   })
   that.recorderManager.start({
+    duration: 600000,
+    sampleRate: 16000,
     format: 'aac'
   });
   countTime(that);
@@ -156,5 +168,6 @@ module.exports = {
   playRecord: playRecord,
   cleanRecord: cleanRecord,
   loadingRecord: loadingRecord,
-  openAudio: openAudio
+  openAudio: openAudio,
+  openAudio2: openAudio2
 }

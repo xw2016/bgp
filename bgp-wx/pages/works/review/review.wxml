@@ -83,7 +83,7 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" placeholder="请填写审核意见" style="height: 3.3em" />
+            <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" placeholder="请填写审核意见" style="height: 3.3em"  value="{{work.rejectInfo}}" />
             <!-- <view class="weui-textarea-counter">0/300</view> -->
           </view>
         </view>

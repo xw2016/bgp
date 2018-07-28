@@ -247,7 +247,8 @@ Page({
       workId: that.data.work.workId,
       workName: that.data.work.workName,
       worksResultScores: worksResultScores,
-      auditUser: that.data.loginUser
+      auditUser: that.data.loginUser,
+      rejectInfo: that.data.rejectInfo
     }
     this.loadingTap();
     this.onSubmit(url, workAuditVo, method, function (res) {
