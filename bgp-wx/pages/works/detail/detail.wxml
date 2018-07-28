@@ -45,7 +45,7 @@
   <!--如果已开始，并且是任务审核人，则显示执行日志-->
   <view class="weui-cells__title"></view>
   <view class="weui-panel" wx:if="{{work.status=='004'||work.status=='041'||work.status=='005'}}">
-    <view class="weui-panel__hd">任务反馈内容（文字、图片、录音等）</view>
+    <view class="weui-panel__hd">任务反馈内容（执行人上传）</view>
     <view class="weui-panel__bd">
       <view class="weui-media-box weui-media-box_text">
         <view class="{{isShowWorkLog?'weui-media-box__info__meta':'weui-media-box__desc'}}" id="isShowWorkLog" bindtap="showWorkLog">

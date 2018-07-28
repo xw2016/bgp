@@ -22,7 +22,7 @@ function initRecorderManager(that) {
   })
 }
 //录音文件操作：收听，删除
-function openAudio(that,e) {
+function openAudio(that, e) {
   // let that = this;
   wx.showActionSheet({
     itemList: ['收听', '删除'],
@@ -33,7 +33,7 @@ function openAudio(that,e) {
         that.innerAudioContext.play()
       } else if (res.tapIndex === 1) {
         console.log('删除' + e.currentTarget.id);
-        fileUtil.delFileUpload(that,e.currentTarget.id);
+        fileUtil.delFileUpload(that, e.currentTarget.id);
       }
     }
   })
@@ -44,7 +44,8 @@ function openAudio2(that, e) {
     itemList: ['收听'],
     itemColor: '#007aff',
     success(res) {
-        that.innerAudioContext.src = e.currentTarget.id;
+      that.innerAudioContext.src = e.currentTarget.id;
+      that.innerAudioContext.play()
     }
   })
 }
@@ -81,7 +82,7 @@ function stopRecord(that) {
   countTime(that)
 }
 //播放录音
-function playRecord (that) {
+function playRecord(that) {
   // var that = this;
   var src = that.data.src;
   if (src == '') {
@@ -126,7 +127,7 @@ function loadingRecord(that) {
       files: that.data.files.concat(e),
       loadingHidden: true
     });
-    fileUtil.initFileData(that,that.data.files);
+    fileUtil.initFileData(that, that.data.files);
     that.modalCandel();
   });
 

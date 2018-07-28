@@ -127,7 +127,7 @@ Page({
       worksId: worksId
     }
     util.onSubmit(url, data, method, function (res) {
-      debugger
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
@@ -150,6 +150,7 @@ Page({
   },
   //录音文件操作：试听
   openAudio: function (e) {
+    debugger
    recordUtil.openAudio2(this,e)
   },
   openActionDoc: function (e) {
@@ -174,7 +175,7 @@ Page({
   showSubWorkDetail: function (e) {
     var that = this
     var idx = e.currentTarget.dataset.idx;
-    debugger
+    
     //将对象转为string
     var queryBean = JSON.stringify(that.data.subWorkList[idx])
 
