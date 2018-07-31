@@ -42,10 +42,12 @@ Page({
     //默认责任人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
+    debugger
     this.setData({
       work: queryBean,
       loginUser: loginUser,
-      responble: {
+      checkedResponsible: loginUser.account + ":" + loginUser.name,
+      responsible: {
         name: loginUser.name,
         account: loginUser.account
       },
@@ -651,15 +653,16 @@ Page({
       })
       return false;
     }
-    let url = '/work/release';
+    let url = '/work/releaseForOther';
     let method = 'post';
 
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
+    debugger
     // work.departments = that.data.checkedDep; //暂时屏蔽
     work.responsibleList = that.data.checkedResponsible;
-    // work.reviewer= that.data.checkedReviewName;
-    // work.reviewerNum= that.data.checkedReview;
+    work.reviewer= that.data.checkedReviewName;
+    work.reviewerNum= that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
     work.creator = loginUser.name;

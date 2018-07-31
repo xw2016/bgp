@@ -284,7 +284,7 @@ Page({
     this.formSubmit(function (data) {
       var queryBean = JSON.stringify(data)
       wx.navigateTo({
-        url: '../add/addSecond?queryBean=' + queryBean
+        url: '../apply/applySecond?queryBean=' + queryBean
       })
     });
   },

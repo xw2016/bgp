@@ -91,7 +91,7 @@
           </view>
           <view class="weui-cell__bd">
             <view class='weui-select'>
-              {{responble.name}}
+              {{responsible.name}}
             </view>
           </view>
         </view>
