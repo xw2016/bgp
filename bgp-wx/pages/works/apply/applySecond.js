@@ -39,13 +39,13 @@ Page({
     // this.initDepartment();
     this.initUserGroupArray();
 
-    //默认审核人
+    //默认责任人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
     this.setData({
       work: queryBean,
       loginUser: loginUser,
-      reviewer: {
+      responble: {
         name: loginUser.name,
         account: loginUser.account
       },
@@ -588,9 +588,9 @@ Page({
           })
         }
       });
-      if (userArr.length > 0) {
-        userArr.unshift("全选");
-      }
+      // if (userArr.length > 0) {
+      //   userArr.unshift("全选");
+      // }
     } else {
       userArr.push('清空');
     }

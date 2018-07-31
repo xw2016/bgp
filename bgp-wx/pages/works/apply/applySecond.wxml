@@ -1,109 +1,278 @@
-/* pages/works/add/addSecond.wxss */
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+<view class="page__bd">
+  <form bindreset="formReset" bindsubmit='formSubmit'>
+    <view bindtap='hideErrMsg' class='fixation-page'>
+      <!--部门-->
+      <!-- <view class="weui-cells__title">请选择所属部门</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input" bindtap='showDepartment'>
+          <view class="weui-cell__hd">
+            <view class="weui-label">所属部门</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="department" value='{{checkedDep}}' placeholder="请选择所属部门" />
+          </view>
+        </view>
+        <block wx:if="{{showDepetment}}">
+          <checkbox-group bindchange="checkboxChange">
+            <label class="weui-cell weui-check__label" wx:for="{{departmentlList}}" wx:key="value">
+              <checkbox class="weui-check" value="{{item.departmentId}}" checked="{{item.checked}}" />
 
-.my-select {
-  position: relative;
-  padding-left: 15px;
-  padding-right: 30px;
-  height: 2.58823529em;
-  min-height: 2.58823529em;
-  line-height: 2.58823529em;
-   /* border-right:1rpx solid #d9d9d9  */
-}
+              <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+              </view>
+              <view class="weui-cell__bd">{{item.departmentName}}</view>
+            </label>
+          </checkbox-group>
+        </block>
+      </view> -->
+      <!--负责人类型-->
+      <view class="weui-cells__title">请选择负责人，可多选 </view>
 
-.my-textarea {
-  position: relative;
-  padding-left: 15px;
-  padding-right: 30px;
-  /* height: 4.58823529em;
-  min-height: 4.58823529em;
-  line-height: 4.58823529em; */
-  border-right: 1rpx solid #d9d9d9;
-}
 
-.modal-mask {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #000;
-  opacity: 0.5;
-  overflow: hidden;
-  z-index: 9000;
-  color: #fff;
-}
+      <!-- 负责人类型
+        <view class="weui-cell weui-cell_input" bindtap='showResponsibleType'>
+          <view class="weui-cell__hd">
+            <view class="weui-label">负责人类型</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" value='{{checkedResponsibleType}}' placeholder="请选择负责人类型" />
+          </view>
+        </view>
+        <block wx:if="{{showResponsibleType}}">
+          <checkbox-group bindchange="checkResponsibleTypeChange">
+            <label class="weui-cell weui-check__label" wx:for="{{responsibleTypeList}}" wx:key="value">
+              <checkbox class="weui-check" value="{{item.type}}" checked="{{item.checked}}" />
 
-.modal-dialog {
-   width: 100%; 
-    height: 45%; 
-  overflow: hidden;
-  position: fixed;
-  /* top: 20%; */
-   /* left: 5%;  */
-  z-index: 9999;
-  background: #f9f9f9;
-  /* margin: -180rpx 105rpx; */
-  /* border-radius: 36rpx; */
-  bottom:0%
-}
-.modal-title{
- height: 10px;
-  width: 100%;
-  text-align: center;
-  line-height: 30px;
-  font: 20px "microsoft yahei";
-  display: flex;
+              <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+              </view>
+              <view class="weui-cell__bd">{{item.type}}</view>
+            </label>
+          </checkbox-group>
+        </block>  -->
 
-}
-.modal-title-left {
-  /* background-size:552%; */
-  height: 10px;
-  width: 24px;
-  font: 20px "microsoft yahei";
-  margin-left:10%;
-  display: inline-block;
-}
-.modal-title-right {
-  /* background-size:552%; */
-  height: 10px;
-  width: 24px;
-  font: 20px "microsoft yahei";
-  margin-right:10%;
-  display: inline-block;
-}
-.input {
-  width: 100%;
-  height: 82rpx;
-  font-size: 28rpx;
-  line-height: 28rpx;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  color: #333;
-}
+      <!--负责人 输入搜索方式-->
+      <!-- <view class="weui-cells weui-cells_after-title">
+        
+        <view class="weui-cell weui-cell_input" bindtap='showResponsible'>
+          <view class="weui-cell__hd">
+            <view class="weui-label">负责人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="responsible" value='{{checkedResponsibleName}}' placeholder="请选择负责人" bindinput="bindSearchResponsibleUser" />
+          </view>
+        </view>
+      </view> -->
+      <!-- <block wx:if="{{showResponsible}}">
+        <checkbox-group bindchange="checkResponsibleChange">
+          <label class="weui-cell weui-check__label" wx:for="{{responsibleList}}" wx:key="value">
+            <checkbox class="weui-check" value="{{item.id}}" checked="{{item.checked}}" />
 
-input-holder {
-  color: #666;
-  font-size: 28rpx;
-}
+            <view class="weui-cell__hd weui-check__hd_in-checkbox">
+              <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+              <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+            </view>
+            <view class="weui-cell__bd">{{item.name}}</view>
+          </label>
+        </checkbox-group>
+      </block> -->
+      <!--负责人 pciker-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">执行人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <view class='weui-select'>
+              {{responble.name}}
+            </view>
+          </view>
+        </view>
+      </view>
 
-.modal-footer {
-  display: flex;
-  flex-direction: row;
-  height: 86rpx;
-  border-top: 1px solid #dedede;
-  font-size: 34rpx;
-  line-height: 86rpx;
-}
 
-.btn-cancel {
-  width: 50%;
-  color: #666;
-  text-align: center;
-  border-right: 1px solid #dedede;
-}
+      <!--审核人-->
+      <view class="weui-cells__title">审核人</view>
+      <!-- <view class="weui-cells weui-cells_after-title"> -->
 
-.btn-confirm {
-  width: 50%;
-  color: #ec5300;
-  text-align: center;
-}
+      <!-- <view class="weui-cell weui-cell_input" bindtap='showReviewType'>
+          <view class="weui-cell__hd">
+            <view class="weui-label">审核人类型</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" value='{{checkedReviewType}}' placeholder="请选择审核人类型" />
+          </view>
+        </view>
+        <block wx:if="{{showReviewType}}">
+          <checkbox-group bindchange="checkReviewTypeChange">
+            <label class="weui-cell weui-check__label" wx:for="{{reviewTypeList}}" wx:key="value">
+              <checkbox class="weui-check" value="{{item.type}}" checked="{{item.checked}}" />
+
+              <view class="weui-cell__hd weui-check__hd_in-checkbox">
+                <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+                <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+              </view>
+              <view class="weui-cell__bd">{{item.type}}</view>
+            </label>
+          </checkbox-group>
+        </block> -->
+
+      <!--审核人-->
+      <!-- <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input" bindtap='showReview'>
+          <view class="weui-cell__hd">
+            <view class="weui-label">审核人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="reviewer" value='{{checkedReviewName}}' placeholder="请选择审核人" bindinput="bindSearchReviewUser" />
+          </view>
+        </view>
+      </view>
+      <block wx:if="{{showReview}}">
+        <checkbox-group bindchange="checkReviewChange">
+          <label class="weui-cell weui-check__label" wx:for="{{reviewList}}" wx:key="value">
+            <checkbox class="weui-check" value="{{item.id}}" checked="{{item.checked}}" />
+
+            <view class="weui-cell__hd weui-check__hd_in-checkbox">
+              <icon class="weui-icon-checkbox_circle" type="circle" size="23" wx:if="{{!item.checked}}"></icon>
+              <icon class="weui-icon-checkbox_success" type="success" size="23" wx:if="{{item.checked}}"></icon>
+            </view>
+            <view class="weui-cell__bd">{{item.name}}</view>
+          </label>
+        </checkbox-group>
+      </block> -->
+      <!--审核人pick-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">审核人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindReviewerChange" bindcolumnchange="bindRevColumnChange" value="{{revIndex}}" range="{{userGroupArray}}">
+              <view class="weui-select">
+                {{reviewerGroupArr[1][revIndex[1]]}}
+
+              </view>
+            </picker>
+          </view>
+        </view>
+      </view>
+      <!--新增任务附件-->
+      <!--文件列表-->
+      <view class="weui-cells__title">添加任务图片</view>
+      <!--图片上传开始-->
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="weui-uploader">
+              <view class="weui-uploader__hd">
+                <!-- <view class="weui-uploader__title"></view> -->
+                <!-- <view class="weui-uploader__info">{{files.length}}/8</view> -->
+              </view>
+              <view class="weui-uploader__bd">
+                <view class="weui-uploader__files">
+                  <block wx:for="{{imgfiles}}" wx:key="*this">
+                    <view class="weui-uploader__file" bindtap="openActionImag" id="{{item.url}}">
+                      <image class="weui-uploader__img" src="{{item.url}}" mode="aspectFill" />
+                    </view>
+                  </block>
+                </view>
+                <view class="weui-uploader__input-box">
+                  <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <!--录音列表-->
+      <view class="weui-cells__title">添加任务语音</view>
+      <view class="weui-cells">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <view class="weui-uploader">
+              <view class="weui-uploader__bd">
+                <view class="weui-uploader__files">
+                  <view wx:for="{{audiofiles}}" wx:key="*this">
+                    <view class="weui-uploader__file" bindtap="openAudio" id="{{item.url}}">
+                      <image style="width:70rpx; height:70rpx;" src="../../../resources/images/voice2.png"></image>
+                    </view>
+                  </view>
+                </view>
+                <view class="weui-uploader__files" bindtap='showAudioOpt'>
+                  <image style="width:70rpx; height:70rpx;" src="../../../resources/images/addvoice.png"></image>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+      <view class="modal-dialog" hidden="{{modalHidden}}">
+        <view class="page__bd page__bd_spacing">
+          <view class='weui-flex'>
+            <view class='weui-flex__item'>
+              <button class='weui-btn' type='default' disabled='true' wx:if="{{record=='start'}}">点一下开始录音</button>
+              <button class='weui-btn' type='default' disabled='true' wx:elif="{{record=='end'}}">录音中({{secondShow}})...点一下结束录音</button>
+              <button class='weui-btn' type='default' disabled='true' wx:elif="{{record=='play'}}">录音结束({{secondShow}})，点一下试听录音</button>
+            </view>
+          </view>
+          <view class="weui-flex">
+            <view class='weui-flex__item'></view>
+            <view class='weui-flex__item'>
+              <image wx:if="{{record=='start'}}" bindtap="startRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/start.png"></image>
+              <image wx:elif="{{record=='end'}}" bindtap="stopRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/end.png"></image>
+              <image wx:elif="{{record=='play'}}" bindtap="playRecord" mode='aspectFill' style="width:280rpx; height:280rpx;" src="../../../resources/images/playRecord.png"></image>
+            </view>
+            <view class='weui-flex__item'></view>
+          </view>
+
+          <view class="weui-flex">
+            <block wx:if="{{record=='play'}}">
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='cleanRecord'>重新录音</button>
+              </view>
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='loadingRecord'>完成录音</button>
+              </view>
+            </block>
+            <block wx:else>
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='cleanRecord' disabled='true'>重新录音</button>
+              </view>
+              <view class="weui-flex__item">
+                <button class='weui-btn' type='primary' plain='true' bindtap='loadingRecord' disabled='true'>完成录音</button>
+              </view>
+            </block>
+          </view>
+        </view>
+      </view>
+
+
+      <view class="weui-cells__title"></view>
+      <view class='weui-flex'>
+        <view class='weui-flex__item'>
+          <image mode='aspectFill' style="width:100%; height:20rpx;" src="../../../resources/images/bottom.png"></image>
+        </view>
+      </view>
+
+      <!--新增任务结束-->
+    </view>
+
+
+
+    <view class="weui-panel weui-form-preview__ft fixation-btn">
+      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+      <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
+    </view>
+
+  </form>
+</view>
