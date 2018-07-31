@@ -105,6 +105,11 @@ Page({
       url: '../works/add/addfirst',
     })
   },
+  applyWork: function () {
+    wx.navigateTo({
+      url: '../works/apply/applyfirst',
+    })
+  },
   myScore: function() {
     // wx.navigateTo({
     //   url: '../rrtest/pingfen',
