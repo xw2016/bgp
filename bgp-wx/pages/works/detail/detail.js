@@ -20,6 +20,8 @@ Page({
     workType:'',
     imgfiles: [],
     files: [], //文件上传
+    popErrorMsg: '',
+    rejectInfo:''
   },
   loadingTap: function () {
     this.setData({
@@ -33,7 +35,16 @@ Page({
       that.update();
     }, 15000);
   },
-
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
+    })
+  },
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
+    })
+  },
   onLoad: function (options) {
     wx.setNavigationBarTitle({
       title: '任务详情'
@@ -217,20 +228,63 @@ Page({
       remark: e.detail.value
     })
   },
+  bindRejectInfoChange: function (e) {
+    this.setData({
+      rejectInfo: e.detail.value
+    })
+  },
   submitWorkLeader:function(){
     let that = this;
     let url = '/work/feedback';
     let work = that.data.work;
     let remark = that.data.remark;
-    // let beginDate = that.data.beginDate;
     let data = {
       workId: work.workId,
-      // beginDate: (beginDate == null || beginDate == '') ? work.beginDate : beginDate,
       remark: (remark == null || remark == '') ? work.remark : remark
     };
     let method = 'post';
     util.onSubmit(url, data, method, function (res) {
-
+      if (res.data.data == false) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.openSuccess();
+      }
+    });
+  },
+  //申请任务 确认
+  submitConfirm:function(){
+    let that = this;
+    let url = '/work/submitConfirm';
+   
+    let data = {
+      workId: that.data.work.workId
+    };
+    let method = 'post';
+    util.onSubmitJson(url, data, method, function (res) {
+      if (res.data.data == false) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.openSuccess();
+      }
+    });
+  },
+  //申请任务 打回
+  submitReject: function () {
+    
+    let that = this;
+    let url = '/work/submitReject';
+    if (that.data.rejectInfo == '') {
+      that.setData({
+        popErrorMsg: '打回意见不能为空！'
+      })
+      return false;
+    }
+    let data = {
+      workId: that.data.work.workId,
+      rejectInfo: that.data.work.rejectInfo
+    };
+    let method = 'post';
+    util.onSubmitJson(url, data, method, function (res) {
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {

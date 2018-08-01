@@ -23,7 +23,7 @@ Page({
     revIndex: [0, 0],
     checkedResponsible: '',
     checkedResName: '',
-    reviewer: {},
+    reviewer: '',
     popErrorMsg: ''
   },
 
@@ -639,6 +639,7 @@ Page({
     //   })
     //   return false;
     // };
+    debugger
     let reviewer = that.data.reviewer;
     let responsible = that.data.checkedResponsible;
     if (responsible == '') {
@@ -658,8 +659,10 @@ Page({
 
     let work = that.data.work;
     let loginUser = wx.getStorageSync("loginUser");
-    debugger
+
     // work.departments = that.data.checkedDep; //暂时屏蔽
+    work.responsible = that.data.responsible.name;
+    work.responsibleNum = that.data.responsible.account;
     work.responsibleList = that.data.checkedResponsible;
     work.reviewer= that.data.checkedReviewName;
     work.reviewerNum= that.data.checkedReview;

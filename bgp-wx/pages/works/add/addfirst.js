@@ -295,6 +295,8 @@ Page({
     // let data = that.data;
     let loginUser = wx.getStorageSync("loginUser");
     let data = {
+      status: '100',
+      statusName: '临时任务',
       parentWorkName: '本任务',
       parentId: '0',
       workId:that.data.workId, //判断是否存在/
