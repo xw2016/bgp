@@ -237,21 +237,24 @@
 <!--审核按钮-->
 <view class="weui-panel weui-form-preview__ft fixation-btn">
   <block wx:if="{{action =='todo'}}">
-    <!--如果是任务责任人，并且未结束，则显示-->
-    <block wx:if="{{work.responsibleNum==userNo&&(work.status=='001'||work.status=='002'||work.status=='003'||work.status=='021'||work.status=='042')}}">
+    <!--如果是任务责任人，并且未结束，则显示：草稿000，确认打回012，待执行002，执行接收021，执行中003，审核打回042-->
+    <block wx:if="{{work.responsibleNum==userNo&&(work.status=='012'||work.status=='002'||work.status=='021'||work.status=='003'||work.status=='042')}}">
       <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
       <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
       <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
-      <!-- </block>
-        <block wx:else>
-          <button bindtap="submitWorkLeader" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
-        </block> -->
-      <!--如果是任务审核人，并且已提交审核，则显示-->
     </block>
+    <!--如果是审核人，并且是申请任务，则显示：待确认001-->
+    <block wx:elif="{{work.reviewerNum==userNo&&work.status=='001'}}">
+         <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary " hover-class="weui-form-preview__btn_active">打回</button>
+      <button bindtap="reviewWork"  class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">确认</button>
+    </block>
+      <!--如果是任务审核人，并且已提交审核，则显示：待审核004，审核接收041-->
     <block wx:else>
       <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary " hover-class="weui-form-preview__btn_active">返回</button>
       <button bindtap="reviewWork" wx:if="{{work.reviewerNum==userNo&&(work.status=='004'||work.status=='041')}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">审核任务</button>
     </block>
+
+    <!--如果是申请任务-->
   </block>
 
   <block wx:else>
