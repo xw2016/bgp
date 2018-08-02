@@ -645,6 +645,8 @@ Page({
     // let data = that.data;
     let workParent = that.data.workParent;
     let work ={};
+    work.status='100';
+    work.statusName='临时任务';
     work.parentWorkName = workParent.workName;
     work.parentId = workParent.workId;
     work.workName = workParent.workName+"(交办)"
@@ -661,7 +663,7 @@ Page({
     work.createReson = workParent.createReson;
     work.addWorkType= workParent.addWorkType;
     work.fileType = 'add';
-    debugger
+    
     that.loadingTap();
 
     util.onSubmitJson(url, work, method, function (res) {

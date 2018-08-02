@@ -212,7 +212,9 @@
     <view class="weui-cells weui-cells_after-title"  bindtap='hideErrMsg'>
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" style="height: 3.3em" value="{{work.rejectInfo}}" />
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" 
+          placeholder="请填写打回原因" 
+          style="height: 3.3em" value="{{work.rejectInfo}}" />
           <!-- <view class="weui-textarea-counter">0/300</view> -->
         </view>
       </view>
