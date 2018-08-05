@@ -26,18 +26,19 @@ Page({
       popErrorMsg: ''
     })
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 15000);
-  },
+  // loadingTap: function () {
+  //   var that = this;
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+    
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     // that.update();
+  //   }, 15000);
+  // },
   tip: function (msg) {
     wx.showModal({
       title: '提示',
@@ -198,7 +199,7 @@ Page({
       // auditUser: that.data.loginUser,
       rejectInfo: that.data.rejectInfo
     }
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmitJson(url, workAuditVo, method, function (res) {
       that.setData({
         loadingHidden: true
@@ -250,7 +251,7 @@ Page({
       auditUser: that.data.loginUser,
       rejectInfo: that.data.rejectInfo
     }
-    this.loadingTap();
+    util.loadingTap(this);
     this.onSubmit(url, workAuditVo, method, function (res) {
       that.setData({
         loadingHidden: true,

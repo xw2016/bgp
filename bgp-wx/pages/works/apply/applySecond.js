@@ -30,7 +30,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     wx.setNavigationBarTitle({
       title: '填写任务信息'
     })
@@ -38,45 +38,46 @@ Page({
     queryBean.fileType = 'add';
     // this.initDepartment();
     this.initUserGroupArray();
-
+    this.setData({
+      work: queryBean
+    });
     //默认责任人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
-    debugger
-    this.setData({
-      work: queryBean,
-      loginUser: loginUser,
-      checkedResponsible: loginUser.account + ":" + loginUser.name,
-      responsible: {
-        name: loginUser.name,
-        account: loginUser.account
-      },
-      userlist: userlist
-    })
-
+    if (loginUser != '') {
+      this.setData({
+        loginUser: loginUser,
+        checkedResponsible: loginUser.account + ":" + loginUser.name,
+        responsible: {
+          name: loginUser.name,
+          account: loginUser.account
+        },
+        userlist: userlist
+      })
+    }
     fileUtil.initFile(this);
     recordUtil.initRecorderManager(this);
   },
 
   //提示语
-  hideErrMsg: function () {
+  hideErrMsg: function() {
     this.setData({
       popErrorMsg: ''
     })
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
-  tip: function (msg) {
+  // loadingTap: function () {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
+  tip: function(msg) {
     wx.showModal({
       title: '提示',
       content: msg,
@@ -84,15 +85,15 @@ Page({
     })
   },
   //图片操作
-  chooseImage: function (e) {
+  chooseImage: function(e) {
     imageUtil.chooseImage(this, e)
   },
-  openActionImag: function (e) {
+  openActionImag: function(e) {
     imageUtil.openActionImag(this, e);
   },
   //录音操作
 
-  modalCandel: function () {
+  modalCandel: function() {
     // do something
     let that = this;
     that.setData({
@@ -104,51 +105,51 @@ Page({
     }
     that.cleanRecord();
   },
-  showAudioOpt: function () {
+  showAudioOpt: function() {
     this.setData({
       modalHidden: false
     })
   },
   //开始录音
-  startRecord: function () {
+  startRecord: function() {
 
     recordUtil.startRecord(this)
   },
   //暂停录音
-  pauseRecord: function () {
+  pauseRecord: function() {
     recordUtil.pauseRecord(this)
   },
   //
-  resumeRecord: function () {
+  resumeRecord: function() {
     recordUtil.resumeRecord(this);
   },
   // 停止录音
-  stopRecord: function () {
+  stopRecord: function() {
     recordUtil.stopRecord(this)
   },
   //播放录音
-  playRecord: function () {
+  playRecord: function() {
     recordUtil.playRecord(this);
   },
   //重新录音，清空原来录音
-  cleanRecord: function () {
+  cleanRecord: function() {
     recordUtil.cleanRecord(this);
   },
   //上传录音
-  loadingRecord: function () {
+  loadingRecord: function() {
     recordUtil.loadingRecord(this)
 
   },
   //录音文件操作：试听，删除
-  openAudio: function (e) {
+  openAudio: function(e) {
     recordUtil.openAudio(this, e)
   },
   //
-  initDepartment: function () {
+  initDepartment: function() {
     let that = this;
     let url = '/work/queryDepartmentList';
     let method = 'POST';
-    util.onSubmit(url, null, method, function (res) {
+    util.onSubmit(url, null, method, function(res) {
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
@@ -162,7 +163,7 @@ Page({
       }
     })
   },
-  showResponsibleType: function () {
+  showResponsibleType: function() {
     let that = this
     let showResponsibleType = that.data.showResponsibleType == false ? true : false
     this.setData({
@@ -173,7 +174,7 @@ Page({
       showResponsible: false
     })
   },
-  showResponsible: function () {
+  showResponsible: function() {
     let that = this
     let showResponsible = that.data.showResponsible == false ? true : false
     this.setData({
@@ -184,7 +185,7 @@ Page({
       showResponsible: showResponsible
     })
   },
-  showReviewType: function () {
+  showReviewType: function() {
     let that = this
     let showReviewType = that.data.showReviewType == false ? true : false
     this.setData({
@@ -195,7 +196,7 @@ Page({
       showResponsible: false
     })
   },
-  showReview: function () {
+  showReview: function() {
     let that = this
     let showReview = that.data.showReview == false ? true : false
     this.setData({
@@ -206,7 +207,7 @@ Page({
       showResponsible: false
     })
   },
-  showDepartment: function () {
+  showDepartment: function() {
     let that = this
     let showDepetment = that.data.showDepetment == false ? true : false
     this.setData({
@@ -231,14 +232,14 @@ Page({
   //     responsibleList: checkGroup   //可选的人员组
   //   })
   // },
-  bindSearchReviewUser: function (e) {
+  bindSearchReviewUser: function(e) {
     let key = e.detail.value;
     let userList = util.searchUser(key);
     this.setData({
       reviewList: userList //可选的人员组
     })
   },
-  bindSearchResponsibleUser: function (e) {
+  bindSearchResponsibleUser: function(e) {
     let key = e.detail.value;
     let userList = util.searchUser(key);
     this.setData({
@@ -259,7 +260,7 @@ Page({
   //     reviewList: checkGroup
   //   })
   // },
-  checkReviewChange: function (e) { //审核人选择
+  checkReviewChange: function(e) { //审核人选择
     var checkboxItems = this.checkUserChange(e, this.data.reviewList);
     this.setData({
       reviewList: checkboxItems
@@ -270,7 +271,7 @@ Page({
     var checkUserNum = '';
     var checkUserArr = checkUsers.split(",");
     if (checkUserArr != '') {
-      checkUserArr.forEach(function (item) {
+      checkUserArr.forEach(function(item) {
         var name = item.split(":")[1];
         checkUserNames = checkUserNames + "," + name;
       });
@@ -284,7 +285,7 @@ Page({
       checkedReview: checkUserNum
     })
   },
-  checkResponsibleChange: function (e) { //责任人选择
+  checkResponsibleChange: function(e) { //责任人选择
     var checkboxItems = this.checkUserChange(e, this.data.responsibleList);
     this.setData({
       responsibleList: checkboxItems
@@ -293,7 +294,7 @@ Page({
     var checkUserNames = '';
     var checkUserArr = checkUsers.split(",");
     if (checkUserArr != '') {
-      checkUserArr.forEach(function (item) {
+      checkUserArr.forEach(function(item) {
         var name = item.split(":")[1];
         checkUserNames = checkUserNames + "," + name;
       });
@@ -307,7 +308,7 @@ Page({
       checkedResponsible: checkUsers
     })
   },
-  checkUserChange: function (e, reviewList) {
+  checkUserChange: function(e, reviewList) {
     console.log('checkReviewChange发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = reviewList,
       values = e.detail.value;
@@ -322,7 +323,7 @@ Page({
     }
     return checkboxItems;
   },
-  checkUserTypeChange: function (e) {
+  checkUserTypeChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = this.data.userTypeList,
       values = e.detail.value;
@@ -338,7 +339,7 @@ Page({
     return checkboxItems;
   },
 
-  checkboxChange: function (e) {
+  checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value);
     var checkboxItems = this.data.departmentlList,
       values = e.detail.value;
@@ -359,10 +360,10 @@ Page({
       checkedDep: checkedDep
     })
   },
-  getCheckedDep: function () {
+  getCheckedDep: function() {
     var departmentlList = this.data.departmentlList;
     var checked = '';
-    departmentlList.forEach(function (item) {
+    departmentlList.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.departmentName;
       }
@@ -372,10 +373,10 @@ Page({
     }
     return checked;
   },
-  getCheckedUserType: function (list) {
+  getCheckedUserType: function(list) {
     // var list = this.data.userTypeList;
     var checked = '';
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.type;
       }
@@ -385,9 +386,9 @@ Page({
     }
     return checked;
   },
-  getCheckedUser: function (list) {
+  getCheckedUser: function(list) {
     var checked = '';
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
         checked = checked + "," + item.account + ":" + item.name;
       }
@@ -397,13 +398,13 @@ Page({
     }
     return checked;
   },
-  initCheckUserTypeUsers: function () {
+  initCheckUserTypeUsers: function() {
     var userlist = this.data.userlist;
     var list = this.data.userTypeList;
     var userGroup = [];
-    list.forEach(function (item) {
+    list.forEach(function(item) {
       if (item.checked == true) {
-        userlist.forEach(function (user) {
+        userlist.forEach(function(user) {
           if (user.type == item.type) {
             userGroup.push(user);
           }
@@ -413,7 +414,7 @@ Page({
     return userGroup;
   },
   //人员选择
-  initUserGroupArray: function () {
+  initUserGroupArray: function() {
     let that = this;
     let groupList = wx.getStorageSync("groupList");
     let groupArrs = groupList.map(item => { //获取人员组
@@ -435,7 +436,7 @@ Page({
       })
     }
   },
-  bindReviewerChange: function (e) {
+  bindReviewerChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -454,7 +455,7 @@ Page({
       });
       return false;
     }
-    userlist.forEach(function (item) {
+    userlist.forEach(function(item) {
       if (user == item.name) {
         reviewer = item;
         return;
@@ -466,7 +467,7 @@ Page({
       reviewer: reviewer
     });
   },
-  bindResponsibleChange: function (e) {
+  bindResponsibleChange: function(e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)
     let that = this;
     let groupList = that.data.groupList;
@@ -477,7 +478,7 @@ Page({
 
     let userlist = that.data.userlist;
 
-    if (typeof (user) == 'undefined') {
+    if (typeof(user) == 'undefined') {
       return false;
     }
     if (user == '清空') {
@@ -494,9 +495,9 @@ Page({
       let users = userGroupArray[1];
       let checkedResName = '';
       let checkedResponsible = '';
-      users.forEach(function (resName) {
+      users.forEach(function(resName) {
 
-        userlist.forEach(function (item) {
+        userlist.forEach(function(item) {
           if (resName == item.name) {
 
             checkedResName = checkedResName != '' ? checkedResName + "," + item.name : '' + item.name;
@@ -515,7 +516,7 @@ Page({
 
       return false;
     }
-    userlist.forEach(function (item) {
+    userlist.forEach(function(item) {
       if (user == item.name) {
         responsible = item;
         return;
@@ -539,7 +540,7 @@ Page({
 
 
   },
-  bindResColumnChange: function (e) {
+  bindResColumnChange: function(e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       resIndex: this.data.resIndex,
@@ -557,7 +558,7 @@ Page({
     }
     this.setData(data);
   },
-  bindRevColumnChange: function (e) {
+  bindRevColumnChange: function(e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       revIndex: this.data.revIndex,
@@ -575,15 +576,15 @@ Page({
     }
     this.setData(data);
   },
-  selectUser: function (group) {
+  selectUser: function(group) {
     let that = this;
     let userlist = that.data.userlist;
     let userArr = [];
     if (group != '') {
-      userlist.forEach(function (item) {
+      userlist.forEach(function(item) {
         let groupList = item.userGroupList
         if (groupList != null) {
-          groupList.forEach(function (g) {
+          groupList.forEach(function(g) {
             if (g.groupName == group) {
               userArr.push(item.name);
             }
@@ -598,7 +599,7 @@ Page({
     }
     return userArr;
   },
-  validateForm: function () {
+  validateForm: function() {
     let wxValidate = app.wxValidate({
       // workName: { required: true },
       // planBeginDate: { required: true },
@@ -613,23 +614,23 @@ Page({
         required: false
       }
     }, {
-        // workName: { required: '请填写任务名称' },
-        // planBeginDate: { required: '请选择计划开始日期' },
-        // planEndDate: { required: '请选择计划结束日期' }
-        department: {
-          required: '请选择所属部门'
-        },
-        reviewer: {
-          required: '请选择审核人'
-        },
-        responsible: {
-          required: '请选择负责人'
-        }
+      // workName: { required: '请填写任务名称' },
+      // planBeginDate: { required: '请选择计划开始日期' },
+      // planEndDate: { required: '请选择计划结束日期' }
+      department: {
+        required: '请选择所属部门'
+      },
+      reviewer: {
+        required: '请选择审核人'
+      },
+      responsible: {
+        required: '请选择负责人'
+      }
 
-      })
+    })
     return wxValidate;
   },
-  formSubmit: function (e) {
+  formSubmit: function(e) {
     let that = this;
     // let validate = this.validateForm();
     // if (!validate.checkForm(e)) {
@@ -639,12 +640,11 @@ Page({
     //   })
     //   return false;
     // };
-    debugger
     let reviewer = that.data.reviewer;
     let responsible = that.data.checkedResponsible;
     if (responsible == '') {
       that.setData({
-        popErrorMsg: '请选择负责人'
+        popErrorMsg: '执行人不能为空，请返回上一页'
       })
       return false;
     }
@@ -664,14 +664,15 @@ Page({
     work.responsible = that.data.responsible.name;
     work.responsibleNum = that.data.responsible.account;
     work.responsibleList = that.data.checkedResponsible;
-    work.reviewer= that.data.checkedReviewName;
-    work.reviewerNum= that.data.checkedReview;
+    work.reviewer = that.data.checkedReviewName;
+    work.reviewerNum = that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
     work.creator = loginUser.name;
     work.creatorNum = loginUser.account;
-    this.loadingTap();
-    util.onSubmitJson(url, work, method, function (res) {
+    work.addWorkType = '1'; //申请任务
+    util.loadingTap(this);
+    util.onSubmitJson(url, work, method, function(res) {
       that.setData({
         loadingHidden: true
       });
@@ -683,15 +684,15 @@ Page({
     });
   },
 
-  goBack: function () {
+  goBack: function() {
     util.goBack();
   },
-  openSuccess: function () {
+  openSuccess: function() {
     wx.redirectTo({
       url: '../../msg/msg_success'
     })
   },
-  openFail: function () {
+  openFail: function() {
     wx.navigateTo({
       url: '../../msg/msg_fail'
     })

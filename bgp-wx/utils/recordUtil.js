@@ -121,7 +121,7 @@ function loadingRecord(that) {
     "creator": userNo,
     "fileType": that.data.work.fileType
   };
-  that.loadingTap();
+  loadingTap();
   fileUtil.onUploadFile(null, tempFilePaths, "file", formData, function (e) {
     that.setData({
       files: that.data.files.concat(e),
@@ -132,7 +132,17 @@ function loadingRecord(that) {
   });
 
 }
-
+//加载动画
+function loadingTap(that) {
+  that.setData({
+    loadingHidden: false
+  });
+  setTimeout(function () {
+    that.setData({
+      loadingHidden: true
+    });
+  }, 15000);
+}
 function formateTime2(seconds) {
   return [
     // parseInt(seconds / 60 / 60), //时
@@ -160,7 +170,6 @@ function countTime(that) { //计时器
       countTime(that);
     }, 1000)
   })
-
 }
 module.exports = {
   initRecorderManager: initRecorderManager,

@@ -245,18 +245,22 @@ function onLogin(callback){
             if (res.data.retCode == 200) {
               console.log('登录' + ":" + res.data.data.loginToken);
               console.log('登录user' + ":" + res.data.data.userNo);
-              wx.setStorage({
-                key: "loginToken",
-                data: res.data.data.loginToken
-              });
-              wx.setStorage({
-                key: "userNo",
-                data: res.data.data.userNo
-              });
-              wx.setStorage({
-                key: "loginUser",
-                data: res.data.data.loginUser
-              });
+              
+              wx.setStorageSync("loginToken", res.data.data.loginToken);
+              wx.setStorageSync("userNo", res.data.data.userNo)
+              wx.setStorageSync("loginUser", res.data.data.loginUser)
+              // wx.setStorage({
+              //   key: "loginToken",
+              //   data: res.data.data.loginToken
+              // });
+              // wx.setStorage({
+              //   key: "userNo",
+              //   data: res.data.data.userNo
+              // });
+              // wx.setStorage({
+              //   key: "loginUser",
+              //   data: res.data.data.loginUser
+              // });
               
               wx.navigateTo({
                 url: '../works/works'
@@ -379,8 +383,18 @@ function searchUser(key){
   if(targets!=''){
     userGroup=this.removeRepeat(targets,"account");
   }
- 
   return userGroup;
+}
+//加载动画
+function loadingTap(that) {
+  that.setData({
+    loadingHidden: false
+  });
+  setTimeout(function () {
+    that.setData({
+      loadingHidden: true
+    });
+  }, 25000);
 }
 module.exports = {
   formatTime: formatTime,
@@ -396,6 +410,7 @@ module.exports = {
   searchUser: searchUser,
   compareDate: compareDate,
   initFile: initFile,
-  countTime:CountTime
+  countTime:CountTime,
+  loadingTap: loadingTap
   // validateForm
 }

@@ -35,7 +35,6 @@ Page({
       title: '任务交办'
     });
     //默认审核人
-    debugger
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
     let queryBean = JSON.parse(options.queryBean);
@@ -63,18 +62,18 @@ Page({
       popErrorMsg: ''
     })
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  // loadingTap: function () {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
   tip: function (msg) {
     wx.showModal({
       title: '提示',
@@ -664,7 +663,7 @@ Page({
     work.addWorkType= workParent.addWorkType;
     work.fileType = 'add';
     
-    that.loadingTap();
+    util.loadingTap(this);
 
     util.onSubmitJson(url, work, method, function (res) {
       
@@ -735,7 +734,7 @@ Page({
 
     work.creator = that.data.loginUser.name;
     work.creatorNum = that.data.loginUser.account;
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmitJson(url, work, method, function(res) {
       that.setData({
         loadingHidden: true

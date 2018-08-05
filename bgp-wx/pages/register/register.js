@@ -75,18 +75,21 @@ Page({
       } else {
         console.log('登录' + ":" + res.data.data.loginToken);
         console.log('登录user' + ":" + res.data.data.userNo);
-        wx.setStorage({
-          key: "loginToken",
-          data: res.data.data.loginToken
-        });
-        wx.setStorage({
-          key: "userNo",
-          data: res.data.data.userNo
-        });
-        wx.setStorage({
-          key: "user",
-          data: res.data.data.loginUser
-        });
+        wx.setStorageSync("loginToken", res.data.data.loginToken);
+        wx.setStorageSync("userNo", res.data.data.userNo)
+        wx.setStorageSync("loginUser", res.data.data.loginUser)
+        // wx.setStorageSync({
+        //   key: "loginToken",
+        //   data: res.data.data.loginToken
+        // });
+        // wx.setStorageSync({
+        //   key: "userNo",
+        //   data: res.data.data.userNo
+        // });
+        // wx.setStorageSync({
+        //   key: "user",
+        //   data: res.data.data.loginUser
+        // });
         wx.reLaunch({
           url: '../works/works'
         })

@@ -1,6 +1,6 @@
 <!--pages/works/works.wxml-->
 <loading hidden="{{loadingHidden}}">
-        加载中...
+  加载中...
 </loading>
 <view class="navbar">
   <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
@@ -13,12 +13,12 @@
       <!-- <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower"> -->
       <scroll-view scroll-y style="height: 450px;">
         <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}" bindtap="queryDetail">
-        
-          <view >
-          <image wx:if="{{item.status==002||item.status==021||item.status==042}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
-          <image wx:elif="{{item.status==003}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/doing.png"></image>
-          <image wx:elif="{{item.status==004||item.status==041}}"style="width:38rpx; height:38rpx;" src="../../../resources/images/waitreview.png"></image>
-          <image wx:else style="width:38rpx; height:38rpx;" src="../../../resources/images/otherstatus.png"></image>
+
+          <view>
+            <image wx:if="{{item.status==002||item.status==021||item.status==042}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
+            <image wx:elif="{{item.status==003}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/doing.png"></image>
+            <image wx:elif="{{item.status==004||item.status==041}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/waitreview.png"></image>
+            <image wx:else style="width:38rpx; height:38rpx;" src="../../../resources/images/otherstatus.png"></image>
             <view style="display: inline-block; vertical-align: middle">{{item.workName}}</view>
             <!-- <view wx:if="{{deadlineDiff<2}}" class="weui-badge" style="margin-left: 5px;">warning</view> -->
           </view>
@@ -26,8 +26,8 @@
             <view class="subtitle">{{item.statusName}}</view>
           </view>
         </view>
-          <view class="loading complete" hidden="{{!todoLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view> 
-        <view class="loading complete" hidden="{{!todoLoadingComplete}}">已加载全部</view> 
+        <view class="loading complete" hidden="{{!todoLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view>
+        <view class="loading complete" hidden="{{!todoLoadingComplete}}">已加载全部</view>
       </scroll-view>
     </view>
   </view>
@@ -35,7 +35,7 @@
 <!--我的已办-->
 <view hidden="{{currentTab!==1}}">
   <view class="search-result">
-    <scroll-view scroll-y style="height: 450px;" >
+    <scroll-view scroll-y style="height: 450px;">
       <view class="result-item" wx:key="unique" wx:for="{{doneworksList}}" data-idx="{{index}}" bindtap="queryDetail">
 
         <text>{{item.workName}}</text>
@@ -43,8 +43,8 @@
           <text>{{item.statusName}}</text>
         </view>
       </view>
-      <view class="loading complete" hidden="{{!doneLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view> 
-      <view class="loading complete" hidden="{{!doneLoadingComplete}}">已加载全部</view> 
+      <view class="loading complete" hidden="{{!doneLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view>
+      <view class="loading complete" hidden="{{!doneLoadingComplete}}">已加载全部</view>
     </scroll-view>
   </view>
 </view>

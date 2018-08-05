@@ -42,22 +42,22 @@ Page({
       })
     }
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  // loadingTap: function () {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
   //事件处理函数
   bindViewTap: function () {
     let that = this;
-    that.loadingTap();
+    util.loadingTap(this);
     util.onLogin(function(){
       that.setData({
         loadingHidden: true

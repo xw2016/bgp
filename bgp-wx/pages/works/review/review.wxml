@@ -65,7 +65,7 @@
               </view>
             </picker> -->
               <view class="zan-font-16 my-ib" bindtap="myStarChoose" data-idx="{{idx}}">
-                <block wx:for="{{itm.kpiScores}}">
+                <block wx:for="{{itm.kpiScores}}" wx:key="unique" >
                   <text wx:if="{{stars[idx]>=index+1}}" style="padding-right: .5em;color:red" data-star="{{index+1}}">★</text>
                   <text wx:if="{{stars[idx]<index+1}}" style="padding-right: .5em" data-star="{{index+1}}">☆</text>
                 </block>

@@ -46,7 +46,6 @@ Page({
         that.setData({
           kpiSocres: socresArr.sort(function(socre) {
             return function(a, b) {
-              debugger
               var value1 = a.socre;
               var value2 = b.socre;
               return value1 - value2;

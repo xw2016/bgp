@@ -24,18 +24,18 @@ Page({
     doneLoadingComplete: false,
     todoLoadingComplete: false //“没有数据”的变量，默认false，隐藏 
   },
-  loadingTap: function() {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function() {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  // loadingTap: function() {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function() {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
   onLoad: function() {
     wx.setNavigationBarTitle({
       title: '任务列表'
@@ -53,7 +53,7 @@ Page({
       responsibleNum: wx.getStorageSync("userNo")
     };
     let method = 'post';
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmit(url, data, method, function(res) {
       that.setData({
         loadingHidden: true,
@@ -73,7 +73,7 @@ Page({
     }
 
     let method = 'post';
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmitJson(url, page, method, function(res) {
       
       if (res.data.retCode != 200) {
@@ -134,10 +134,16 @@ Page({
     let worksList = opt == 'todo' ? that.data.todoworksList : that.data.doneworksList;
 
     var queryBean = JSON.stringify(worksList[idx])
-
+    var work = worksList[idx];
+    //草稿，跳到提单第一页界面
+    // if (work.status=='000'){
+    //   wx.navigateTo({
+    //     url: '../works/add/addfirst?queryBean=' + queryBean + '&action=' + that.data.action,
+    //   })
+    // }
+  
+    //调到任务详情界面
     wx.navigateTo({
-      // url: '../works/todo/todo?queryBean=' + queryBean,
-      // url: '../works/detail/detail?queryBean=' + queryBean + '&action=' + that.data.action
       url: '../detail/detail?queryBean=' + queryBean + '&action=' + that.data.action
     })
   },

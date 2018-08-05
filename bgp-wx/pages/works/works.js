@@ -22,18 +22,18 @@ Page({
       duration: 5000
     });
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  // loadingTap: function () {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
   onLoad: function() {
     wx.setNavigationBarTitle({
       title: '任务中心'
@@ -69,7 +69,7 @@ Page({
       userNo: wx.getStorageSync("userNo")
     };
     let method = 'post';
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmit(url, data, method, function(res) {
       if (res.data.retCode != 200) {
         // callback(res);
@@ -129,9 +129,8 @@ Page({
     let data = {
       responsible: that.data.loginUser.name
     }
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmit(url, data, method, function(res) {
-      
       that.setData({
         loadingHidden: true
       })

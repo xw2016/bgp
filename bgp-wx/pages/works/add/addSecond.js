@@ -23,7 +23,7 @@ Page({
     revIndex: [0, 0],
     checkedResponsible: '',
     checkedResName: '',
-    reviewer: {},
+    reviewer: '',
     popErrorMsg: ''
   },
 
@@ -36,22 +36,26 @@ Page({
     })
     let queryBean = JSON.parse(options.queryBean);
     queryBean.fileType='add';
-    // this.initDepartment();
+    this.setData({
+      work: queryBean
+    });
+
+
     this.initUserGroupArray();
 
     //默认审核人
     let loginUser = wx.getStorageSync("loginUser");
     let userlist = wx.getStorageSync("userlist");
-    this.setData({
-      work: queryBean,
-      loginUser: loginUser,
-      reviewer: {
-        name: loginUser.name,
-        account: loginUser.account
-      },
-      userlist: userlist
-    })
-
+    if(loginUser!=''){
+      this.setData({
+        loginUser: loginUser,
+        reviewer: {
+          name: loginUser.name,
+          account: loginUser.account
+        },
+        userlist: userlist
+      })
+    }
     fileUtil.initFile(this);
     recordUtil.initRecorderManager(this);
   },
@@ -62,18 +66,18 @@ Page({
       popErrorMsg: ''
     })
   },
-  loadingTap: function() {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function() {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  // loadingTap: function() {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function() {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 10000);
+  // },
   tip: function (msg) {
     wx.showModal({
       title: '提示',
@@ -641,13 +645,13 @@ Page({
     let responsible = that.data.checkedResponsible;
     if (responsible == '') {
       that.setData({
-        popErrorMsg: '请选择负责人'
+        popErrorMsg: '请选择执行人'
       })
       return false;
     }
     if (reviewer == '') {
       that.setData({
-        popErrorMsg: '请选择审核人'
+        popErrorMsg: '审核人不能为空，请返回上一页'
       })
       return false;
     }
@@ -662,9 +666,10 @@ Page({
     // work.reviewerNum= that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
+    work.addWorkType = '0'; //新增任务
     work.creator = loginUser.name;
     work.creatorNum = loginUser.account;
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmitJson(url, work, method, function(res) {
       that.setData({
         loadingHidden: true

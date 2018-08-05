@@ -27,18 +27,7 @@ Page({
     
     this.initFile();
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 10000);
-  },
+  
  //初始化附件
   initFile: function () {
     let url = '/work/queryGuideFileById';

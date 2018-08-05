@@ -20,7 +20,7 @@ function chooseImage(that, e) {
         "fileType": that.data.work.fileType
       };
 
-      that.loadingTap();
+      loadingTap();
       let len = tempFilePaths.length;
       tempFilePaths.forEach(function (tempFilePath, idx) {
 
@@ -99,7 +99,17 @@ function openAlert(content, callback) {
     }
   });
 }
-
+//加载动画
+function loadingTap(that) {
+  that.setData({
+    loadingHidden: false
+  });
+  setTimeout(function () {
+    that.setData({
+      loadingHidden: true
+    });
+  }, 15000);
+}
 module.exports = {
   chooseImage: chooseImage,
   openActionImag: openActionImag,

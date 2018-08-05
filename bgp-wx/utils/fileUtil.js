@@ -70,7 +70,7 @@ function initFileData(that,files) {
 //文件查看
 function bindFileDown(that,e) {
   // var that = this;
-  that.loadingTap();
+  loadingTap();
   wx.downloadFile({
     url: e.currentTarget.id,
     success: function (res) {
@@ -256,6 +256,17 @@ function openAlert(content, callback) {
       }
     }
   });
+}
+//加载动画
+function loadingTap(that) {
+  that.setData({
+    loadingHidden: false
+  });
+  setTimeout(function () {
+    that.setData({
+      loadingHidden: true
+    });
+  }, 15000);
 }
 module.exports = {
   initFile: initFile,

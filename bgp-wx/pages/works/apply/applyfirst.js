@@ -18,18 +18,18 @@ Page({
     levelIndex: 0,
     popErrorMsg: ''
   },
-  loadingTap: function () {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 15000);
-  },
+  // loadingTap: function () {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function () {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 15000);
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -74,7 +74,7 @@ Page({
     let that = this;
     let url = '/work/queryWorkTypeList';
     let method = 'POST';
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmit(url, null, method, function (res) {
       that.setData({
         loadingHidden: true
@@ -308,10 +308,11 @@ Page({
       // departments: that.data.departments,
       level: that.data.workLevel == "请选择" ? "" : that.data.workLevel,
       typeId: that.data.workType.typeId,
+      addWorkType: '1',
       typeName: that.data.workType.title,
-      pass: that.data.workType.unifyKpi == 'Y' ? 'Y' : 'N'
-      // creator : loginUser.name,
-      // creatorNum : loginUser.account
+      pass: that.data.workType.unifyKpi == 'Y' ? 'Y' : 'N',
+      creator : loginUser.name,
+      creatorNum : loginUser.account
 
     };
     util.onSubmitJson(url, data, method, function (res) {

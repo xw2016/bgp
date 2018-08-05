@@ -24,18 +24,18 @@ Page({
     work: [] //任务
 
   },
-  loadingTap: function() {
-    this.setData({
-      loadingHidden: false
-    });
-    var that = this;
-    setTimeout(function() {
-      that.setData({
-        loadingHidden: true
-      });
-      that.update();
-    }, 15000);
-  },
+  // loadingTap: function() {
+  //   this.setData({
+  //     loadingHidden: false
+  //   });
+  //   var that = this;
+  //   setTimeout(function() {
+  //     that.setData({
+  //       loadingHidden: true
+  //     });
+  //     that.update();
+  //   }, 15000);
+  // },
   hideErrMsg: function () {
     this.setData({
       popErrorMsg: ''
@@ -128,7 +128,7 @@ Page({
     let that = this;
     let url = urls;
     let method = 'post';
-    this.loadingTap();
+    util.loadingTap(this);
     util.onSubmitJson(url, data, method, function(res) {
       that.setData({
         loadingHidden: true
