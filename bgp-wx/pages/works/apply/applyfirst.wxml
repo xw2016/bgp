@@ -77,8 +77,8 @@
       <view class="weui-cells weui-cells_after-title">
         <view class="weui-cell">
           <view class="weui-cell__bd">
-            <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription'/>
-            <!-- <view class="weui-textarea-counter">0/200</view> -->
+           <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription' maxlength="2000"/>
+            <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
           </view>
         </view>
       </view>

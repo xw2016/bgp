@@ -1,1 +1,11 @@
 /* pages/common/share/workShare/workShare.wxss */
+
+
+/*修改按钮样式，使其能够包裹其他组件*/
+.btn {
+  border:none;
+  text-align:left;
+  padding:0;
+  margin:0;
+  line-height:1.5;
+}

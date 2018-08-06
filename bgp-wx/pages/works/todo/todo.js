@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    descriptionLen:0,
     second: 0,
     secondShow: 0,
     record: 'start',
@@ -75,7 +76,8 @@ Page({
   },
   bindInputRemarkChange: function(e) {
     this.setData({
-      remark: e.detail.value
+      remark: e.detail.value,
+      descriptionLen: e.detail.value.length
     })
   },
   showdetail: function(e) {

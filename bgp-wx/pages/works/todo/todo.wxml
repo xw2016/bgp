@@ -27,8 +27,8 @@
         <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell">
             <view class="weui-cell__bd">
-              <textarea class="weui-textarea" name="remark" bindinput="bindInputRemarkChange" maxlength="500" auto-focus placeholder="请输入完成情况" style="height: 5.3em" value="{{work.remark}}" />
-              <!-- <view class="weui-textarea-counter">0/300</view> -->
+              <textarea class="weui-textarea" name="remark" bindinput="bindInputRemarkChange" maxlength="500" auto-focus placeholder="请输入完成情况" style="height: 5.3em" value="{{work.remark}}" maxlength="2000"/>
+                <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
             </view>
           </view>
         </view>

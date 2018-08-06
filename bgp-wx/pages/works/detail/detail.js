@@ -16,6 +16,7 @@ Page({
     action: 'todo',
     isShowDetail: false,//是否显示详情
     isShowWorkLog:false,
+    isShowWorkReview: false,
     userNo:'',
     workType:'',
     imgfiles: [],
@@ -172,14 +173,27 @@ Page({
     let that = this
     let showDetaliTmp = that.data.isShowDetail == false ? true : false
     this.setData({
-      isShowDetail: showDetaliTmp
+      isShowDetail: showDetaliTmp,
+      isShowWorkLog: false,
+      isShowWorkReview: false
     })
   },
   showWorkLog: function (e) {
     let that = this
     let isShowWorkLog = that.data.isShowWorkLog == false ? true : false
     this.setData({
-      isShowWorkLog: isShowWorkLog
+      isShowDetail: false,
+      isShowWorkLog: isShowWorkLog,
+      isShowWorkReview: false
+    })
+  },
+  showWorkReview: function (e) {
+    let that = this
+    let isShowWorkReview = that.data.isShowWorkReview == false ? true : false
+    this.setData({
+      isShowDetail: false,
+      isShowWorkLog: false,
+      isShowWorkReview: isShowWorkReview
     })
   },
   //查询详情

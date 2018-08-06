@@ -263,8 +263,9 @@ function onLogin(callback){
               // });
               
               wx.navigateTo({
-                url: '../works/works'
+                // url: '../works/works'
                 // url:'../rrtest/rrtest"'
+                url:'../common/share/workShare/workShare'
               })
             }
             else {

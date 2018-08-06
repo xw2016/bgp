@@ -1,2 +1,5 @@
 <!--pages/common/share/workShare/workShare.wxml-->
-<text>pages/common/share/workShare/workShare.wxml</text>
+<form report-submit='true' bindsubmit='formSubmin'>
+<view></view>
+<button form-type='submit'>收集发送码</button>
+</form>

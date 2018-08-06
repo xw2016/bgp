@@ -24,7 +24,8 @@ Page({
     checkedResponsible: '',
     checkedResName: '',
     reviewer: {},
-    popErrorMsg: ''
+    popErrorMsg: '',
+    descriptionLen: 0
   },
 
   /**
@@ -217,7 +218,8 @@ Page({
   },
   bindDescription: function (e) {
     this.setData({
-      description: e.detail.value
+      description: e.detail.value,
+      descriptionLen: e.detail.value.length
     })
   },
   bindCreateReson: function (e) {

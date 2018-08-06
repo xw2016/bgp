@@ -9,6 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    descriptionLen: 0,
     second: 0,
     secondShow: 0,
     record: 'start',
@@ -179,7 +180,8 @@ Page({
   
   bindRejectInfoChange: function (e) {
     this.setData({
-      rejectInfo: e.detail.value
+      rejectInfo: e.detail.value,
+      descriptionLen: e.detail.value.length
     })
   },
   reject: function () {
