@@ -148,11 +148,11 @@
             </view>
           </view>
           <!-- 审核人 -->
-          <!-- <view class="weui-form-preview__label">审核人</view>
+          <view class="weui-form-preview__label">发起人(审核人)</view>
           <view class="weui-form-preview__value">
             <block wx:if="{{work.reviewer ==null}}">无</block>
             <block wx:else>{{work.reviewer}}</block>
-          </view> -->
+          </view>
           <!--任务类型-->
           <view class="weui-form-preview__label">任务类型</view>
           <view class="weui-form-preview__value">
@@ -207,7 +207,7 @@
   </view>
 
 
-  <view wx:if="{{work.status=='001'||work.status=='011'}}">
+  <view wx:if="{{action=='todo'&&(work.status=='001'||work.status=='011')}}">
     <view class="weui-cells__title">打回原因:若打回，必须填写</view>
     <view class="weui-cells weui-cells_after-title"  bindtap='hideErrMsg'>
       <view class="weui-cell">
