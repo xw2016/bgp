@@ -1,6 +1,8 @@
 // pages/works/works.js
 var com = require('../../../lib/js/common.js')
 var util = require('../../../utils/util.js');
+var msgUtil = require('../../../utils/msgUtil.js');
+
 Page({
 
   /**
@@ -125,7 +127,7 @@ Page({
 
   //查询详情
   queryDetail: function(e) {
-
+    
     var that = this
     //拿到点击的index下标
     var idx = e.currentTarget.dataset.idx;
@@ -146,6 +148,7 @@ Page({
     wx.navigateTo({
       url: '../detail/detail?queryBean=' + queryBean + '&action=' + that.data.action
     })
+    msgUtil.collect(e);
   },
   //输入框事件，每输入一个字符，就会触发一次
   bindKeywordInput: function(e) {

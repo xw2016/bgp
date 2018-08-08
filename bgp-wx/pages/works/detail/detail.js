@@ -51,6 +51,7 @@ Page({
       title: '任务详情'
     })
     let that = this;
+    debugger
     let queryBean = JSON.parse(options.queryBean);
     let action = options.action;
     let userNo = wx.getStorageSync("userNo");

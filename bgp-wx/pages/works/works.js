@@ -1,5 +1,7 @@
 const app = getApp()
 var util = require('../../utils/util.js');
+var msgUtil = require('../../utils/msgUtil.js');
+
 Page({
 
   data: {
@@ -95,20 +97,24 @@ Page({
       });
     });
   },
-  gotoWorkList: function() {
+  gotoWorkList: function(e) {
+    
     wx.navigateTo({
       url: '../works/list/list',
     })
+    msgUtil.collect(e);
   },
-  addWork: function() {
+  addWork: function(e) {
     wx.navigateTo({
       url: '../works/add/addfirst',
     })
+    msgUtil.collect(e);
   },
-  applyWork: function () {
+  applyWork: function (e) {
     wx.navigateTo({
       url: '../works/apply/applyfirst',
     })
+    msgUtil.collect(e);
   },
   myScore: function() {
     // wx.navigateTo({

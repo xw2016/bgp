@@ -26,14 +26,14 @@
       <!-- <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view> -->
     </view>
     <scroll-view scroll-x style="height:45rpx" bindtap='myScore'>
-        <image style="width:35rpx; height:35rpx;" src="../../resources/images/done.png"></image>
-        <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
-        <image style="width:35rpx; height:35rpx;" src="../../resources/images/fscore.png"></image>
-        <text class="index-post-info">已得分 {{myReport.finalScore}}</text>
-        <image style="width:35rpx; height:35rpx;" src="../../resources/images/rscore.png"></image>
-        <text class="index-post-info">预得分 {{myReport.reserveScore}}</text>
-        <image style="width:35rpx; height:35rpx;" src="../../resources/images/workload.png"></image>
-        <text class="index-post-info">工作量 {{myReport.workload}}</text>
+      <image style="width:35rpx; height:35rpx;" src="../../resources/images/done.png"></image>
+      <text class="index-post-info">已办数 {{myReport.doneWorkCount}}</text>
+      <image style="width:35rpx; height:35rpx;" src="../../resources/images/fscore.png"></image>
+      <text class="index-post-info">已得分 {{myReport.finalScore}}</text>
+      <!-- <image style="width:35rpx; height:35rpx;" src="../../resources/images/rscore.png"></image>
+        <text class="index-post-info">预得分 {{myReport.reserveScore}}</text> -->
+      <image style="width:35rpx; height:35rpx;" src="../../resources/images/workload.png"></image>
+      <text class="index-post-info">工作量 {{myReport.workload}}</text>
     </scroll-view>
   </view>
 </view>
@@ -53,49 +53,63 @@
 
 
 <!-- 我的任务（跳转） -->
-<view class="weui-cells__title"></view>
-<view class="weui-cells weui-cells_after-title" bindtap="gotoWorkList">
-  <view class="weui-cell weui-cell_access">
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-      <image src="../../resources/images/my1.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+<form report-submit='true' bindsubmit='gotoWorkList'>
+  <button class='btn' form-type='submit'>
+    <view class="weui-cells__title"></view>
+    <!-- <view class="weui-cells weui-cells_after-title" bindtap="gotoWorkList"> -->
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <image src="../../resources/images/my1.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+          <view style="display: inline-block; vertical-align: middle">我的任务</view>
+          <view class="weui-badge" style="margin-left: 5px;" wx:if="{{todoLength}}">{{todoLength}}</view>
+        </view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+          <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
+        </view>
+      </view>
     </view>
-    <view class="weui-cell__bd">
-      <view style="display: inline-block; vertical-align: middle">我的任务</view>
-      <view class="weui-badge" style="margin-left: 5px;" wx:if="{{todoLength}}">{{todoLength}}</view>
-    </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
-    </view>
-  </view>
-</view>
+  </button>
+</form>
 <!-- 待办 -->
 <!-- 任务创建 -->
-<view class="weui-cells__title"></view>
-<view class="weui-cells weui-cells_after-title" bindtap="addWork">
-  <view class="weui-cell weui-cell_access">
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-      <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+
+<form report-submit='true' bindsubmit='addWork'>
+  <button class='btn' form-type='submit'>
+    <view class="weui-cells__title"></view>
+    <view class="weui-cells weui-cells_after-title" bindtap="addWork">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+          <view>委派任务（给别人任务）</view>
+        </view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+          <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
+        </view>
+      </view>
     </view>
-    <view class="weui-cell__bd">
-      <view>委派任务</view>
+  </button>
+</form>
+<!--申请任务-->
+<form report-submit='true' bindsubmit='applyWork'>
+  <button class='btn' form-type='submit'>
+    <view class="weui-cells__title"></view>
+    <view class="weui-cells weui-cells_after-title" bindtap="applyWork">
+      <view class="weui-cell weui-cell_access">
+        <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+          <image src="../../resources/images/apply.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
+        </view>
+        <view class="weui-cell__bd">
+          <view>申请任务(给自己任务)</view>
+        </view>
+        <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+          <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
+        </view>
+      </view>
     </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
-    </view>
-  </view>
-</view>
-<!--任务积分-->
-<view class="weui-cells__title"></view>
-<view class="weui-cells weui-cells_after-title" bindtap="applyWork">
-  <view class="weui-cell weui-cell_access">
-    <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-      <image src="../../resources/images/apply.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
-    </view>
-    <view class="weui-cell__bd">
-      <view>申请任务</view>
-    </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>
-    </view>
-  </view>
-</view>
+  </button>
+</form>

@@ -1,6 +1,6 @@
 <!--pages/common/share/workShare/workShare.wxml-->
 <form report-submit='true' bindsubmit='formSubmin'>
 <view></view>
-<button form-type='submit'>收集发送码</button>
+<button class='btn' form-type='submit'>收集发送码</button>
 </form>
 <view bindtap='sentMsg'>发送消息</view>

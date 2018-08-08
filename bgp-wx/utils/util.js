@@ -124,7 +124,6 @@ function onSubmitJson(url, data, method, callback) {
             url: '../index/index'
           })
         });
-
       }
     }
   })
@@ -264,9 +263,9 @@ function onLogin(callback){
               // });
               
               wx.navigateTo({
-                // url: '../works/works'
+                url: '../works/works'
                 // url:'../rrtest/rrtest"'
-                url:'../common/share/workShare/workShare'
+                // url:'../common/share/workShare/workShare'
               })
             }
             else {

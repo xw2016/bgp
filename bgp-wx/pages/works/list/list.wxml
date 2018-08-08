@@ -12,8 +12,10 @@
     <view class="search-result">
       <!-- <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower"> -->
       <scroll-view scroll-y style="height: 450px;">
+      <!-- <form report-submit='true' bindsubmit='queryDetail'>
+  <button class='btn' form-type='submit'> -->
         <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}" bindtap="queryDetail">
-
+         <!-- <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}"> -->
           <view>
             <image wx:if="{{item.status==002||item.status==021||item.status==042}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
             <image wx:elif="{{item.status==003}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/doing.png"></image>
@@ -26,6 +28,10 @@
             <view class="subtitle">{{item.statusName}}</view>
           </view>
         </view>
+<!-- </button>
+</form> -->
+
+
         <view class="loading complete" hidden="{{!todoLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view>
         <view class="loading complete" hidden="{{!todoLoadingComplete}}">已加载全部</view>
       </scroll-view>

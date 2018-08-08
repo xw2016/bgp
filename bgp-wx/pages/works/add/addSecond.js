@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 var fileUtil = require('../../../utils/fileUtil.js')
 var imageUtil = require('../../../utils/imageUtil.js');
 var recordUtil = require('../../../utils/recordUtil.js');
+var mgsUtil = require('../../../utils/msgUtil.js');
 Page({
 
   /**
@@ -678,6 +679,8 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        debugger
+        mgsUtil.sentMsg(res.data.data.workId);
       }
     });
   },
