@@ -70,7 +70,7 @@ function initFileData(that,files) {
 //文件查看
 function bindFileDown(that,e) {
   // var that = this;
-  loadingTap();
+  loadingTap(that);
   wx.downloadFile({
     url: e.currentTarget.id,
     success: function (res) {

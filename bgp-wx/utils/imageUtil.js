@@ -20,7 +20,7 @@ function chooseImage(that, e) {
         "fileType": that.data.work.fileType
       };
 
-      loadingTap();
+      loadingTap(that);
       let len = tempFilePaths.length;
       tempFilePaths.forEach(function (tempFilePath, idx) {
 

@@ -121,7 +121,7 @@ function loadingRecord(that) {
     "creator": userNo,
     "fileType": that.data.work.fileType
   };
-  loadingTap();
+  loadingTap(that);
   fileUtil.onUploadFile(null, tempFilePaths, "file", formData, function (e) {
     that.setData({
       files: that.data.files.concat(e),

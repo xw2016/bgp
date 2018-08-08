@@ -229,6 +229,7 @@ function openAlert(content,callback) {
 }
 //后台登录
 function onLogin(callback){
+  
   var host = app.globalData.serviceUrl;
   // 登录
   wx.login({

@@ -3,4 +3,4 @@
 <view></view>
 <button form-type='submit'>收集发送码</button>
 </form>
-<view bindtap='sentMsg'></view>
+<view bindtap='sentMsg'>发送消息</view>

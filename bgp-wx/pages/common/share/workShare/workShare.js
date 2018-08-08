@@ -1,5 +1,5 @@
 const app = getApp()
-var util = require('../../../utils/util.js')
+var util = require('../../../../utils/util.js')
 Page({
 
   /**
@@ -33,7 +33,7 @@ Page({
     }
     formIds.push(data);//将data添加到数组的末尾
     app.globalData.gloabalFomIds = formIds; //保存推送码并赋值给全局变量
-    let url = '/wx/msg/collect';
+    let url = '/msg/collect';
     let method = 'post';
 
     util.onSubmitJson(url, data, method, function (res) {
@@ -45,9 +45,9 @@ Page({
     })
   },
   sentMsg: function(e){
-    let url = '/wx/msg/pushMsg';
+    let url = '/msg/pushMsg';
     let method = 'post';
-
+    let data={}
     util.onSubmitJson(url, data, method, function (res) {
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
