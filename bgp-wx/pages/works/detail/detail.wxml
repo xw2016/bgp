@@ -212,10 +212,10 @@
     <view class="weui-cells weui-cells_after-title"  bindtap='hideErrMsg'>
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="500" 
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="2000" 
           placeholder="请填写打回原因" 
           style="height: 3.3em" value="{{work.rejectInfo}}" />
-          <!-- <view class="weui-textarea-counter">0/300</view> -->
+          <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
         </view>
       </view>
     </view>
@@ -232,10 +232,12 @@
         <view class="weui-form-preview">
           <view class="weui-form-preview__hd">
             <view class="weui-form-preview__item">
-              <view class="weui-form-preview__label">{{index+1}}.</view>
-              <view class="weui-form-preview__value weui-cell_link">
-                {{item.workName}}({{item.statusName}})
+
+              <view class="weui-form-preview__label {{item.status!=005?'doing':''}}">{{index+1}}.{{item.workName}}</view>
+              <view class="weui-form-preview__value weui-cell_link {{item.status!=005?'doing':''}}">
+                {{item.responsible}}({{item.statusName}})
               </view>
+
             </view>
           </view>
         </view>

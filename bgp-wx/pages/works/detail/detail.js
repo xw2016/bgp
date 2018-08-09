@@ -3,12 +3,14 @@ var util = require('../../../utils/util.js');
 var fileUtil = require('../../../utils/fileUtil.js')
 var imageUtil = require('../../../utils/imageUtil.js');
 var recordUtil = require('../../../utils/recordUtil.js');
+var msgUtil = require('../../../utils/msgUtil.js');
 
 Page({
   /**
    * 页面的初始数据
    */
   data: {
+    descriptionLen:0,
     loadingHidden: true,
     modalHidden: true,
     work: [],  //任务
@@ -51,7 +53,7 @@ Page({
       title: '任务详情'
     })
     let that = this;
-    debugger
+    
     let queryBean = JSON.parse(options.queryBean);
     let action = options.action;
     let userNo = wx.getStorageSync("userNo");
@@ -163,7 +165,7 @@ Page({
   },
   //录音文件操作：试听
   openAudio: function (e) {
-    debugger
+    
    recordUtil.openAudio2(this,e)
   },
   openActionDoc: function (e) {
@@ -245,7 +247,8 @@ Page({
   },
   bindRejectInfoChange: function (e) {
     this.setData({
-      rejectInfo: e.detail.value
+      rejectInfo: e.detail.value,
+      descriptionLen: e.detail.value.length
     })
   },
   submitWorkLeader:function(){
@@ -276,10 +279,12 @@ Page({
     };
     let method = 'post';
     util.onSubmitJson(url, data, method, function (res) {
+      
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        msgUtil.sentMsg(that.data.work.workId);
       }
     });
   },
@@ -300,10 +305,12 @@ Page({
     };
     let method = 'post';
     util.onSubmitJson(url, data, method, function (res) {
+      
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        msgUtil.sentMsg(that.data.work.workId);
       }
     });
   },

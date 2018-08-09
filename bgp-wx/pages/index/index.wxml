@@ -1,5 +1,5 @@
 <loading hidden="{{loadingHidden}}">
-        加载中...
+  加载中...
 </loading>
 
 <!-- 头像姓名 任务中心 -->
@@ -12,19 +12,23 @@
   </view>
 </block>
 <block wx:else>
-  <view class="weui-cells weui-cells_after-title">
-    <view class="weui-cell" bindtap="bindViewTap">
-
-      <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
-        <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" style="width: 45px; height: 45px; display: block" />
+  <form report-submit='true' bindsubmit='bindViewTap'>
+    <button class='btn' form-type='submit'>
+      <view class="weui-cells weui-cells_after-title">
+        <!-- <view class="weui-cell" bindtap="bindViewTap"> -->
+        <view class="weui-cell">
+          <view class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <image src="{{userInfo.avatarUrl}}" class="userinfo-avatar" style="width: 45px; height: 45px; display: block" />
+          </view>
+          <view class="weui-cell__bd">
+            <view>{{userInfo.nickName}}</view>
+          </view>
+          <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
+            <view style="display: inline-block;vertical-align:middle; font-size: 17px;">任务中心</view>
+          </view>
+        </view>
       </view>
-      <view class="weui-cell__bd">
-        <view>{{userInfo.nickName}}</view>
-      </view>
-    <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
-      <view style="display: inline-block;vertical-align:middle; font-size: 17px;">任务中心</view>
-    </view>
-    </view>
-  </view>
+    </button>
+  </form>
 </block>
 <!-- 热门服务 -->

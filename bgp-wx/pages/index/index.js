@@ -1,7 +1,9 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var util = require('../../utils/util.js');
+var util    = require('../../utils/util.js');
+var msgUtil = require('../../utils/msgUtil.js');
+ 
 Page({
   data: {
     loadingHidden: true,
@@ -55,7 +57,7 @@ Page({
   //   }, 10000);
   // },
   //事件处理函数
-  bindViewTap: function () {
+  bindViewTap: function (e) {
     let that = this;
     util.loadingTap(this);
     util.onLogin(function(){
@@ -63,6 +65,7 @@ Page({
         loadingHidden: true
       })
     });
+    msgUtil.collect(e);
   },
   getUserInfo: function (e) {
     console.log(e)

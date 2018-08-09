@@ -4,6 +4,7 @@ var util = require('../../../utils/util.js')
 var fileUtil = require('../../../utils/fileUtil.js')
 var imageUtil = require('../../../utils/imageUtil.js');
 var recordUtil = require('../../../utils/recordUtil.js');
+var mgsUtil = require('../../../utils/msgUtil.js');
 Page({
 
   /**
@@ -92,6 +93,7 @@ Page({
 
     let that = this;
     let url = '/work/feedback';
+    let method = 'post';
     let work = that.data.work;
     work.remark = that.data.remark == '' ? work.remark : that.data.remark;
     work.beginDate = that.data.beginDate;
@@ -115,7 +117,19 @@ Page({
       })
       return false;
     }
-    this.submit(url, work)
+    util.loadingTap(this);
+    util.onSubmitJson(url, work, method, function (res) {
+      that.setData({
+        loadingHidden: true
+      })
+      
+      if (res.data.retCode != 200) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.openSuccess();
+        mgsUtil.sentMsg(that.data.work.workId);
+      }
+    });
   },
   formSave: function(e) {
     let that = this;
@@ -124,6 +138,8 @@ Page({
     work.remark = that.data.remark;
     work.beginDate = that.data.beginDate;
     work.endDate = null;
+    let method = 'post';
+    util.loadingTap(this);
     this.submit(url, work)
   },
   submit: function(urls, data) {

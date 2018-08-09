@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 var fileUtil = require('../../../utils/fileUtil.js')
 var imageUtil = require('../../../utils/imageUtil.js');
 var recordUtil = require('../../../utils/recordUtil.js');
+var msgUtil = require('../../../utils/msgUtil.js');
 Page({
 
   /**
@@ -210,6 +211,7 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        msgUtil.sentMsg(that.data.work.workId);
       }
     });
   },
@@ -259,10 +261,12 @@ Page({
         loadingHidden: true,
         worksList: res.data.data
       });
+      
       if (res.data.retCode != 200) {
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        // mgsUtil.sentMsg(that.data.work.workId);
       }
     });
 

@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js')
 var fileUtil = require('../../../utils/fileUtil.js')
 var imageUtil = require('../../../utils/imageUtil.js');
 var recordUtil = require('../../../utils/recordUtil.js');
+var msgUtil = require('../../../utils/msgUtil.js');
 Page({
 
   /**
@@ -738,6 +739,7 @@ Page({
     work.creatorNum = that.data.loginUser.account;
     util.loadingTap(this);
     util.onSubmitJson(url, work, method, function(res) {
+      
       that.setData({
         loadingHidden: true
       })
@@ -745,6 +747,7 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
+        msgUtil.sentMsg(work.workId);
       }
     });
   },
