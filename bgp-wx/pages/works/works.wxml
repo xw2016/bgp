@@ -85,7 +85,7 @@
           <image src="../../resources/images/add.png" class="userinfo-avatar" style="width: 25px; height: 25px; display: block" />
         </view>
         <view class="weui-cell__bd">
-          <view>委派任务（给别人任务）</view>
+          <view>委派任务(给别人任务)</view>
         </view>
         <view class="weui-cell__ft weui-cell__ft_in-access" style="font-size: 0">
           <view style="display: inline-block;vertical-align:middle; font-size: 17px;"></view>

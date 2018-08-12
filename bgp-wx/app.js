@@ -32,8 +32,10 @@ App({
   globalData: {
     userInfo: null,
     logout:false,
-    serviceUrl:'https://www.bgpmy.com/web/wx',
-    servicePath: 'https://www.bgpmy.com/'
+    serviceUrl: 'https://www.longjinoa.com/web/wx',
+    servicePath: 'https://www.longjinoa.com/'
+    // serviceUrl:'https://test.litebike.cn/web/wx',
+    // servicePath: 'https://test.litebike.cn/'
         // serviceUrl: 'http://localhost:8080/web/wx',
         // servicePath: 'http://localhost:8080/'
   }
