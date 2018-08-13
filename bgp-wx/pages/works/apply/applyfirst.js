@@ -263,17 +263,22 @@ Page({
       })
       return false;
     };
-
+    if (that.data.workName.replace(/(^\s*)|(\s*$)/g, "") == '') {
+      that.setData({
+        popErrorMsg: '请填写任务名称'
+      })
+      return false;
+    }
     if (typeof that.data.workType === 'undefined') {
       that.setData({
         popErrorMsg: '请选择工作类型'
       })
       return false;
     }
-
-    if (util.compareDate(util.formatTime(new Date()), that.data.planBeginDate)) {
+    let preDate = new Date() - 24 * 60 * 60 * 1000 * 2; //前两天
+    if (util.compareDate(util.formatTime(new Date(preDate)), that.data.planBeginDate)) {
       that.setData({
-        popErrorMsg: '开始日期不能早于今天'
+        popErrorMsg: '开始日期不能早于前两天'
       })
       return false;
     }

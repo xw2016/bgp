@@ -694,6 +694,12 @@ Page({
       })
       return false;
     };
+    if (that.data.workName.replace(/(^\s*)|(\s*$)/g, "") == '') {
+      that.setData({
+        popErrorMsg: '请填写任务名称'
+      })
+      return false;
+    }
     let reviewer = that.data.reviewer;
     let responsible = that.data.checkedResponsible;
     if (responsible == '') {

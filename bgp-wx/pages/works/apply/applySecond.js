@@ -23,6 +23,7 @@ Page({
     resIndex: [0, 0],
     revIndex: [0, 0],
     checkedResponsible: '',
+    responsible:'',
     checkedResName: '',
     reviewer: '',
     popErrorMsg: ''
@@ -642,7 +643,7 @@ Page({
     //   return false;
     // };
     let reviewer = that.data.reviewer;
-    let responsible = that.data.checkedResponsible;
+    let responsible = that.data.responsible;
     if (responsible == '') {
       that.setData({
         popErrorMsg: '执行人不能为空，请返回上一页'
