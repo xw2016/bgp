@@ -57,7 +57,7 @@ Page({
     console.log("queryBean:" + options.queryBean);
     that.setData({
       work: queryBean,
-      descriptionLen: queryBean.remark.length,
+      descriptionLen: queryBean.remark == null ? 0 : queryBean.remark.length,
       beginDate: (beginDate == null || beginDate == '') ? util.formatTime(new Date()) : beginDate,
       endDate: beginDate == new Date() ? null : util.formatTime(new Date())
     })

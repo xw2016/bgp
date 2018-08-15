@@ -47,7 +47,7 @@ Page({
       pass: queryBean.pass,
       workName:queryBean.workName,
       description: queryBean.description,
-      descriptionLen: queryBean.description.length,
+      descriptionLen: queryBean.description == null ? 0 : queryBean.description.length,
       reviewer: {
         name: loginUser.name,
         account: loginUser.account
