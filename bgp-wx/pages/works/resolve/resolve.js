@@ -45,6 +45,9 @@ Page({
       loginUser: loginUser,
       userlist: userlist,
       pass: queryBean.pass,
+      workName:queryBean.workName,
+      description: queryBean.description,
+      descriptionLen: queryBean.description.length,
       reviewer: {
         name: loginUser.name,
         account: loginUser.account
@@ -649,9 +652,10 @@ Page({
     let work ={};
     work.status='100';
     work.statusName='临时任务';
+    work.workName = workParent.workName;
     work.parentWorkName = workParent.workName;
     work.parentId = workParent.workId;
-    work.workName = workParent.workName+"(交办)"
+    // work.workName = workParent.workName+"(交办)"
     work.workId = null;
     work.typeId=workParent.typeId;
     work.typeName = workParent.typeName;
@@ -739,7 +743,7 @@ Page({
     work.responsibleList = that.data.checkedResponsible;
     // work.reviewer = that.data.checkedReviewName;
     // work.reviewerNum = that.data.checkedReview;
-    // work.description = that.data.description;
+    work.description = that.data.description;
 
     work.creator = that.data.loginUser.name;
     work.creatorNum = that.data.loginUser.account;
