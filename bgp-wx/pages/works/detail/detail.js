@@ -319,6 +319,24 @@ Page({
       delta: 1
     })
   },
+  //任务撤销
+  repeal:function(){
+    let that = this;
+    let url = '/work/withdrawWork';
+    let data = {
+      workId: that.data.work.workId
+    };
+    let method = 'post';
+    util.onSubmit(url, data, method, function (res) {
+
+      if (res.data.data == false) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.openSuccess();
+        msgUtil.sentMsg(that.data.work.workId);
+      }
+    });
+  },
   openSuccess: function () {
     wx.redirectTo({
       url: '../../msg/msg_success'

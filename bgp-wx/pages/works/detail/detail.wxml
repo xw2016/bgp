@@ -280,6 +280,9 @@
 
   <block wx:else>
     <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+  <block wx:if="{{(work.reviewerNum==userNo&&(work.status=='000'||work.status=='002'||work.status=='021'))||(work.responsibleNum==userNo&&(work.status=='001'||work.status=='011'))}}"> 
+    <button bindtap="repeal" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">撤销</button>
+    </block>
   </block>
 </view>
 
