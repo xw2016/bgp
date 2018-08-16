@@ -43,9 +43,10 @@ Page({
       popErrorMsg: ''
     })
   },
-  hideErrMsg: function () {
+  modalCandel: function () {
+    // do something
     this.setData({
-      popErrorMsg: ''
+      modalHidden: true
     })
   },
   onLoad: function (options) {
@@ -328,12 +329,30 @@ Page({
     };
     let method = 'post';
     util.onSubmit(url, data, method, function (res) {
-
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
         msgUtil.sentMsg(that.data.work.workId);
+      }
+    });
+  },
+  //查看执行历史
+  queryTaskHistory:function(){
+    let that = this;
+    let url = '/work/queryTaskHistory';
+    let data = {
+      workId: that.data.work.workId
+    };
+    let method = 'post';
+    util.onSubmit(url, data, method, function (res) {
+      if (res.data.data == false) {
+        util.openAlert(res.data.msg);
+      } else {
+        that.setData({
+          taksHistory:res.data.data,
+          modalHidden: false
+        })
       }
     });
   },

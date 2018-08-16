@@ -40,7 +40,6 @@
 
 <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
 <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
-
   <view class="modal-title">我的积分</view>
   <view class="result-item" />
   <view class="result-item" wx:for="{{kpiSocres}}" wx:key="unique">

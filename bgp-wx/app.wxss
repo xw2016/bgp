@@ -79,3 +79,36 @@ page{
 .doing{
   color: #f64400
 }
+
+
+.table {
+border:1px solid #dadada;
+border-right: 0;
+border-bottom: 0;
+width: 98%;
+}
+.tr {
+width: 100%;
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+}
+.th,.td {
+padding: 10px;
+border-bottom: 1px solid #dadada;
+border-right: 1px solid #dadada;
+text-align: center;
+width:100%
+}
+.th1,.td1 {
+padding: 10px;
+border-bottom: 1px solid #dadada;
+border-right: 1px solid #dadada;
+text-align: center;
+width:35%;
+}
+
+.th,.th1 {
+font-weight: 400;
+background-color: #79c5f1e1;
+}

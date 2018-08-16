@@ -5,8 +5,8 @@
 </loading>
 <view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
 <view class="weui-cells__title"></view>
-<view class="page__bd fixation-page">
 
+<view class="page__bd fixation-page">
   <!--任务名称,任务详情-->
   <view class="weui-panel">
     <view class="weui-panel__hd">任务名称/描述</view>
@@ -80,6 +80,7 @@
       </view>
     </view>
   </view>
+
   <!-- </block> -->
   <!--任务审核附件，审核、完成可见-->
   <view class="weui-cells__title"></view>
@@ -166,6 +167,7 @@
           <view class="weui-form-preview__value">
             <block wx:if="{{work.statusName ==null}}">无</block>
             <block wx:else>{{work.statusName}}</block>
+            <text bindtap="queryTaskHistory" class="weui-cell_link">(执行历史)</text>
           </view>
 
           <!--计划开始时间-->
@@ -198,8 +200,6 @@
               <block wx:else>{{work.beginDate}} 至 {{work.endDate}}</block>
             </view>
           </view>
-
-
         </view>
       </view>
     </view>
@@ -209,19 +209,15 @@
 
   <view wx:if="{{action=='todo'&&(work.status=='001'||work.status=='011')}}">
     <view class="weui-cells__title">打回原因:若打回，必须填写</view>
-    <view class="weui-cells weui-cells_after-title"  bindtap='hideErrMsg'>
+    <view class="weui-cells weui-cells_after-title" bindtap='hideErrMsg'>
       <view class="weui-cell">
         <view class="weui-cell__bd">
-          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="2000" 
-          placeholder="请填写打回原因" 
-          style="height: 3.3em" value="{{work.rejectInfo}}" />
+          <textarea class="weui-textarea" name="rejectInfo" bindinput="bindRejectInfoChange" maxlength="2000" placeholder="请填写打回原因" style="height: 3.3em" value="{{work.rejectInfo}}" />
           <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
         </view>
       </view>
     </view>
   </view>
-
-
 
   <!--子任务-->
   <block wx:if="{{subWorkList.length>0}}">
@@ -245,6 +241,27 @@
     </view>
   </block>
 
+  <!--执行历史-->
+  <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
+  <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
+    <view class="modal-title">执行历史</view>
+    <view class="table">
+        <view class="tr">
+            <view class="th1">序号</view>
+            <view class="th">操作人</view>
+            <view class="th">动作</view>
+            <view class="th">时间</view>
+        </view>
+        <scroll-view scroll-y style="height: 200px;">
+        <view class="tr" wx:for="{{taksHistory}}">
+            <view class="td1">{{index+1}}</view>
+            <view class="td">{{item.operator}}</view>
+            <view class="td">{{item.historyStatus}}</view>
+            <view class="td">{{item.operatorTime}}</view>
+        </view>
+       </scroll-view>
+    </view>
+  </view>
 
   <view class="weui-cells__title"></view>
   <view class='weui-flex'>
@@ -252,6 +269,9 @@
       <image mode='aspectFill' style="width:100%; height:20rpx;" src="../../../resources/images/bottom.png"></image>
     </view>
   </view>
+
+
+
 </view>
 
 
@@ -280,10 +300,8 @@
 
   <block wx:else>
     <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
-  <block wx:if="{{(work.reviewerNum==userNo&&(work.status=='000'||work.status=='002'||work.status=='021'))||(work.responsibleNum==userNo&&(work.status=='001'||work.status=='011'))}}"> 
-    <button bindtap="repeal" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">撤销</button>
+    <block wx:if="{{(work.reviewerNum==userNo&&(work.status=='000'||work.status=='002'||work.status=='021'))||(work.responsibleNum==userNo&&(work.status=='001'||work.status=='011'))}}">
+      <button bindtap="repeal" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">撤销</button>
     </block>
   </block>
 </view>
-
-<!-- </view> -->
