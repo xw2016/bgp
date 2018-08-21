@@ -110,5 +110,5 @@ width:35%;
 
 .th,.th1 {
 font-weight: 400;
-background-color: #79c5f1e1;
+background-color: #dadada;
 }
