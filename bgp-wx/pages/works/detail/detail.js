@@ -323,19 +323,31 @@ Page({
   //任务撤销
   repeal:function(){
     let that = this;
-    let url = '/work/withdrawWork';
-    let data = {
-      workId: that.data.work.workId
-    };
-    let method = 'post';
-    util.onSubmit(url, data, method, function (res) {
-      if (res.data.data == false) {
-        util.openAlert(res.data.msg);
-      } else {
-        that.openSuccess();
-        msgUtil.sentMsg(that.data.work.workId);
+    wx.showModal({
+      title: '是否撤销该任务',
+      // content: '这是一个模态弹窗',
+      success: function (res) {
+        if (res.confirm) {
+         
+          let url = '/work/withdrawWork';
+          let data = {
+            workId: that.data.work.workId
+          };
+          let method = 'post';
+          util.onSubmit(url, data, method, function (res) {
+            if (res.data.data == false) {
+              util.openAlert(res.data.msg);
+            } else {
+              that.openSuccess();
+              msgUtil.sentMsg(that.data.work.workId);
+            }
+          });
+        } else {//这里是点击了取消以后
+          console.log('用户点击取消')
+        }
       }
-    });
+    })
+
   },
   //查看执行历史
   queryTaskHistory:function(){
@@ -345,7 +357,11 @@ Page({
       workId: that.data.work.workId
     };
     let method = 'post';
+    this.loadingTap();
     util.onSubmit(url, data, method, function (res) {
+      that.setData({
+        loadingHidden: true
+      });
       if (res.data.data == false) {
         util.openAlert(res.data.msg);
       } else {
