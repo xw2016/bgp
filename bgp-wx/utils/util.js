@@ -232,14 +232,14 @@ function onUploadFile(url, tempFilePaths, name, formData, callback) {
   }
 }
 
-function openAlert(content, callback) {
+function openAlert(content) {
   wx.showModal({
     content: content,
     showCancel: false,
     success: function(res) {
       if (res.confirm) {
         // console.log('用户点击确定');
-        callback();
+        // callback();
       }
     }
   });

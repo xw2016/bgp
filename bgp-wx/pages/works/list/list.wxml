@@ -12,10 +12,10 @@
     <view class="search-result">
       <!-- <scroll-view scroll-y style="height: 500px;" bindscrolltolower="searchToDoWorksScrollLower"> -->
       <scroll-view scroll-y style="height: 450px;">
-      <!-- <form report-submit='true' bindsubmit='queryDetail'>
+        <!-- <form report-submit='true' bindsubmit='queryDetail'>
   <button class='btn' form-type='submit'> -->
         <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}" bindtap="queryDetail">
-         <!-- <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}"> -->
+          <!-- <view class="result-item" wx:key="unique" wx:for="{{todoworksList}}" data-idx="{{index}}"> -->
           <view>
             <image wx:if="{{item.status==002||item.status==021||item.status==042}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/waitdo.png"></image>
             <image wx:elif="{{item.status==003}}" style="width:38rpx; height:38rpx;" src="../../../resources/images/doing.png"></image>
@@ -28,10 +28,8 @@
             <view class="subtitle">{{item.statusName}}</view>
           </view>
         </view>
-<!-- </button>
+        <!-- </button>
 </form> -->
-
-
         <view class="loading complete" hidden="{{!todoLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view>
         <view class="loading complete" hidden="{{!todoLoadingComplete}}">已加载全部</view>
       </scroll-view>
@@ -40,13 +38,20 @@
 </view>
 <!--我的已办-->
 <view hidden="{{currentTab!==1}}">
+  <view class="search-bar">
+    <view class="search-wrap">
+      <icon type="search" size="16" class="icon-search" />
+      <input type="text" placeholder="请输入任务名或人名查询" class="search-input" name="searchKeyword" bindinput="bindKeywordInput" value="{{searchKeyword}}" />
+    </view>
+    <view class="search-cancel" bindtap="keywordSearch">搜索</view>
+  </view>
   <view class="search-result">
     <scroll-view scroll-y style="height: 450px;">
       <view class="result-item" wx:key="unique" wx:for="{{doneworksList}}" data-idx="{{index}}" bindtap="queryDetail">
-
         <text>{{item.workName}}</text>
         <view class="subtitle">
-          <text>{{item.statusName}}</text>
+          <text>{{item.statusName}}   [审核人：{{item.reviewer}}，执行人：{{item.responsible}}]</text>
+          
         </view>
       </view>
       <view class="loading complete" hidden="{{!doneLoading}}" bindtap='searchToDoWorksScrollLower'>点击加载更多</view>
@@ -56,7 +61,7 @@
 </view>
 
 <!--知识库-->
-<view hidden="{{currentTab!==2}}">
+<!-- <view hidden="{{currentTab!==2}}">
   <view class="search">
     <view class="search-bar">
       <view class="search-wrap">
@@ -79,4 +84,4 @@
       </scroll-view>
     </view>
   </view>
-</view>
+</view> -->
