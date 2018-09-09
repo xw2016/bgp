@@ -42,6 +42,7 @@ Page({
     })
     util.initGroup();
     util.initUser();
+    debugger
     let loginUser = wx.getStorageSync("loginUser");
     if (loginUser != null) {
       this.setData({
@@ -116,6 +117,17 @@ Page({
     })
     msgUtil.collect(e);
   },
+  //我的个人信息
+  logout:function(){
+    wx.setStorageSync("loginToken", null);
+    wx.setStorageSync("userNo", null);
+    wx.setStorageSync("loginUser", null);
+    app.globalData.userInfo=null;
+    wx.navigateTo({
+      url: '../index/index',
+    })
+  },
+  //我的积分
   myScore: function() {
     // wx.navigateTo({
     //   url: '../rrtest/pingfen',

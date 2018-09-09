@@ -23,7 +23,7 @@
     <view class="aricle-user-wrap">
       <text class="index-poster-name">{{loginUser.name}}</text>
       <!-- <text class="index-poster-kind">V.{{item.User.Level}}</text> -->
-      <!-- <view class="index-poster-arrow" catchtap="openArrow" data-user-id="{{item.User.Id}}"></view> -->
+      <!-- <text class="index-poster-name" bindtap='logout'>注销</text> -->
     </view>
     <scroll-view scroll-x style="height:45rpx" bindtap='myScore'>
       <image style="width:35rpx; height:35rpx;" src="../../resources/images/done.png"></image>
@@ -38,6 +38,7 @@
   </view>
 </view>
 
+<!--我的积分-->
 <view class="modal-mask" bindtap="modalCandel" catchtouchmove="preventTouchMove" hidden="{{modalHidden}}"></view>
 <view class="modal-dialog" hidden="{{modalHidden}}" bindtap="modalCandel">
   <view class="modal-title">我的积分</view>
@@ -49,6 +50,8 @@
     </view>
   </view>
 </view>
+
+
 
 
 <!-- 我的任务（跳转） -->

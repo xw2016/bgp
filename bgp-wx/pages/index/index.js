@@ -17,6 +17,7 @@ Page({
     wx.setNavigationBarTitle({
       title: '移动办公'
     })
+    
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -63,9 +64,10 @@ Page({
     util.onLogin(function(){
       that.setData({
         loadingHidden: true
-      })
+      });
+      msgUtil.collect(e);
     });
-    msgUtil.collect(e);
+    
   },
   getUserInfo: function (e) {
     console.log(e)

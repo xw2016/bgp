@@ -276,8 +276,8 @@ function onLogin(callback) {
               console.log('登录user' + ":" + res.data.data.userNo);
 
               wx.setStorageSync("loginToken", res.data.data.loginToken);
-              wx.setStorageSync("userNo", res.data.data.userNo)
-              wx.setStorageSync("loginUser", res.data.data.loginUser)
+              wx.setStorageSync("userNo", res.data.data.userNo);
+              wx.setStorageSync("loginUser", res.data.data.loginUser);
               // wx.setStorage({
               //   key: "loginToken",
               //   data: res.data.data.loginToken
@@ -321,6 +321,11 @@ function onLogin(callback) {
       }
     }
   })
+}
+function logout(){
+  wx.setStorageSync("loginToken", null);
+  wx.setStorageSync("userNo", null);
+  wx.setStorageSync("loginUser", null);
 }
 // function validateForm(e,callback) {
 //   let wxValidate = app.wxValidate({

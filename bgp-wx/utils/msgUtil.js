@@ -32,8 +32,16 @@ function sentMsg(workId) {
   onSubmit(url, data, method, function (res) {
     if (res.data.retCode != 200) {
       openAlert(res.data.msg);
-    } else {
-
+    }
+  })
+}
+function sentMsgSingle(workId,account) {
+  let url = '/msg/pushMsgSingle';
+  let method = 'post';
+  let data = { workId: workId ,account:account}
+  onSubmit(url, data, method, function (res) {
+    if (res.data.retCode != 200) {
+      openAlert(res.data.msg);
     }
   })
 }
@@ -88,5 +96,6 @@ function openAlert(content) {
 module.exports = {
   collect: collect,
   dealFormIds: dealFormIds,
-  sentMsg: sentMsg
+  sentMsg: sentMsg,
+  sentMsgSingle: sentMsgSingle
 }

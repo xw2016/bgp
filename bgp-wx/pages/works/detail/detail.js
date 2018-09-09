@@ -311,7 +311,7 @@ Page({
         util.openAlert(res.data.msg);
       } else {
         that.openSuccess();
-        msgUtil.sentMsg(that.data.work.workId);
+        msgUtil.sentMsgSingle(that.data.work.workId, that.data.work.responsibleNum);
       }
     });
   },

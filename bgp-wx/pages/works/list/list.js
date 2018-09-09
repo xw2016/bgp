@@ -10,7 +10,7 @@ Page({
    */
   data: {
     loadingHidden: true,
-    navbar: ['我的待办', '任务查看','知识库'],
+    navbar: ['我的待办', '任务查看'],
     action: 'todo',
     currentTab: 0,
     searchKeyword: '', //需要搜索的字符  

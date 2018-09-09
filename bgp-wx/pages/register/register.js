@@ -8,7 +8,8 @@ Page({
     loadingHidden: true,
     account: '',
     password: '',
-    code: ''
+    code: '',
+    popErrorMsg: ''
   },
 
   /**
@@ -30,6 +31,12 @@ Page({
         }
       }
     });
+  },
+  //提示语
+  hideErrMsg: function () {
+    this.setData({
+      popErrorMsg: ''
+    })
   },
   loadingTap: function () {
     this.setData({
@@ -59,6 +66,20 @@ Page({
   formLogin: function (e) {
     let that = this;
     let url = '/register';
+    let account = that.data.account;
+    if (account == '') {
+      that.setData({
+        popErrorMsg: '请输入账号'
+      })
+      return false;
+    }
+    let password = that.data.password;
+    if (password == '') {
+      that.setData({
+        popErrorMsg: '请输入密码'
+      })
+      return false;
+    }
     let data = {
       account: that.data.account,
       password: that.data.password,
