@@ -538,9 +538,6 @@ Page({
         checkedResponsible: checkedResponsible
       });
     }
-
-
-
   },
   bindResColumnChange: function(e) {
     console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
@@ -634,14 +631,6 @@ Page({
   },
   formSubmit: function(e) {
     let that = this;
-    // let validate = this.validateForm();
-    // if (!validate.checkForm(e)) {
-    //   const error = validate.errorList[0];
-    //   that.setData({
-    //     popErrorMsg: error.msg
-    //   })
-    //   return false;
-    // };
     let reviewer = that.data.reviewer;
     let responsible = that.data.checkedResponsible;
     if (responsible == '') {
@@ -663,8 +652,6 @@ Page({
     let loginUser = wx.getStorageSync("loginUser");
     // work.departments = that.data.checkedDep; //暂时屏蔽
     work.responsibleList = that.data.checkedResponsible;
-    // work.reviewer= that.data.checkedReviewName;
-    // work.reviewerNum= that.data.checkedReview;
     work.reviewer = that.data.reviewer.name
     work.reviewerNum = that.data.reviewer.account;
     work.addWorkType = '0'; //新增任务

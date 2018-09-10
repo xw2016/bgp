@@ -108,6 +108,7 @@ Page({
   addWork: function(e) {
     wx.navigateTo({
       url: '../works/add/addfirst',
+      // url: '../works/add2/add',
     })
     msgUtil.collect(e);
   },

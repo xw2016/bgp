@@ -190,7 +190,7 @@
     </view>
   </view>
   <view class="weui-panel weui-form-preview__ft fixation-btn">
-    <button bindtap="reject" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">打回</button>
+    <button bindtap="reject" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">打回</button>
     <button bindtap="formSubmit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">提交</button>
   </view>
   <!-- </form>  -->

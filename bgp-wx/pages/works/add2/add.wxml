@@ -1,0 +1,129 @@
+<loading hidden="{{loadingHidden}}">
+  加载中...
+</loading>
+<view class="ad_popError" wx:if="{{popErrorMsg}}">{{popErrorMsg}}</view>
+<view class="page__bd">
+  <form bindreset="formReset" bindsubmit='next'>
+    <view bindtap='hideErrMsg' class="fixation-page">
+
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <!--任务名称-->
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd ">
+            <view class="weui-label">任务名称</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input class="weui-input" name="workName" bindinput='bindWorkName' placeholder="请输入任务名称" />
+          </view>
+        </view>
+      </view>
+
+      <!--任务类型-->
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">任务类型</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{typeIndex}}" range="{{workTypeArray}}">
+
+              <view class="weui-select">
+                {{workTypeArray[1][typeIndex[1]]}}
+              </view>
+            </picker>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell weui-cell_link">
+            <view bindtap="bindguide" class="weui-cell__bd">查看工作指引</view>
+          </view>
+        </view>
+      </view>
+
+      <!--人员选择-->
+      <!--负责人类型-->
+      <view class="weui-cells__title">请选择负责人，可多选 </view>
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">执行人</view>
+          </view>
+          <view class="weui-cell__bd">
+              <scroll-view scroll-y style="height: 4.5em;">
+                <view wx:if="{{checkedResName}}">
+                  {{checkedResName}}
+                </view>
+                <view class="weui-uploader__files" bindtap='bindAddmenber'>
+                  <image style="width:70rpx; height:70rpx;" src="../../../resources/images/addmenber.png"></image>
+                </view>
+              </scroll-view>
+          </view>
+        </view>
+      </view>
+      <!--审核人-->
+      <view class="weui-cells__title">审核人</view>
+      <view class="weui-cells__title"></view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_select">
+          <view class="weui-cell__hd weui-cell__hd_in-select-after">
+            <view class="weui-label">审核人</view>
+          </view>
+          <view class="weui-cell__bd">
+            <view class="my-select">
+              {{reviewer.name}}
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <!--计划开始时间-->
+      <view class="weui-cells__title">任务计划开始日期,计划结束日期</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">开始日期</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker name="planBeginDate" mode="date" value="{{planBeginDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanBeginDateChange">
+              <view class="weui-input">{{planBeginDate}}</view>
+            </picker>
+          </view>
+        </view>
+        <!--计划结束日期-->
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">结束日期</view>
+          </view>
+          <view class="weui-cell__bd">
+            <picker name="planEndDate" mode="date" value="{{planEndDate}}" start="2018-06-01" end="2099-12-31" bindchange="bindPlanEndDateChange">
+              <view class="weui-input">{{planEndDate}}</view>
+            </picker>
+          </view>
+        </view>
+
+      </view>
+
+      <view class="weui-cells__title">任务描述</view>
+      <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+          <view class="weui-cell__bd">
+            <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription' maxlength="2000" />
+            <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="weui-panel weui-form-preview__ft fixation-btn">
+      <!-- <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">返回</button> -->
+      <button bindtap="goBack" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">返回</button>
+      <button formType="submit" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">下一步</button>
+    </view>
+
+  </form>
+
+</view>
