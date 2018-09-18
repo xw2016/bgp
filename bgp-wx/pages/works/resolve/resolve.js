@@ -612,6 +612,14 @@ Page({
     }
     return userArr;
   },
+  //人员选择
+  bindAddmenber: function () {
+    let that = this;
+    let theSelectedUsers = JSON.stringify(that.data.selectUsers);
+    wx.navigateTo({
+      url: '../../common/menber/menber?theSelectedUsers=' + theSelectedUsers
+    })
+  },
   validateForm: function() {
     let wxValidate = app.wxValidate({
       workName: {

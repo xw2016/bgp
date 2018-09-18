@@ -42,7 +42,7 @@ Page({
     })
     util.initGroup();
     util.initUser();
-    debugger
+    
     let loginUser = wx.getStorageSync("loginUser");
     if (loginUser != null) {
       this.setData({
@@ -109,6 +109,7 @@ Page({
     wx.navigateTo({
       url: '../works/add/addfirst',
       // url: '../works/add2/add',
+      // url:'../common/menber/menber'
     })
     msgUtil.collect(e);
   },
@@ -179,7 +180,6 @@ Page({
           modalHidden: false
         })
       }
-      // debugger
     })
   }
 

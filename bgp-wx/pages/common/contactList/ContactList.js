@@ -1,7 +1,7 @@
 // pages/ContactList/ContactList.js
 
 // 用于锚点字母排序
-var compare = function (x, y) { //比较函数
+var compare = function(x, y) { //比较函数
   if (x < y) {
     return -1;
   } else if (x > y) {
@@ -36,6 +36,9 @@ function cloneGroupUser(id, anchor) {
 
 // 根据key，返回数组内相对应的index
 function findArrayIndex(array, key, value) {
+  if (array == undefined || array.length == 0) {
+    return -1;
+  }
   for (var i = 0; i < array.length; i++) {
     var subObject = array[i]
     if (subObject[key] == value) //如果要求数据类型也一致，这里可使用恒等号===
@@ -47,7 +50,92 @@ function findArrayIndex(array, key, value) {
 const app = getApp()
 Page({
   data: {
-    userlist: [],
+    selectedUsers: [{ id: 111 }, { id: 114 }, { id: 115 }, { id: 113},],
+    userlist: [{
+      id: 111,
+      account: "zhoujielun",
+      name: "周杰伦"
+    }, {
+      id: 114,
+      account: "chenglong",
+      name: "成龙"
+    }, {
+      id: 115,
+      account: "wumengda",
+      name: "吴孟达"
+    }, {
+      id: 113,
+      account: "adu",
+      name: "阿杜"
+    }, {
+      id: 112,
+      account: "luohaoxiang",
+      name: "罗昊翔"
+    }, {
+      id: 101,
+      account: "xietingfeng",
+      name: "谢霆锋"
+    }, {
+      id: 102,
+      account: "liudehua",
+      name: "刘德华"
+    }, {
+      id: 103,
+      account: "huangrihua",
+      name: "黄日华"
+    }, {
+      id: 93,
+      account: "liminghua",
+      name: "李明华"
+    }, {
+      id: 92,
+      account: "liming",
+      name: "李明"
+    }, {
+      id: 87,
+      account: "zhangsan",
+      name: "张三",
+      userGroupList: [{
+        groupId: 2,
+        groupName: "管理员"
+      }, {
+        groupId: 1,
+        groupName: "村干部"
+      }]
+    }, {
+      id: 88,
+      account: "lisi",
+      name: "李四",
+      userGroupList: [{
+        groupId: 3,
+        groupName: "居委会"
+      }, {
+        groupId: 2,
+        groupName: "管理员"
+      }]
+    }, {
+      id: 89,
+      account: "zzy",
+      name: "周议议",
+      userGroupList: [{
+        groupId: 4,
+        groupName: "妇委"
+      }]
+    }, {
+      id: 90,
+      account: "xiewei",
+      name: "xiewei01",
+      userGroupList: [{
+        groupId: 5,
+        groupName: "XXX村代表"
+      }, {
+        groupId: 1,
+        groupName: "村干部"
+      }, {
+        groupId: 6,
+        groupName: "宣传部"
+      }]
+    }],
     scrollTopId: '', // 置顶id
     theShowLetter: "", // 显示锚点字母
     showLetter: false, // 显示锚点
@@ -65,21 +153,23 @@ Page({
     windowHeight: 0,
     letterHeight: 0
   },
-  onLoad: function (options) {
+  onLoad: function() {
     var thePage = this;
-    let theSelectedUsers = JSON.parse(options.theSelectedUsers);
-    thePage.setData({
-      theSelectedUsers: theSelectedUsers
-    })
   },
-  onShow: function () {
+  onShow: function() {
     // 生命周期函数--监听页面加载
     var thePage = this;
 
-    // 你要在这里读取用户数据！！！
-    var userlist = wx.getStorageSync("userlist");
-   
-    // var userlist = thePage.data.userlist;
+    // 你要在这里读取用户列表！！！
+    // 你要在这里读取用户列表！！！
+    // 你要在这里读取用户列表！！！列表格式参照thePage.data.userlist;
+    var userlist = thePage.data.userlist;
+
+    // 你要在这里读取已选择的用户列表！！！
+    // 你要在这里读取已选择的用户列表！！！
+    // 你要在这里读取已选择的用户列表！！！列表格式参照thePage.data.selectedUsers;
+    var selectedUsers = thePage.data.selectedUsers;
+
 
     var anchorList = thePage.data.anchorList;
     var theLabels = thePage.data.theLabels;
@@ -114,6 +204,10 @@ Page({
       clonedSubUser = cloneUser(subUser);
       clonedSubUser.anchor = anchor;
       clonedSubUser.selected = false;
+      if (findArrayIndex(selectedUsers, 'id', clonedSubUser.id) != -1) {
+        clonedSubUser.selected = true;
+        this.addSelectedUser(clonedSubUser.id, clonedSubUser.account, clonedSubUser.name, anchor);
+      }
 
       // 依据锚点构造二维数据
       if (theUserMap[anchor] == undefined) {
@@ -171,7 +265,7 @@ Page({
 
     // 获取屏幕宽度、高度
     wx.getSystemInfo({
-      success: function (res) {
+      success: function(res) {
         var winHeight = res.windowHeight - 45;
         var letterHeight = (winHeight) / anchorList.length;
         letterHeight = (letterHeight > 40) ? 40 : letterHeight;
@@ -185,7 +279,7 @@ Page({
     return;
   },
   // 点击通讯录选择用户
-  selectUser: function (e) {
+  selectUser: function(e) {
     var index = e.currentTarget.dataset['index'];
     var anchor = e.currentTarget.dataset['anchor'];
 
@@ -204,7 +298,7 @@ Page({
     });
   },
   // 点击搜索、筛选结果选择用户
-  selectSearch: function (e) {
+  selectSearch: function(e) {
     var anchor = e.currentTarget.dataset['anchor'];
     var searchIndex = e.currentTarget.dataset['index'];
     var id = e.currentTarget.dataset['id'];
@@ -230,7 +324,7 @@ Page({
       });
     }
   },
-  clickLetter: function (showLetter) {
+  clickLetter: function(showLetter) {
     this.setData({
       theShowLetter: showLetter,
       showLetter: true,
@@ -238,7 +332,7 @@ Page({
     })
   },
   // 锚点栏触摸开始
-  touchstart: function (e) {
+  touchstart: function(e) {
     this.setData({
       theShowLetter: e.currentTarget.dataset.letter,
       searchLetterActive: 1,
@@ -247,7 +341,7 @@ Page({
     this.clickLetter(e.currentTarget.dataset.letter);
   },
   // 锚点栏触摸回调
-  touchmove: function (e) {
+  touchmove: function(e) {
     var thePage = this;
     // console.log('Y轴移动：' + JSON.stringify(e.touches[0].clientY));
     // 通过位移计算锚点
@@ -271,28 +365,28 @@ Page({
     })
   },
   // 锚点栏触摸结束
-  touchend: function (e) {
+  touchend: function(e) {
     this.setData({
       searchLetterActive: 0,
       showLetter: false
     })
   },
   // 点击搜索栏
-  OnSearchInputTapped: function (e) {
+  OnSearchInputTapped: function(e) {
     this.setData({
       searchInputActive: 1,
       showLabelView: true
     });
   },
   // 搜索栏输入
-  OnSearchInput: function (e) {
+  OnSearchInput: function(e) {
     this.setData({
       searchValue: e.detail.value
     })
     this.triggerSearchEvent();
   },
   // 取消搜索
-  OnInputCancel: function () {
+  OnInputCancel: function() {
     this.setData({
       selectedGroupIndex: -1,
       searchInputActive: 0,
@@ -302,7 +396,7 @@ Page({
     });
   },
   // 点击标签
-  OnLabelPressed: function (e) {
+  OnLabelPressed: function(e) {
     var theUserGroupMap = this.data.theUserGroupMap;
     var key = e.currentTarget.dataset['groupid'];
     var index = e.currentTarget.dataset['index'];
@@ -341,7 +435,7 @@ Page({
       showSearchResult: true
 
     });
-    setTimeout(function () {
+    setTimeout(function() {
       var animation = wx.createAnimation({
         duration: 300,
         timingFunction: "linear",
@@ -354,7 +448,7 @@ Page({
     }.bind(this), 100)
   },
   // 点击已选用户，用于取消选择
-  OnSelectedUserPressed: function (e) {
+  OnSelectedUserPressed: function(e) {
     var theSelectedUsers = this.data.theSelectedUsers;
     var anchor = e.currentTarget.dataset['anchor'];
     var id = e.currentTarget.dataset['id'];
@@ -387,7 +481,7 @@ Page({
     }
   },
   // 搜索事件触发
-  triggerSearchEvent: function () {
+  triggerSearchEvent: function() {
     var searchValue = this.data.searchValue;
     if (searchValue == '') {
       this.setData({
@@ -426,7 +520,7 @@ Page({
     });
   },
   // 取消标签筛选
-  OnLabelCancel: function () {
+  OnLabelCancel: function() {
     var windowWidth = this.data.windowWidth;
     var animation = wx.createAnimation({
       duration: 300,
@@ -437,7 +531,7 @@ Page({
     this.setData({
       animationData: animation.export(),
     })
-    setTimeout(function () {
+    setTimeout(function() {
       animation.translateX(0).step()
       this.setData({
         animationData: animation.export(),
@@ -449,7 +543,7 @@ Page({
     }.bind(this), 200)
   },
   // 添加用户
-  addSelectedUser: function (id, account, name, anchor) {
+  addSelectedUser: function(id, account, name, anchor) {
     var user = {};
     user.id = id;
     user.account = account;
@@ -461,11 +555,10 @@ Page({
     }
     this.setData({
       theSelectedUsers: theSelectedUsers
-    });
-    
+    })
   },
   // 删除用户
-  removeSelectedUser: function (id, account, name, anchor) {
+  removeSelectedUser: function(id, account, name, anchor) {
     var user = {};
     user.id = id;
     user.account = account;
@@ -480,28 +573,10 @@ Page({
       theSelectedUsers: theSelectedUsers
     })
   },
-
   // 点击确认按钮!!!
-  OnConfirmBtnPressed: function () {
+  // 点击确认按钮!!!
+  // 点击确认按钮!!!
+  OnConfirmBtnPressed: function() {
     console.log("theSelectedUsers" + JSON.stringify(this.data.theSelectedUsers));
-    var pages = getCurrentPages();
-    var currPage = pages[pages.length - 1];  //当前页面
-    var prevPage = pages[pages.length - 2]; //上一个页面
-    //直接调用上一个页面的setData()方法，把数据存到上一个页面中去
-    var checkedResName='';
-    var checkedResponsible='';
-    var selectUsers = this.data.theSelectedUsers;
-    selectUsers.forEach(function (item) {
-      checkedResName = checkedResName != '' ? checkedResName + "," + item.name : '' + item.name;
-      let newRes = item.account + ":" + item.name;
-      checkedResponsible = checkedResponsible != '' ? (checkedResponsible + "," + newRes) : ('' + newRes);
-    })
-    prevPage.setData({
-      checkedResName: checkedResName,
-      checkedResponsible: checkedResponsible,
-      selectUsers: selectUsers
-    })
-
-    wx.navigateBack();
   }
 })

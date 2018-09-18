@@ -15,7 +15,7 @@
           <view class="weui-cell__bd">
             <!-- <block wx:if="{{pass=='N'}}"> -->
             <!-- <input class="weui-input" name="workName" bindinput='bindWorkName' placeholder="请输入任务名称" /> -->
-             <input class="weui-input" name="workName" bindinput='bindWorkName' value="{{workName}}" />
+            <input class="weui-input" name="workName" bindinput='bindWorkName' value="{{workName}}" />
             <!-- </block>
             <block wx:else>
               <text class="weui-input" value="{{workName}}" bindinput='bindWorkName' placeholder="请输入任务名称" />
@@ -107,7 +107,7 @@
             <view class="weui-label">执行人</view>
           </view>
           <view class="weui-cell__bd">
-            <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
+            <!-- <picker mode="multiSelector" bindchange="bindResponsibleChange" bindcolumnchange="bindResColumnChange" value="{{resIndex}}" range="{{userGroupArray}}">
               <scroll-view scroll-y style="height: 4.5em;">
                 <view wx:if="{{checkedResName}}">
                   {{checkedResName}}
@@ -116,7 +116,15 @@
                   请选择执行人
                 </view>
               </scroll-view>
-            </picker>
+            </picker> -->
+            <scroll-view scroll-y style="height: 3.5em;">
+              {{checkedResName}}
+              <image bindtap='bindAddmenber' style="margin-top:15rpx;margin-left:30rpx;width:90rpx; height:90rpx;" src="../../../resources/images/addmenber.png"></image>
+              <block wx:if='{{checkedResName}}'>
+                <image style="margin-top:15rpx;margin-left:30rpx; width:90rpx; height:90rpx;" src="../../../resources/images/delmenber.png"></image>
+              </block>
+
+            </scroll-view>
           </view>
         </view>
       </view>
@@ -195,8 +203,8 @@
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell">
         <view class="weui-cell__bd">
-           <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription' maxlength="2000" value="{{description}}"/>
-            <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
+          <textarea class="weui-textarea" placeholder="请输入任务描述" style="height: 3.3em" bindinput='bindDescription' maxlength="2000" value="{{description}}" />
+          <view class="weui-textarea-counter">{{descriptionLen}}/2000</view>
         </view>
       </view>
     </view>

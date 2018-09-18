@@ -25,7 +25,8 @@ Page({
     checkedResponsible: '',
     checkedResName: '',
     reviewer: '',
-    popErrorMsg: ''
+    popErrorMsg: '',
+    selectUsers:[]
   },
 
   /**
@@ -670,7 +671,14 @@ Page({
       }
     });
   },
-
+  //人员选择
+  bindAddmenber: function () {
+    let that = this;
+    let theSelectedUsers = JSON.stringify(that.data.selectUsers); 
+    wx.navigateTo({
+      url: '../../common/menber/menber?theSelectedUsers=' + theSelectedUsers
+    })
+  },
   goBack: function() {
     util.goBack();
   },

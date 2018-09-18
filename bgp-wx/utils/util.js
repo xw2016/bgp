@@ -163,7 +163,7 @@ function initFile(worksId) {
           return app.globalData.serviceUrl + '/work/download?fileId=' + item.id;
         });
       }
-      debugger
+      
     }
   });
   return files;
@@ -362,6 +362,7 @@ function initGroup() {
   wx.getStorageSync("groupList");
   if (groupList == '') {
     this.onSubmit(url, null, method, function(res) {
+      
       if (res.data.retCode != 200) {
         this.openAlert(res.data.msg);
       } else {
@@ -383,6 +384,7 @@ function initUser() {
   wx.getStorageSync("userlist");
   if (userList == '') {
     this.onSubmit(url, null, method, function(res) {
+      
       if (res.data.retCode != 200) {
         this.openAlert(res.data.msg);
       } else {
