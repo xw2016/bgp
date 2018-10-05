@@ -282,7 +282,7 @@
     <block wx:if="{{work.responsibleNum==userNo&&(work.status=='012'||work.status=='002'||work.status=='021'||work.status=='003'||work.status=='042')}}">
       <button bindtap="resolveWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务交办</button>
       <!-- <block wx:if="{{loginUser.type!='领导'}}"> -->
-      <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务反馈</button>
+      <button bindtap="todoWork" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">任务结果回复</button>
     </block>
     <!--如果是审核人，并且是申请任务，则显示：待确认001-->
     <block wx:elif="{{work.reviewerNum==userNo&&work.status=='001'}}">

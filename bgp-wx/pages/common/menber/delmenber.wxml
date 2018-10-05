@@ -1,0 +1,85 @@
+<!--pages/ContactList/ContactList.wxml-->
+<view class='searchCtr'>
+  <view class='searchBar {{searchInputActive==1?"active":""}}'>
+    <view class='iconfont icon-sousuo' hidden='true'></view>
+    <input class='searchInput' placeholder-class='searchInputPH' placeholder='搜索' value='{{searchValue}}' confirm-type='search' bindinput='OnSearchInput' bindtap='OnSearchInputTapped' />
+    <button class='cancel' hidden='{{searchInputActive!=1}}' bindtap='OnInputCancel'>
+      <i class='iconfont icon-cha'></i>
+    </button>
+  </view>
+</view>
+<view style='width:100%;height:45px;'></view>
+
+<!-- 标签栏 -->
+<!-- <view class='labelView' hidden='{{!showLabelView}}'>
+  <view class='labelHint'>通过标签筛选</view>
+  <view class='label' wx:for='{{theLabels}}' wx:key='theLabels' data-index='{{index}}' data-groupid='{{item.groupId}}' bindtap='OnLabelPressed'>{{item.groupName}}</view>
+</view> -->
+
+<!-- 锚点 -->
+<view class='searchLetter touchClass {{searchLetterActive==1?"active":""}}'>
+  <view wx:for="{{anchorList}}" class='jumpLetter' wx:key="index" style="height:{{letterHeight}}px;line-height:{{letterHeight}}px" data-letter="{{item}}" catchtouchstart='touchstart' catchtouchmove='touchmove' catchtouchend='touchend'>{{item}}
+  </view>
+</view>
+
+<!-- 锚点显示 -->
+<view class="showSlectedLetter" hidden="{{!showLetter}}">
+  {{theShowLetter}}
+</view>
+
+<!-- 用户列表 -->
+<scroll-view class='userListScrollView' scroll-y="true" scroll-into-view="{{scrollTopId}}">
+  <view class="selection" wx:for="{{anchorList}}" wx:key="anchorList">
+    <view class="item_letter" id="{{item}}">{{item}}</view>
+    <view class="item_city" wx:for="{{theUserMap[item]}}" wx:for-item="subUser" wx:key="subUser" data-index='{{index}}' data-anchor='{{item}}' data-account='{{subUser.account}}' data-name='{{subUser.name}}' data-id='{{subUser.id}}' data-id='{{subUser.id}}'
+      bindtap="selectUser">
+      {{subUser.name}}
+      <view class='checkbox {{subUser.selected?"active":""}}'>
+        <i class='iconfont icon-gou'></i>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+
+<!-- 筛选、搜索列表 -->
+<view class='searchResultCtr' hidden='{{!showSearchResult}}' animation='{{animationData}}'>
+  <view class='labelTitle' bindtap='OnLabelCancel' hidden='{{selectedGroupIndex < 0}}'>
+    <button class='cancel'>
+      <i class='iconfont icon-zuo'></i>
+    </button>
+    {{theLabels[selectedGroupIndex].groupName}}
+  </view>
+  <block wx:if='{{searchValue != "" && theSearchUsers.length == 0}}'>
+    <view class='searchNoData'>
+      <view>没有找到“</view>
+      <view>{{searchValue}}</view>
+      <view>”相关结果</view>
+    </view>
+  </block>
+  <block wx:else>
+    <scroll-view class='userListScrollView' scroll-y="true">
+      <view class="item_letter">联系人</view>
+      <view class="selection" wx:for="{{theSearchUsers}}" wx:key="theSearchUsers">
+        <view class="item_city" data-index='{{index}}' data-anchor='{{item.anchor}}' data-account='{{item.account}}' data-name='{{item.name}}' data-id='{{item.id}}' bindtap="selectSearch">
+          {{item.name}}
+          <view class='checkbox {{item.selected?"active":""}}'>
+            <i class='iconfont icon-gou'></i>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </block>
+</view>
+
+<!-- 底部按钮组 -->
+<view class='btnCtr'>
+  <scroll-view scroll-x='true' class='theSelectedUsers' hidden='{{theSelectedUsers.length == 0}}'>
+    <view class='selectedUser' wx:key='theSelectedUsers' wx:for='{{theSelectedUsers}}' bindtap='OnSelectedUserPressed' data-id='{{item.id}}' data-anchor='{{item.anchor}}' data-index='{{index}}'>{{item.name}}</view>
+  </scroll-view>
+  <button class='confirmBtn' bindtap='OnConfirmBtnPressed'>确认
+    <block wx:if='{{theSelectedUsers.length > 0}}'>
+      ({{theSelectedUsers.length}})
+    </block>
+  </button>
+</view>

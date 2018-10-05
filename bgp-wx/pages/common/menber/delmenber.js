@@ -70,7 +70,7 @@ Page({
     letterHeight: 0
   },
   onLoad: function (options) {
-
+    
     var thePage = this;
     let theSelectedUsers = JSON.parse(options.theSelectedUsers);
     thePage.setData({
@@ -81,9 +81,9 @@ Page({
   onShow: function () {
     // 生命周期函数--监听页面加载
     var thePage = this;
-
+    
     // 你要在这里读取用户列表！！！列表格式参照thePage.data.userlist;
-    var userlist = wx.getStorageSync("userlist");
+    var userlist = thePage.data.userlist;
 
     // 你要在这里读取已选择的用户列表！！！列表格式参照thePage.data.selectedUsers;
     var selectedUsers = thePage.data.selectedUsers;

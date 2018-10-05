@@ -106,3 +106,15 @@ input-holder {
   color: #ec5300;
   text-align: center;
 }
+.add-name {
+  text-align:center;
+  border:1px solid ;
+  padding:2px 2px; 
+  font-size: 70%;
+  /* background:#dddddd; */
+  border-radius:5px;
+  /* margin-top:15rpx;
+  margin-left:30rpx;  */
+  width:90rpx; 
+  height:50rpx
+}

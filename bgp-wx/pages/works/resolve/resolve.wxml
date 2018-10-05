@@ -117,14 +117,19 @@
                 </view>
               </scroll-view>
             </picker> -->
-            <scroll-view scroll-y style="height: 3.5em;">
-              {{checkedResName}}
-              <image bindtap='bindAddmenber' style="margin-top:15rpx;margin-left:30rpx;width:90rpx; height:90rpx;" src="../../../resources/images/addmenber.png"></image>
-              <block wx:if='{{checkedResName}}'>
-                <image style="margin-top:15rpx;margin-left:30rpx; width:90rpx; height:90rpx;" src="../../../resources/images/delmenber.png"></image>
-              </block>
+            <!-- <scroll-view scroll-y style="height: 3.5em;"> -->
+            <!-- <block class='add-name' wx:for='{{selectUsers}}' data-idx='{{index}}' wx:key='unique'> -->
+              <!-- <text class='add-name'> -->
+                {{checkedResName}}
+                <!-- {{item.name}} -->
+              <!-- </text> -->
+            <!-- </block> -->
+            <image bindtap='bindAddmenber' style="margin-top:15rpx;margin-left:30rpx;width:90rpx; height:90rpx;" src="../../../resources/images/addmenber.png"></image>
+            <block wx:if='{{checkedResName}}'>
+              <image bindtap='bindDelmenber' style="margin-top:15rpx;margin-left:30rpx; width:90rpx; height:90rpx;" src="../../../resources/images/delmenber.png"></image>
+            </block>
 
-            </scroll-view>
+            <!-- </scroll-view> -->
           </view>
         </view>
       </view>

@@ -24,6 +24,7 @@ Page({
     revIndex: [0, 0],
     checkedResponsible: '',
     checkedResName: '',
+    checkedResNameArr:[],
     reviewer: {},
     popErrorMsg: '',
     descriptionLen: 0
@@ -51,7 +52,8 @@ Page({
       reviewer: {
         name: loginUser.name,
         account: loginUser.account
-      }
+      },
+      selectUsers:[]
     })
     this.saveDreft(function(that){
       fileUtil.initFile(that);
@@ -618,6 +620,13 @@ Page({
     let theSelectedUsers = JSON.stringify(that.data.selectUsers);
     wx.navigateTo({
       url: '../../common/menber/menber?theSelectedUsers=' + theSelectedUsers
+    })
+  },
+  bindDelmenber:function (){
+    let that = this;
+    let theSelectedUsers = JSON.stringify(that.data.selectUsers);
+    wx.navigateTo({
+      url: '../../common/menber/delmenber?theSelectedUsers=' + theSelectedUsers
     })
   },
   validateForm: function() {

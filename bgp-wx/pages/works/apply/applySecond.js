@@ -634,7 +634,7 @@ Page({
         required: '请选择审核人'
       },
       responsible: {
-        required: '请选择负责人'
+        required: '请选择执行人'
       }
 
     })

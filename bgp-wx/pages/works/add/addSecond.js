@@ -624,7 +624,7 @@ Page({
         required: '请选择审核人'
       },
       responsible: {
-        required: '请选择负责人'
+        required: '请选择执行人'
       }
 
     })
@@ -677,6 +677,13 @@ Page({
     let theSelectedUsers = JSON.stringify(that.data.selectUsers); 
     wx.navigateTo({
       url: '../../common/menber/menber?theSelectedUsers=' + theSelectedUsers
+    })
+  },
+  bindDelmenber: function () {
+    let that = this;
+    let theSelectedUsers = JSON.stringify(that.data.selectUsers);
+    wx.navigateTo({
+      url: '../../common/menber/delmenber?theSelectedUsers=' + theSelectedUsers
     })
   },
   goBack: function() {
