@@ -1,5 +1,5 @@
 // pages/ContactList/ContactList.js
-
+var pinyinUtils = require('./pinyinUtil.js');
 // 用于锚点字母排序
 var compare = function (x, y) { //比较函数
   if (x < y) {
@@ -107,10 +107,20 @@ Page({
     var theSubGroup = null;
 
     // 循环用户列表
+    var pinyin = null;
     for (var i = 0, size = userlist.length; i < size; i++) {
       subUser = userlist[i];
       // 获取锚点
-      anchor = subUser.account.substring(0, 1).toUpperCase();
+      if (subUser.pinyin == undefined) {
+        // 中文名字转拼音，做锚点
+        // 中文名字转拼音，做锚点
+        // 中文名字转拼音，做锚点
+        pinyin = pinyinUtils.convertPinyin(subUser.name);
+        anchor = pinyin.substring(0, 1).toUpperCase();
+        console.log("PinYin : " + pinyin);
+      } else {
+        anchor = subUser.pinyin.substring(0, 1).toUpperCase();
+      }
       // 构造锚点列表
       if (anchorList.indexOf(anchor) == -1) {
         anchorList.push(anchor);

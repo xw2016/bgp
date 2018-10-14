@@ -109,7 +109,8 @@ Page({
     wx.navigateTo({
       url: '../works/add/addfirst',
       // url: '../works/add2/add',
-      // url:'../common/menber/menber'
+      // url:'../common/menber/ContactList'
+      
     })
     msgUtil.collect(e);
   },
